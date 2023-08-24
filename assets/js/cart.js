@@ -53,10 +53,13 @@ function Cart() {
   console.log(canvasW);
 
   // IU AND MENU
-  ms=[-32,-116,52];
+  ms=[[-48,types.HAM],[-150,types.SWD],[48,types.AX]];
   for(i=0;i<ms.length;i++){
+    m = new entity(16, 16, canvasW/2+ms[i][0], canvasH-88, 0, types.UI, "", 5, true);
+    m.ui=true;
+    this.menu.push(m);
 
-    m = new entity(16, 16, canvasW/2+ms[i], canvasH-70, 0, types.UI, "", 4, true);
+    m = new entity(10, 10, canvasW/2+ms[i][0]+14, canvasH-80, 0, ms[i][1], "", 5, true);
     m.ui=true;
     this.menu.push(m);
   };

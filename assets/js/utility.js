@@ -47,19 +47,6 @@ function vec2(x,y){
   }
 }
 
-function drawImg(ctx, img, sx, sy, w, h, x, y, alpha, scale, angle=0){
-  ctx.save();
-  ctx.globalAlpha = alpha;
-  ctx.translate(x, y);
-  if(angle > 0){
-    ctx.translate(24,24);
-    ctx.rotate(angle*Math.PI/180);
-    ctx.translate(-24,-24);
-  }
-  ctx.drawImage(img, sx, sy, w, h, w/2, h/2, w * scale, h * scale);
-  ctx.restore();
-}
-
 function drawRect(ctx, ox, oy, x, y, w, h, col, alpha){
   ctx.save();
   ctx.globalAlpha = alpha;
@@ -70,26 +57,7 @@ function drawRect(ctx, ox, oy, x, y, w, h, col, alpha){
 }
 
 function resizeCanvas(){
-  // // Needs to handle screens smaller than 800x600
-  // let totalWidth = 1216; // Tiles are 16x16 scaled up by 4 with 19 columns
-  // let totalHeight = 832; // 13 Rows
-  //
-  // canvasW = window.innerWidth;
-  // canvasH = window.innerHeight;
-  //
-  // let widthToHeight = 4 / 3;
-  // let newWidthToHeight = canvasW / canvasH;
-  // let ratio=0;
-  //
-  // if (newWidthToHeight > widthToHeight) {
-  //   canvasW = canvasH * widthToHeight;
-  //   ratio=canvasW / totalWidth;
-  // } else {
-  //   canvasH = canvasW / widthToHeight;
-  //   ratio=canvasH / totalHeight;
-  // }
-  //
-  // cart.scale = ratio * scale.scale;
+
 }
 
 function partDir(p) {
@@ -107,16 +75,12 @@ function lerp (start, end, amt){
 }
 
 function findIsometricCenter(numColumns, numRows) {
-    const tileWidth = 16;
-    const tileHeight = 16;
+    const size = 16;
 
     // Finding the center tile
-    const centerTileX = Math.floor(numColumns / 2);
-    const centerTileY = Math.floor(numRows / 2);
+    const cenX = Math.floor(numColumns / 2);
+    const cenY = Math.floor(numRows / 2);
 
     // Calculating the pixel coordinates of the center tile
-    const centerPixelX = (centerTileX - centerTileY) * tileWidth / 2;
-    const centerPixelY = (centerTileX + centerTileY) * tileHeight / 2;
-
-    return { x: centerPixelX, y: centerPixelY };
+    return { x: (cenX - cenY) * size / 2, y: (cenX + cenY) * size / 2 };
 }

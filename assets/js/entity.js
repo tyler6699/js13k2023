@@ -96,7 +96,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
       // Camera
       if(this.ui){
         ctx.setTransform(1, 0, 0, 1, 0, 0);
-        ctx.drawImage(img, this.sx, this.sy, w, h, this.x, this.y, 64, 64);
+        ctx.drawImage(img, this.sx, this.sy, w, h, this.x, this.y, w*s, h*s);
       } else {
         ctx.translate(cart.cam.x,cart.cam.y);
 
@@ -206,11 +206,11 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
         this.sy=33;
         break;
       case types.SWD:
-        this.sx=36;
+        this.sx=26;
         this.sy=33;
         break;
       case types.AX:
-        this.sx=48;
+        this.sx=36;
         this.sy=32;
         break;
      }

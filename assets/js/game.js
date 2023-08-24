@@ -3,7 +3,6 @@
 // ╚═══════════════════════════════╝
 
 // Reference for new atlas
-// https://twitter.com/CarelessLabs/status/598922902407372800
 let canvasW = window.innerWidth;
 let canvasH = window.innerHeight;
 let gameStarted = false;
@@ -122,7 +121,6 @@ function updateGameArea() {
   } else {
     mg.clear();
     cart.update(delta, TIME, false);
-    //drawBox(ctx,0.1,"#"+COL1,0,0,800,600)
     let font = "15px Verdana";
     writeTxt(ctx, 1, font,"WHITE","[M] Music: " + !pause, 650, 20);
     writeTxt(ctx, 1, font,"WHITE","[T] Tips: " + (cart.tips), 650, 40);
@@ -194,4 +192,12 @@ function map() {
 
 function one() {
   return mg.keys && (mg.keys[ONE]||mg.keys[E]);
+}
+
+function two() {
+  return mg.keys && (mg.keys[TWO]);
+}
+
+function three() {
+  return mg.keys && (mg.keys[THREE]);
 }
