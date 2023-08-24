@@ -8,6 +8,7 @@ function Cart() {
   this.ratio=1;
   this.tips=true;
   this.time=0;
+  this.menu = []; // Move to a menu class
 
   // console.log("Canvas W: " + canvasW + " Canvas H: " + canvasH + " newWidthToHeight:" + newWidthToHeight);
   // console.log("totalWidth: " + totalWidth + " totalHeight: " + totalHeight );
@@ -49,6 +50,16 @@ function Cart() {
   this.level.objs.push(this.hero.e);
   // Changing the number of columns changes the surrounding tiles array.
   var c = this.levels[this.hero.e.curLevel].cols;
+  console.log(canvasW);
+
+  // IU AND MENU
+  ms=[-32,-116,52];
+  for(i=0;i<ms.length;i++){
+
+    m = new entity(16, 16, canvasW/2+ms[i], canvasH-70, 0, types.UI, "", 4, true);
+    m.ui=true;
+    this.menu.push(m);
+  };
 
   // Render & Logic
   this.update = function(delta, time, intro=false) {
@@ -71,9 +82,11 @@ function Cart() {
       mg.canvas.style.cursor='none';
     }
 
+    // Render Menu
+    this.menu.forEach(e => e.update(delta));
+
     // Follow hero
     this.cam.x = lerp(-this.hero.e.x + (totalWidth/2)-20,this.cam.x ,.8);
     this.cam.y = lerp(-this.hero.e.y + (totalHeight/2)-80,this.cam.y ,.8);
   }
-
 }

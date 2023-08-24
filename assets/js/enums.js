@@ -9,7 +9,11 @@ const types = {
   TREE:7,
   RCK:8,
   CST:9,
-  CNE:10
+  CNE:10,
+  UI:11,
+  HAM:12,
+  SWD:13,
+  AX:4
 }
 
 const mobtype = {

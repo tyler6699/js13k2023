@@ -33,6 +33,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
   this.offsetY=0;
   this.parent=null;
   this.wet=false;
+  this.ui=false;
 
   // ATLAS Positions
   this.sx=0;
@@ -93,35 +94,43 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
       }
 
       // Camera
-      ctx.translate(cart.cam.x,cart.cam.y);
-
-      // Animate Image
-      if (this.image == null) {
-        ctx.fillStyle = this.colour;
-        ctx.fillRect((mhw *.5) * s, (mhh * .5) * s, (w * .5) * s, (h * .5) * s);
-      // Image
+      if(this.ui){
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.drawImage(img, this.sx, this.sy, w, h, this.x, this.y, 64, 64);
       } else {
-        if (this.flip){
-          ctx.scale(-1, 1);
-          ctx.translate(-(w*s)-w,0);
+        ctx.translate(cart.cam.x,cart.cam.y);
+
+        // Animate Image
+        if (this.image == null) {
+          ctx.fillStyle = this.colour;
+          ctx.fillRect((mhw *.5) * s, (mhh * .5) * s, (w * .5) * s, (h * .5) * s);
+        // Image
         } else {
-          ctx.scale(1, 1);
-        }
-        f=0; // float
-        z=0; // hover
+          if (this.flip){
+            ctx.scale(-1, 1);
+            ctx.translate(-(w*s)-w,0);
+          } else {
+            ctx.scale(1, 1);
+          }
+          f=0; // float
+          z=0; // hover
 
-        if(this.angle > 0){
-          let z=24;
-          ctx.translate(z,z);
-          ctx.rotate(this.angle*Math.PI/180);
-          ctx.translate(-z,-z);
-        }
+          if(this.angle > 0){
+            let z=24;
+            ctx.translate(z,z);
+            ctx.rotate(this.angle*Math.PI/180);
+            ctx.translate(-z,-z);
+          }
 
-        if(this.wet){
-          h-=2;
+          if(this.wet){
+            h-=2;
+          }
+
+          ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh+f, w * s, h * s);
         }
-        ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh+f, w * s, h * s);
       }
+
+
       ctx.restore();
     }
 
@@ -188,6 +197,21 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
       case types.CNE:
         this.sx=48;
         this.sy=16;
+        break;
+      case types.UI:
+        this.sy=32;
+        break;
+      case types.HAM:
+        this.sx=16;
+        this.sy=33;
+        break;
+      case types.SWD:
+        this.sx=36;
+        this.sy=33;
+        break;
+      case types.AX:
+        this.sx=48;
+        this.sy=32;
         break;
      }
   }
