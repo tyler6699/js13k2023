@@ -112,23 +112,23 @@ function updateGameArea() {
     cart.update(delta, TIME, true);
     ctx.save();
     drawBox(ctx,0.1,"#"+COL1,0,0,canvasW,canvasH)
-    let font="18px Papyrus";
-    writeTxt(ctx, 1, font,"WHITE","Main Screen", 22, 25);
+    let font="30px Papyrus";
+    writeTxt(ctx, 1, font,"WHITE","Main Screen", 30, 40);
     ctx.restore();
   } else {
     mg.clear();
     cart.update(delta, TIME, false);
     //drawBox(ctx,0.1,"#EDEDED",0,0,800,600)
-    let font = "15px Papyrus";
-    writeTxt(ctx, 1, font,"WHITE","[M] Music: " + !pause, 650, 20);
-    writeTxt(ctx, 1, font,"WHITE","[T] Tips: " + (cart.tips), 650, 40);
-    writeTxt(ctx, 1, font,"WHITE","[R] Reset Level", 650, 60);
+    let font = "30px Papyrus";
+    writeTxt(ctx, 1, font,"WHITE","[M] Music: " + !pause, canvasW-230, 30);
+    writeTxt(ctx, 1, font,"WHITE","[T] Tips: " + (cart.tips), canvasW-230, 70);
+    writeTxt(ctx, 1, font,"WHITE","[R] Reset Level", canvasW-230, 110);
 
-    writeTxt(ctx, 1, font,"WHITE","Lives: " + cart.hero.hp, 10, 80);
-    writeTxt(ctx, 1, font,"RED","Deaths: " + cart.hero.deaths, 10, 100);
-    writeTxt(ctx, 1, font,"WHITE","Level: " + (cart.hero.e.curLevel+1), 10, 60);
-    writeTxt(ctx, 1, font,"WHITE","X: " + (cart.hero.e.x), 10, 120);
-    writeTxt(ctx, 1, font,"WHITE","Y: " + (cart.hero.e.y), 10, 140);
+    writeTxt(ctx, 1, font,"WHITE","Level: " + (cart.hero.e.curLevel+1), 10, 100);
+    writeTxt(ctx, 1, font,"WHITE","Lives: " + cart.hero.hp, 10, 140);
+    writeTxt(ctx, 1, font,"RED","Deaths: " + cart.hero.deaths, 10, 180);
+    writeTxt(ctx, 1, font,"WHITE","X: " + (cart.hero.e.x), 10, 210);
+    writeTxt(ctx, 1, font,"WHITE","Y: " + (cart.hero.e.y), 10, 250);
     let lvl=cart.hero.e.curLevel;
 
     // Music
@@ -162,10 +162,13 @@ function writeSum(ctx,a,font,colour,num,x,y){
   ctx.fillText(hex, x, y);
 }
 function writeTxt(ctx,a,font,colour,txt,x,y) {
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.globalAlpha = a;
   ctx.font = font;
   ctx.fillStyle = colour;
   ctx.fillText(txt, x, y);
+  ctx.restore();
 }
 
 function left() {

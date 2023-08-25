@@ -5,6 +5,7 @@ TODO List
 UI
   - Intro screen
   - Player UI (stats)
+  - Add a pole behind the weapons bar? A pole with balls on the ends, like a flag post.
 
 General
   - Add the bottom later of objects of the castle to the obj array to stop the hero walking through the castle
