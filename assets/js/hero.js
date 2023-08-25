@@ -22,6 +22,7 @@ function hero(w, h, x, y, angle, type, scale) {
   this.done=false;
   this.changeLevel=false;
   this.moved=false;
+  this.weapon=0; // 0 Sword, 1 Hammer, 2 Axe
 
   this.update = function(ctx, delta){
     this.time+=delta;
@@ -56,6 +57,18 @@ function hero(w, h, x, y, angle, type, scale) {
         this.e.x += this.gMove(1,0);
         this.e.flip = false;
         this.moved=true;
+      }
+
+      if(one()&&this.weapon!=1){
+        this.weapon=1;
+      }
+
+      if(two()&&this.weapon!=2){
+        this.weapon=2;
+      }
+
+      if(three()&&this.weapon!=3){
+        this.weapon=3;
       }
     }
 

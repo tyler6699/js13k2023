@@ -13,7 +13,8 @@ const types = {
   UI:11,
   HAM:12,
   SWD:13,
-  AX:14
+  AX:14,
+  HP:15
 }
 
 const mobtype = {
