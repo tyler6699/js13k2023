@@ -121,15 +121,17 @@ function updateGameArea() {
   } else {
     mg.clear();
     cart.update(delta, TIME, false);
+    //drawBox(ctx,0.1,"#EDEDED",0,0,800,600)
     let font = "15px Verdana";
     writeTxt(ctx, 1, font,"WHITE","[M] Music: " + !pause, 650, 20);
     writeTxt(ctx, 1, font,"WHITE","[T] Tips: " + (cart.tips), 650, 40);
     writeTxt(ctx, 1, font,"WHITE","[R] Reset Level", 650, 60);
-    writeTxt(ctx, 1, font,"WHITE","Lives: " + cart.hero.hp, 10, 40);
-    writeTxt(ctx, 1, font,"RED","Deaths: " + cart.hero.deaths, 10, 60);
-    writeTxt(ctx, 1, font,"WHITE","Level: " + (cart.hero.e.curLevel+1), 10, 20);
-    writeTxt(ctx, 1, font,"WHITE","X: " + (cart.hero.e.x), 10, 80);
-    writeTxt(ctx, 1, font,"WHITE","Y: " + (cart.hero.e.y), 10, 100);
+
+    writeTxt(ctx, 1, font,"WHITE","Lives: " + cart.hero.hp, 10, 80);
+    writeTxt(ctx, 1, font,"RED","Deaths: " + cart.hero.deaths, 10, 100);
+    writeTxt(ctx, 1, font,"WHITE","Level: " + (cart.hero.e.curLevel+1), 10, 60);
+    writeTxt(ctx, 1, font,"WHITE","X: " + (cart.hero.e.x), 10, 120);
+    writeTxt(ctx, 1, font,"WHITE","Y: " + (cart.hero.e.y), 10, 140);
     let lvl=cart.hero.e.curLevel;
 
     // Music
