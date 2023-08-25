@@ -111,18 +111,15 @@ function updateGameArea() {
     ctx = mg.context;
     cart.update(delta, TIME, true);
     ctx.save();
-    drawBox(ctx,0.1,"#"+COL1,0,0,800,600)
-
-    let font="20px Verdana";
-    writeTxt(ctx, 1, font,"WHITE","Main Screen", 50, 40);
-
+    drawBox(ctx,0.1,"#"+COL1,0,0,canvasW,canvasH)
+    let font="18px Papyrus";
+    writeTxt(ctx, 1, font,"WHITE","Main Screen", 22, 25);
     ctx.restore();
-    ctx.save();
   } else {
     mg.clear();
     cart.update(delta, TIME, false);
     //drawBox(ctx,0.1,"#EDEDED",0,0,800,600)
-    let font = "15px Verdana";
+    let font = "15px Papyrus";
     writeTxt(ctx, 1, font,"WHITE","[M] Music: " + !pause, 650, 20);
     writeTxt(ctx, 1, font,"WHITE","[T] Tips: " + (cart.tips), 650, 40);
     writeTxt(ctx, 1, font,"WHITE","[R] Reset Level", 650, 60);
@@ -149,9 +146,12 @@ function updateGameArea() {
 }
 
 function drawBox(ctx,a,colour,x,y,w,h) {
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.globalAlpha = a;
   ctx.fillStyle = colour;
   ctx.fillRect(x, y, w, h);
+  ctx.restore();
 }
 
 function writeSum(ctx,a,font,colour,num,x,y){

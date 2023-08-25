@@ -8,7 +8,6 @@ function Cart() {
   this.ratio=1;
   this.tips=true;
   this.time=0;
-  this.menu = []; // Move to a menu class
 
   // console.log("Canvas W: " + canvasW + " Canvas H: " + canvasH + " newWidthToHeight:" + newWidthToHeight);
   // console.log("totalWidth: " + totalWidth + " totalHeight: " + totalHeight );
@@ -50,24 +49,10 @@ function Cart() {
   this.level.objs.push(this.hero.e);
   // Changing the number of columns changes the surrounding tiles array.
   var c = this.levels[this.hero.e.curLevel].cols;
-  console.log(canvasW);
 
-  // IU AND MENU
-  ms=[[-32,types.HAM],[-116,types.SWD],[52,types.AX]];
-  for(i=0;i<ms.length;i++){
-    this.menu.push(new entity(16, 16, canvasW/2+ms[i][0], canvasH-88, 0, types.UI, "", 4, true));
-    this.menu.push(new entity(10, 10, canvasW/2+ms[i][0]+14, canvasH-80, 0, ms[i][1], "", 4, true));
-  };
+  // UI
+  this.menu = new menu();
 
-  for(i=0;i<5;i++){
-    this.menu.push(new entity(16, 16, 20+(i*32), 0, 0, types.HP, "", 4, true));
-  }
-
-  this.menu.push(new entity(6, 16, 212, 0, 0, types.HPE, "", 4, true));
-  m=new entity(6, 16, 0, 0, 0, types.HPE, "", 4, true);
-  m.flip=true;
-  this.menu.push(m);
-  
   // Render & Logic
   this.update = function(delta, time, intro=false) {
     this.time=time;
@@ -90,7 +75,8 @@ function Cart() {
     }
 
     // Render Menu
-    this.menu.forEach(e => e.update(delta));
+    drawBox(ctx,0.5,"#041024",canvasW/2-125,canvasH-60,250,50)
+    this.menu.ui.forEach(e => e.update(delta));
 
     // Follow hero
     this.cam.x = lerp(-this.hero.e.x + (totalWidth/2)-20,this.cam.x ,.8);

@@ -4,13 +4,10 @@ TODO List
 
 UI
   - Intro screen
-  - Inventory's (Weapon, axe, hammer)
   - Player UI (stats)
 
 General
-  - Collisions (Working but needs improving)
   - Add the bottom later of objects of the castle to the obj array to stop the hero walking through the castle
-  - Create a castle where bad guys come out of (Added one type)
   - Give the castle HP and you have to defeat it
   - Destroy trees and stones to stop the caste from getting resources
   - While trees and rocks are available the mobs keep spawning
@@ -18,11 +15,10 @@ General
   - Shadows
 
 HERO
-  - Walking in water makes you sink and you move very slowly, you die in the sea
-      - Added sinking
+  - Slowly, you die in the sea
   - Walk, attack, idle animations
   - New character pixel art
-  - Add HP, Strength, Agility, Swords, Arrows
+  - Add Strength, Agility, Swords, Arrows
   - Jumping
 
 Sounds
