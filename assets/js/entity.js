@@ -1,4 +1,5 @@
-function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP = 0) {
+function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP = 0,weapon=0) {
+  this.weapon = weapon;
   this.scale = scale;
   this.type = type;
   this.width = w;
@@ -43,8 +44,8 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
     this.hb = new rectanlge(0, 0, 0, 0);
     this.sensor = new rectanlge(0, 0, 0, 0);
     if(this.isButton){
-      this.hb.w = this.width * 2;
-      this.hb.h = this.height * 2;
+      this.hb.w = this.width * 2*this.scale;
+      this.hb.h = this.height * 2*this.scale
     }
   }
   this.setHitbox();
@@ -96,6 +97,11 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
       // Camera
       if(this.ui){
         ctx.setTransform(1, 0, 0, 1, 0, 0);
+        if (this.flip){
+          ctx.scale(-1, 1);
+          ctx.translate(-w*s,0);
+        }
+
         ctx.drawImage(img, this.sx, this.sy, w, h, this.x, this.y, w*s, h*s);
       } else {
         ctx.translate(cart.cam.x,cart.cam.y);
@@ -199,23 +205,33 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
         this.sy=16;
         break;
       case types.UI:
+        this.ui=true;
         this.sy=32;
         break;
       case types.HAM:
         this.sx=16;
         this.sy=33;
+        this.ui=true;
         break;
       case types.SWD:
         this.sx=26;
         this.sy=33;
+        this.ui=true;
         break;
       case types.AX:
         this.sx=36;
         this.sy=32;
+        this.ui=true;
         break;
       case types.HP:
         this.sx=48;
         this.sy=32;
+        this.ui=true;
+        break;
+      case types.HPE:
+        this.sx=64;
+        this.sy=32;
+        this.ui=true;
         break;
      }
   }

@@ -14,7 +14,8 @@ module.exports = function(grunt) {
       build: {
         files: [{
           expand: false,
-          src: ["assets/js/audio.js",
+          src: ["assets/js/menu.js",
+                "assets/js/audio.js",
                 "assets/js/particle.js",
                 "assets/js/camera.js",
                 "assets/js/sound.js",

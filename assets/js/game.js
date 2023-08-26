@@ -13,6 +13,7 @@ let TIME = 0;
 let introT = 0;
 let mousePos = new vec2(0,0);
 let clickedAt = new vec2(0,0);
+let clickedRec = new rectanlge(0,0,0,0);
 let processClick = false;
 let GAMEOVER=false;
 let RELOAD=false;
@@ -69,6 +70,17 @@ let mg = {
       if(e.keyCode==M) pause=!pause;
       if(e.keyCode==T) cart.tips=!cart.tips;
     })
+    window.addEventListener('mouseup', function(e) {
+      e.preventDefault();
+      setclicks();
+      processClick=true;
+    })
+    window.addEventListener('mousemove', function(e) {
+      e.preventDefault();
+      var r = mg.canvas.getBoundingClientRect();
+      mousePos.set((e.clientX - r.left) / (r.right - r.left) * canvasW,
+                   (e.clientY - r.top) / (r.bottom - r.top) * canvasH);
+  })
     // Disable right click context menu
     this.canvas.oncontextmenu = function(e) {
       e.preventDefault();
@@ -111,27 +123,23 @@ function updateGameArea() {
     ctx = mg.context;
     cart.update(delta, TIME, true);
     ctx.save();
-    drawBox(ctx,0.1,"#"+COL1,0,0,800,600)
-
-    let font="20px Verdana";
-    writeTxt(ctx, 1, font,"WHITE","Main Screen", 50, 40);
-
+    drawBox(ctx,0.1,"#"+COL1,0,0,canvasW,canvasH)
+    let font="30px Papyrus";
+    writeTxt(ctx, 1, font,"WHITE","Main Screen", 30, 40);
     ctx.restore();
-    ctx.save();
   } else {
     mg.clear();
     cart.update(delta, TIME, false);
-    //drawBox(ctx,0.1,"#EDEDED",0,0,800,600)
-    let font = "15px Verdana";
-    writeTxt(ctx, 1, font,"WHITE","[M] Music: " + !pause, 650, 20);
-    writeTxt(ctx, 1, font,"WHITE","[T] Tips: " + (cart.tips), 650, 40);
-    writeTxt(ctx, 1, font,"WHITE","[R] Reset Level", 650, 60);
+    let font = "30px Papyrus";
+    writeTxt(ctx, 1, font,"WHITE","[M] Music: " + !pause, canvasW-230, 30);
+    writeTxt(ctx, 1, font,"WHITE","[T] Tips: " + (cart.tips), canvasW-230, 70);
+    writeTxt(ctx, 1, font,"WHITE","[R] Reset Level", canvasW-230, 110);
 
-    writeTxt(ctx, 1, font,"WHITE","Lives: " + cart.hero.hp, 10, 80);
-    writeTxt(ctx, 1, font,"RED","Deaths: " + cart.hero.deaths, 10, 100);
-    writeTxt(ctx, 1, font,"WHITE","Level: " + (cart.hero.e.curLevel+1), 10, 60);
-    writeTxt(ctx, 1, font,"WHITE","X: " + (cart.hero.e.x), 10, 120);
-    writeTxt(ctx, 1, font,"WHITE","Y: " + (cart.hero.e.y), 10, 140);
+    writeTxt(ctx, 1, font,"WHITE","Level: " + (cart.hero.e.curLevel+1), 10, 100);
+    writeTxt(ctx, 1, font,"WHITE","Lives: " + cart.hero.hp, 10, 140);
+    writeTxt(ctx, 1, font,"RED","Deaths: " + cart.hero.deaths, 10, 180);
+    writeTxt(ctx, 1, font,"WHITE","X: " + (cart.hero.e.x), 10, 210);
+    writeTxt(ctx, 1, font,"WHITE","Y: " + (cart.hero.e.y), 10, 250);
     let lvl=cart.hero.e.curLevel;
 
     // Music
@@ -146,12 +154,16 @@ function updateGameArea() {
       music=false;
     }
   }
+  processClick=false;
 }
 
 function drawBox(ctx,a,colour,x,y,w,h) {
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.globalAlpha = a;
   ctx.fillStyle = colour;
   ctx.fillRect(x, y, w, h);
+  ctx.restore();
 }
 
 function writeSum(ctx,a,font,colour,num,x,y){
@@ -161,11 +173,15 @@ function writeSum(ctx,a,font,colour,num,x,y){
   ctx.fillStyle = colour;
   ctx.fillText(hex, x, y);
 }
+
 function writeTxt(ctx,a,font,colour,txt,x,y) {
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.globalAlpha = a;
   ctx.font = font;
   ctx.fillStyle = colour;
   ctx.fillText(txt, x, y);
+  ctx.restore();
 }
 
 function left() {
@@ -202,4 +218,12 @@ function two() {
 
 function three() {
   return mg.keys && (mg.keys[THREE]);
+}
+
+function setclicks(){
+  clickedAt.set(mousePos.x, mousePos.y);
+  clickedRec.x=mousePos.x-5;
+  clickedRec.y=mousePos.y+5;
+  clickedRec.h=10;
+  clickedRec.w=10;
 }
