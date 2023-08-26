@@ -128,14 +128,11 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
             ctx.translate(-z,-z);
           }
 
-          if(this.wet){
-            h-=2;
-          }
+          if(this.wet) h-=2;
 
           ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh+f, w * s, h * s);
         }
       }
-
 
       ctx.restore();
     }

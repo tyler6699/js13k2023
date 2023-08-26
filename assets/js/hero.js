@@ -9,7 +9,6 @@ function hero(w, h, x, y, angle, type, scale) {
   let airTime=0;
   let idle=0;
   let speed=0;
-  // HERO PARAMS
   let maxSpeed=3;
   let lastDir = RIGHT;
   let prevPos={x: this.e.x, y: this.e.y};
@@ -144,12 +143,8 @@ function hero(w, h, x, y, angle, type, scale) {
       if (curTile && prevTile && curTile.id !== prevTile.id) {
           // Changed Tiles
           if (prevTile.up !== curTile.up) {
-              // this.e.z = .5* (curTile.up - prevTile.up);
-              this.e.z = -curTile.up*.25;
+            this.e.z = -curTile.up*.25;
           }
-          // Test current tile position
-          // curTile.e.type=10;
-          // curTile.e.setType();
       }
     }
     // Hero Speed based on the tile

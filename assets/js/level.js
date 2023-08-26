@@ -35,7 +35,6 @@ function level(num, canvasW, canvasH, scale) {
 
     if(this.rotate){
       rotateMap90Degrees(cart);
-      // printMap(cart);
       this.rotate=false;
     }
   }
@@ -86,11 +85,11 @@ function level(num, canvasW, canvasH, scale) {
     const changes = [];
 
     this.tiles.forEach((tile, i) => {
-        if (isWater(tile.e.type)) {
+        if (tile.e.type == types.WTR) {
             Array.from({ length: rndNo(3, 8) }, (_, r) => r).forEach(r => {
                 Array.from({ length: rndNo(3, 5) }, (_, col) => col).forEach(col => {
-                    let pos = getTilePos(tile.row + r, tile.column + col, colz);
-                    if (isValidPos(pos, this.tiles.length)) changes.push(pos);
+                    let pos = (tile.row + r) * tile.column + col;
+                    if (pos >= 0 && pos < this.tiles.length) changes.push(pos);
                 });
             });
         }
@@ -134,26 +133,21 @@ function level(num, canvasW, canvasH, scale) {
     // Add a simple castle
     // Castle looks great! Very, uh, can't find the right word, but, like,
     // it means business, you know? No nonsense castle vibe, fortification lvl 99
-    //for(i = 0; i < 2; i++){
-      //cen.x-=(i*70);
-      //cen.y+=(i*40);
-      buildTower(this.castle, cen.x+5, cen.y-86, 4, 0, 16, true, types.CST, true); // Back Right Tower
-      buildTower(this.castle, cen.x-10, cen.y-64, 1, 0, 16); // Back Left Wall (R)
-      buildTower(this.castle, cen.x-26, cen.y-56, 1, 0, 16); // Back Left Wall (L)
-      buildTower(this.castle, cen.x-41, cen.y-64, 4, 0, 16,true, types.CST, true); // Back Left Tower
-      buildTower(this.castle, cen.x+22, cen.y-64, 1, 0, -16, false); // Right back wall
-      buildTower(this.castle, cen.x+38, cen.y-56, 1, 0, -16, false); // Right front wall
-      buildTower(this.castle, cen.x+54, cen.y-64, 4, 0, 16,true, types.CST, true); // Front Right Tower
-      buildTower(this.castle, cen.x+38, cen.y-24, 2, 0, -16, false); // Front Right Wall (R) OPEN
-      buildTower(this.castle, cen.x+22, cen.y-18, 2, 0, -16, false); // Front Right Wall (L) OPEN
-      buildTower(this.castle, cen.x-26, cen.y-8, 3, 0, -16, false); // Front Left Wall (L) CLOSED
-      buildTower(this.castle, cen.x-10, cen.y, 3, 0, -16, false); // Front Left Wall (R) CLOSED
-      buildTower(this.castle, cen.x+6, cen.y-40, 4, 0, 16, true, types.CST, true); // Front Left Tower
-    //}
+    tower(this.castle, cen.x+5, cen.y-86, 4, 0, 16, true, types.CST, true); // Back Right Tower
+    tower(this.castle, cen.x-10, cen.y-64, 1, 0, 16); // Back Left Wall (R)
+    tower(this.castle, cen.x-26, cen.y-56, 1, 0, 16); // Back Left Wall (L)
+    tower(this.castle, cen.x-41, cen.y-64, 4, 0, 16,true, types.CST, true); // Back Left Tower
+    tower(this.castle, cen.x+22, cen.y-64, 1, 0, -16, false); // Right back wall
+    tower(this.castle, cen.x+38, cen.y-56, 1, 0, -16, false); // Right front wall
+    tower(this.castle, cen.x+54, cen.y-64, 4, 0, 16,true, types.CST, true); // Front Right Tower
+    tower(this.castle, cen.x+38, cen.y-24, 2, 0, -16, false); // Front Right Wall (R) OPEN
+    tower(this.castle, cen.x+22, cen.y-18, 2, 0, -16, false); // Front Right Wall (L) OPEN
+    tower(this.castle, cen.x-26, cen.y-8, 3, 0, -16, false); // Front Left Wall (L) CLOSED
+    tower(this.castle, cen.x-10, cen.y, 3, 0, -16, false); // Front Left Wall (R) CLOSED
+    tower(this.castle, cen.x+6, cen.y-40, 4, 0, 16, true, types.CST, true); // Front Left Tower
+}
 
-  }
-
-  const buildTower = (tiles, x, y, count, dx = 0, dy = 8, decrement = true, type=types.CST, tower=false) => {
+  const tower = (tiles, x, y, count, dx = 0, dy = 8, decrement = true, type=types.CST, tower=false) => {
     const loopInit = decrement ? count - 1 : 0;
     const loopCond = decrement ? (i) => i >= 0 : (i) => i < count;
     const loopChange = decrement ? (i) => --i : (i) => ++i;
@@ -166,26 +160,12 @@ function level(num, canvasW, canvasH, scale) {
     }
 };
 
-  function printMap(cart) {
-      let size = colz;
-      let mapRepresentation = "";
-
-      for (let i = 0; i < size; i++) {
-          for (let j = 0; j < size; j++) {
-              let tile = cart.level.tiles[i * size + j];
-              mapRepresentation += tile.entity.type + " ";
-          }
-          mapRepresentation += "\n";
-      }
-      console.log(mapRepresentation);
-  }
-
-  function swapTileTypes(tileA, tileB) {
-      let tempType = tileA.e.type;
-      tileA.e.type = tileB.e.type;
-      tileB.e.type = tempType;
-      tileA.e.setType();
-      tileB.e.setType();
+  function swapTileTypes(a, b) {
+      let tempType = a.e.type;
+      a.e.type = b.e.type;
+      b.e.type = tempType;
+      a.e.setType();
+      b.e.setType();
   }
 
   function rotateMap90Degrees(cart) {
@@ -196,10 +176,10 @@ function level(num, canvasW, canvasH, scale) {
     for (let i = 0; i < size; i++) {
         for (let j = i + 1; j < size; j++) {
             // Swap tile[i][j] and tile[j][i]
-            let tileA = cart.level.tiles[i * size + j];
-            let tileB = cart.level.tiles[j * size + i];
+            let a = cart.level.tiles[i * size + j];
+            let b = cart.level.tiles[j * size + i];
 
-            swapTileTypes(tileA, tileB);
+            swapTileTypes(a, b);
         }
     }
 
@@ -218,24 +198,7 @@ function level(num, canvasW, canvasH, scale) {
   function nearCastle(x, y, cen) {
       const topLeft = [-90, cen.y-100];
       const bottomRight = [90, cen.y+20];
-
       return x >= topLeft[0] && x <= bottomRight[0] && y >= topLeft[1] && y <= bottomRight[1];
-  }
-
-  function isValidPos(pos, max) {
-      return pos >= 0 && pos < max;
-  }
-
-  function getTilePos(row, column,totalCols) {
-    return row * totalCols + column;
-  }
-
-  function isAir(t) {
-    return t == types.AIR;
-  }
-
-  function isWater(t) {
-    return t == types.WTR;
   }
 
 }
