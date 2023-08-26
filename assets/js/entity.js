@@ -1,4 +1,5 @@
-function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP = 0) {
+function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP = 0,weapon=0) {
+  this.weapon = weapon;
   this.scale = scale;
   this.type = type;
   this.width = w;
@@ -43,8 +44,8 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
     this.hb = new rectanlge(0, 0, 0, 0);
     this.sensor = new rectanlge(0, 0, 0, 0);
     if(this.isButton){
-      this.hb.w = this.width * 2;
-      this.hb.h = this.height * 2;
+      this.hb.w = this.width * 2*this.scale;
+      this.hb.h = this.height * 2*this.scale
     }
   }
   this.setHitbox();

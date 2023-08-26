@@ -13,6 +13,7 @@ let TIME = 0;
 let introT = 0;
 let mousePos = new vec2(0,0);
 let clickedAt = new vec2(0,0);
+let clickedRec = new rectanlge(0,0,0,0);
 let processClick = false;
 let GAMEOVER=false;
 let RELOAD=false;
@@ -69,6 +70,17 @@ let mg = {
       if(e.keyCode==M) pause=!pause;
       if(e.keyCode==T) cart.tips=!cart.tips;
     })
+    window.addEventListener('mouseup', function(e) {
+      e.preventDefault();
+      setclicks();
+      processClick=true;
+    })
+    window.addEventListener('mousemove', function(e) {
+      e.preventDefault();
+      var r = mg.canvas.getBoundingClientRect();
+      mousePos.set((e.clientX - r.left) / (r.right - r.left) * canvasW,
+                   (e.clientY - r.top) / (r.bottom - r.top) * canvasH);
+  })
     // Disable right click context menu
     this.canvas.oncontextmenu = function(e) {
       e.preventDefault();
@@ -118,7 +130,6 @@ function updateGameArea() {
   } else {
     mg.clear();
     cart.update(delta, TIME, false);
-    //drawBox(ctx,0.1,"#EDEDED",0,0,800,600)
     let font = "30px Papyrus";
     writeTxt(ctx, 1, font,"WHITE","[M] Music: " + !pause, canvasW-230, 30);
     writeTxt(ctx, 1, font,"WHITE","[T] Tips: " + (cart.tips), canvasW-230, 70);
@@ -143,6 +154,7 @@ function updateGameArea() {
       music=false;
     }
   }
+  processClick=false;
 }
 
 function drawBox(ctx,a,colour,x,y,w,h) {
@@ -161,6 +173,7 @@ function writeSum(ctx,a,font,colour,num,x,y){
   ctx.fillStyle = colour;
   ctx.fillText(hex, x, y);
 }
+
 function writeTxt(ctx,a,font,colour,txt,x,y) {
   ctx.save();
   ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -205,4 +218,12 @@ function two() {
 
 function three() {
   return mg.keys && (mg.keys[THREE]);
+}
+
+function setclicks(){
+  clickedAt.set(mousePos.x, mousePos.y);
+  clickedRec.x=mousePos.x-5;
+  clickedRec.y=mousePos.y+5;
+  clickedRec.h=10;
+  clickedRec.w=10;
 }
