@@ -25,7 +25,9 @@ function hero(w, h, x, y, angle, type, scale) {
   this.weapon=0; // 0 Sword, 1 Hammer, 2 Ax
   // Hands
   let theta = 0;  // This is the angle that will increase over time
-
+  let punchProgress = 0;
+  let punch=false;
+  let handState = 'idle';
   // BODY
   this.hands = [];
   this.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
@@ -101,6 +103,10 @@ function hero(w, h, x, y, angle, type, scale) {
     // });
 
     // HANDS
+    // Distance to punch out and retraction speed
+    const punchDistance = 70;
+    const punchSpeed = 5;
+
     // Bob when idle, alternate when moving, raise while wet
     this.hands[0].x = 30;
     this.hands[1].x = 9;
@@ -118,20 +124,49 @@ function hero(w, h, x, y, angle, type, scale) {
 
     this.hands[1].y = 29 + sin+waterY;
     if(one()){
-      const s = .8;  // The speed at which the hand rotates. Adjust for faster/slower rotations.
-      const radius = 4;  // The distance from the pivot point to the hand's center
-      theta += s;
+      if(handState=='idle'|| handState == 'spin'){
+        handState == 'spin'
+        const s = .8;  // The speed at which the hand rotates. Adjust for faster/slower rotations.
+        const radius = 4;  // The distance from the pivot point to the hand's center
+        theta += s;
 
-      // Calculate the new position using trigonometric functions
-      this.hands[1].x += radius * Math.cos(theta);
-      this.hands[1].y += radius * Math.sin(theta);
+        // Calculate the new position using trigonometric functions
+        this.hands[1].x += radius * Math.cos(theta);
+        this.hands[1].y += radius * Math.sin(theta);
 
-      // Once the desired rotation (like a full circle) is achieved, reset theta or stop the movement
-      if(theta >= 2 * Math.PI) {
-          theta = 0;
-          // You can also stop the movement here or trigger the punch
+        // Once the desired rotation (like a full circle) is achieved, reset theta or stop the movement
+        if(theta >= 2 * Math.PI) {
+            theta = 0;
+            punch=true;
+            punchProgress=0;
+            // You can also stop the movement here or trigger the punch
+        }
+      }
+    } else {
+      if(punch){
+        this.hands[1].scale += .1;
+        handState = 'punch'
+        punchProgress += punchSpeed;
+        this.hands[1].x = punchProgress;
+
+        if (punchProgress >= punchDistance) {
+              handState = 'retracting';
+              punch=false;
+        }
+      } else if(handState == 'retracting') {
+        this.hands[1].scale -= .1;
+        punchProgress -= punchSpeed;
+        this.hands[1].x = punchProgress;
+
+           if (punchProgress <= 0) {
+               punchProgress = 0;
+               handState = 'idle';
+               // this.hands[1].x = restX;
+               // this.hands[1].y = restY;
+           }
       }
     }
+
     // END OF HANDS
 
     // Do I need these?
