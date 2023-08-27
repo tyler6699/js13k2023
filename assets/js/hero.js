@@ -102,72 +102,67 @@ function hero(w, h, x, y, angle, type, scale) {
     //   return p.remove == false;
     // });
 
-    // HANDS
-    // Distance to punch out and retraction speed
-    const punchDistance = 70;
+    // HANDS CONSTANTS
+    const punchDistance = 65;
     const punchSpeed = 5;
 
-    // Bob when idle, alternate when moving, raise while wet
+    // hands move when in water
+    const waterY = this.e.wet ? -6 : 0;
+
+    // Calculate the sine value based on elapsed time
+    const amount = this.moved ? 0.01 : 0.003;
+    const sin = Math.sin(this.time * amount) * 1.7;
+    const offsin = Math.sin(this.time * amount + Math.PI) * 1.7;
+
+    // Set X position for both hands
     this.hands[0].x = 30;
     this.hands[1].x = 9;
-    waterY= this.e.wet? -6 : 0;
-    // Calculate the sine value based on the elapsed time
-    amount = this.moved? .01 : .003;
-    sin = Math.sin(this.time * amount) * 1.7;
-    offsin = Math.sin(this.time * amount + Math.PI) * 1.7;
 
-    if(this.moved){
-      this.hands[0].y = 29 + offsin+waterY;
+    // Calculate Y position based on movement state
+    if (this.moved) {
+        this.hands[0].y = 29 + offsin + waterY;
     } else {
-      this.hands[0].y = 29 + sin+waterY;
+        this.hands[0].y = 29 + sin + waterY;
     }
+    this.hands[1].y = 29 + sin + waterY;
 
-    this.hands[1].y = 29 + sin+waterY;
-    if(one()){
-      if(handState=='idle'|| handState == 'spin'){
-        handState == 'spin'
-        const s = .8;  // The speed at which the hand rotates. Adjust for faster/slower rotations.
-        const radius = 4;  // The distance from the pivot point to the hand's center
-        theta += s;
+    // Handle hands' actions
+    if (one() && (handState == "idle" || handState == "spin")) {
+        handState = 'spin';
+        // 4 is Distance from pivot to hand's center
+        theta += .8; // .8 is speed
+        this.hands[1].x += 4 * Math.cos(theta);
+        this.hands[1].y += 4 * Math.sin(theta);
 
-        // Calculate the new position using trigonometric functions
-        this.hands[1].x += radius * Math.cos(theta);
-        this.hands[1].y += radius * Math.sin(theta);
-
-        // Once the desired rotation (like a full circle) is achieved, reset theta or stop the movement
-        if(theta >= 2 * Math.PI) {
+        // If a full circle is achieved, prepare for punch
+        if (theta >= 2 * Math.PI) {
             theta = 0;
-            punch=true;
-            punchProgress=0;
-            // You can also stop the movement here or trigger the punch
+            punch = true;
+            punchProgress = 0;
         }
-      }
     } else {
-      if(punch){
-        this.hands[1].scale += .1;
-        handState = 'punch'
+      if (punch) {
         punchProgress += punchSpeed;
         this.hands[1].x = punchProgress;
+        this.hands[1].scale += 0.1;
+        handState = 'punch';
 
         if (punchProgress >= punchDistance) {
-              handState = 'retracting';
-              punch=false;
+            handState = 'retracting';
+            punch = false;
         }
-      } else if(handState == 'retracting') {
-        this.hands[1].scale -= .1;
+      } else if (handState == 'retracting') {
         punchProgress -= punchSpeed;
         this.hands[1].x = punchProgress;
+        this.hands[1].scale -= 0.1;
 
-           if (punchProgress <= 0) {
-               punchProgress = 0;
-               handState = 'idle';
-               // this.hands[1].x = restX;
-               // this.hands[1].y = restY;
-           }
+        if (punchProgress <= 0) {
+          punchProgress = 0;
+          handState = 'idle';
+        }
       }
     }
-
-    // END OF HANDS
+    // HANDS
 
     // Do I need these?
     cenX = this.e.x-this.e.mhWScld;
