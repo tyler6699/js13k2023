@@ -23,6 +23,8 @@ function hero(w, h, x, y, angle, type, scale) {
   this.changeLevel=false;
   this.moved=false;
   this.weapon=0; // 0 Sword, 1 Hammer, 2 Ax
+  // Hands
+  let theta = 0;  // This is the angle that will increase over time
 
   // BODY
   this.hands = [];
@@ -115,6 +117,22 @@ function hero(w, h, x, y, angle, type, scale) {
     }
 
     this.hands[1].y = 29 + sin+waterY;
+    if(one()){
+      const s = .8;  // The speed at which the hand rotates. Adjust for faster/slower rotations.
+      const radius = 4;  // The distance from the pivot point to the hand's center
+      theta += s;
+
+      // Calculate the new position using trigonometric functions
+      this.hands[1].x += radius * Math.cos(theta);
+      this.hands[1].y += radius * Math.sin(theta);
+
+      // Once the desired rotation (like a full circle) is achieved, reset theta or stop the movement
+      if(theta >= 2 * Math.PI) {
+          theta = 0;
+          // You can also stop the movement here or trigger the punch
+      }
+    }
+    // END OF HANDS
 
     // Do I need these?
     cenX = this.e.x-this.e.mhWScld;

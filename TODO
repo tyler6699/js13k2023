@@ -17,10 +17,10 @@ General
 
 HERO
   - Slowly, you die in the sea
-  - Walk, attack, idle animations
-  - New character pixel art
+  - attack animations
+  - New character pixel art - in progress
   - Add Strength, Agility, Swords, Arrows
-  - Jumping
+  - Jumping ?
 
 Sounds
   - Walk
@@ -36,6 +36,6 @@ Particles
 
 Enemies
   - Slimes
-  - Knights
-  - Archers
+  - goblins
+  - skeletons
   - Boss?
