@@ -129,7 +129,12 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
           }
 
           if(this.wet) h-=2;
-
+          if(this.isHero()){
+            // Draw the hands, hair etc, weapon
+            cart.hero.hands.forEach((i) => {
+                ctx.drawImage(img, i.sx, i.sy, i.width, i.height, i.x, i.y, i.width*s, i.height*s);
+            });
+          }
           ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh+f, w * s, h * s);
         }
       }
@@ -160,7 +165,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
     this.sx=0;
     this.isSolid = false;
 
-    switch(this.type) {
+    switch(this.type){
       case types.HERO:
         this.isSolid = true;
         this.sx=0;
@@ -230,7 +235,10 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
         this.sy=32;
         this.ui=true;
         break;
-     }
+      case types.HAND:
+        this.sx=71;
+        this.sy=42;
+    }
   }
 
   this.setType();

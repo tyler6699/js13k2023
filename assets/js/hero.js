@@ -21,7 +21,12 @@ function hero(w, h, x, y, angle, type, scale) {
   this.done=false;
   this.changeLevel=false;
   this.moved=false;
-  this.weapon=0; // 0 Sword, 1 Hammer, 2 Axe
+  this.weapon=0; // 0 Sword, 1 Hammer, 2 Ax
+
+  // BODY
+  this.hands = [];
+  this.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
+  this.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
 
   this.update = function(ctx, delta){
     this.time+=delta;
@@ -92,6 +97,13 @@ function hero(w, h, x, y, angle, type, scale) {
     //   return p.remove == false;
     // });
 
+    // HANDS
+    this.hands[0].x = 32;
+    this.hands[0].y = 29;
+    // LEFT
+    this.hands[1].x = 7;
+    this.hands[1].y = 29;
+
     // Do I need these?
     cenX = this.e.x-this.e.mhWScld;
     cenY = this.e.y-this.e.mhHScld;
@@ -120,7 +132,6 @@ function hero(w, h, x, y, angle, type, scale) {
       if(this.hp==0){this.hp++;}
     }
   }
-
 
   this.setCurrentTile = function(scaled) {
     if(this.moved){

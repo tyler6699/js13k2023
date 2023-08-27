@@ -15,7 +15,8 @@ const types = {
   SWD:13,
   AX:14,
   HP:15,
-  HPE:16
+  HPE:16,
+  HAND:17
 }
 
 const mobtype = {
