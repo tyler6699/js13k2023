@@ -17,6 +17,7 @@ function hero(w, h, x, y, angle, type, scale) {
   let cenX=0;
   let cenY=0;
   let offScreen=false;
+  this.time=0;
   this.deaths=0;
   this.done=false;
   this.changeLevel=false;
@@ -98,11 +99,22 @@ function hero(w, h, x, y, angle, type, scale) {
     // });
 
     // HANDS
-    this.hands[0].x = 32;
-    this.hands[0].y = 29;
-    // LEFT
-    this.hands[1].x = 7;
-    this.hands[1].y = 29;
+    // Bob when idle, alternate when moving, raise while wet
+    this.hands[0].x = 30;
+    this.hands[1].x = 9;
+    waterY= this.e.wet? -6 : 0;
+    // Calculate the sine value based on the elapsed time
+    amount = this.moved? .01 : .003;
+    sin = Math.sin(this.time * amount) * 1.7;
+    offsin = Math.sin(this.time * amount + Math.PI) * 1.7;
+
+    if(this.moved){
+      this.hands[0].y = 29 + offsin+waterY;
+    } else {
+      this.hands[0].y = 29 + sin+waterY;
+    }
+
+    this.hands[1].y = 29 + sin+waterY;
 
     // Do I need these?
     cenX = this.e.x-this.e.mhWScld;
