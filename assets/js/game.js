@@ -209,7 +209,7 @@ function map() {
 }
 
 function one() {
-  return mg.keys && (mg.keys[ONE]||mg.keys[E]);
+  return mg.keys && (mg.keys[ONE]);
 }
 
 function two() {
@@ -218,6 +218,10 @@ function two() {
 
 function three() {
   return mg.keys && (mg.keys[THREE]);
+}
+
+function four() {
+  return mg.keys && (mg.keys[FOUR]);
 }
 
 function setclicks(){

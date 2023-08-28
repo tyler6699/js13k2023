@@ -136,9 +136,13 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
             });
             // Hero
             ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh+f, w * s, h * s);
-            // Sword Test
+            // Weapon Test
             let swd = cart.hero.eWep;
-            ctx.drawImage(img, swd.sx, swd.sy, swd.width, swd.height, swd.x, swd.y,swd.width*swd.scale, swd.height*swd.scale);
+            if(swd.flip){
+              ctx.scale(-1, 1);
+              ctx.translate(-(w*s),0);
+            }
+            if(swd.type!=types.HAND) ctx.drawImage(img, swd.sx, swd.sy, swd.width, swd.height, swd.x, swd.y,swd.width*swd.scale, swd.height*swd.scale);
             // ctx.rotate(45*Math.PI/180);
             // ctx.translate(5,-10);
             // ctx.drawImage(img, 26, 33, 10, 10, hw+z, hh+f, 12 * s, 12 * s);

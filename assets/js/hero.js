@@ -74,35 +74,49 @@ function hero(w, h, x, y, angle, type, scale) {
         lastDir=RIGHT;
       }
 
-      if(one()&&this.weapon!=1){
+      // SWORD
+      if(one()&&this.weapon!=0){
+        this.weapon=0;
+        this.eWep.type=types.SWD;
+        this.eWep.setType();
+        this.eWep.flip=false;
+      }
+
+      // HAMMER
+      if(two()&&this.weapon!=1){
         this.weapon=1;
+        this.eWep.type=types.HAM;
+        this.eWep.setType();
+        this.eWep.flip=false;
       }
 
-      if(two()&&this.weapon!=2){
+      // AXE
+      if(three()&&this.weapon!=2){
         this.weapon=2;
+        this.eWep.type=types.AX;
+        this.eWep.flip=true;
+        this.eWep.setType();
       }
 
-      if(three()&&this.weapon!=3){
-        this.weapon=3;
+      //HANDS
+      if(four()&&this.weapon!=4){
+        this.weapon=4;
+        this.eWep.type=types.HAND;
+        this.eWep.setType();
+        this.eWep.flip=false;
       }
     }
 
     // idle check
     if(up()||space()||one()||right()||left()) idle=0;
-    if(idle>3){
-
-    }
+    //if(idle>3){ }
 
     // Particles
     for (let i = 0; i <= this.particles.length-1; i++){
       this.particles[i].update(ctx,delta);
     }
 
-    // Hero Draw
-    //this.e.update(delta);
-
     // if(runtime>.35) this.addDust();
-
     // Remove Particles
     // this.particles = this.particles.filter(function (p) {
     //   return p.remove == false;
@@ -129,7 +143,7 @@ function hero(w, h, x, y, angle, type, scale) {
     this.hands[1].y = 29 + sin + waterY;
 
     // Handle hands' actions
-    if (one() && (handState == "idle" || handState == "spin")) {
+    if (space() && (handState == "idle" || handState == "spin")) {
         handState = 'spin';
         // 4 is Distance from pivot to hand's center
         theta += .8; // .8 is speed
