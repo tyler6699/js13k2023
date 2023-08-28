@@ -25,6 +25,8 @@ function hero(w, h, x, y, angle, type, scale) {
   this.moved=false;
   this.weapon=4; // 0 Sword, 1 Hammer, 2 Ax, 4 Hands
   this.eWep=new entity(10, 10, x, y, 45, types.SWD, "", scale);
+  this.eWep.type=types.HAND;
+  this.eWep.setType();
   // Hands
   this.restX = 0;       // Original hand X position
   this.restY = 0;       // Original hand Y position
@@ -156,8 +158,8 @@ function hero(w, h, x, y, angle, type, scale) {
         case 'idle':
           if(this.weapon ==4){ // HANDS
             handState = 'spin';
-          } else if(this.weapon==1) { // SWORD
-            handState == 'swipe';
+          } else if(this.weapon==0) { // SWORD
+            handState = 'swipe';
           }
           break;
 
@@ -171,6 +173,9 @@ function hero(w, h, x, y, angle, type, scale) {
             punch = true;
             punchProgress = 0;
           }
+          break;
+        case 'swipe':
+          console.log("Charging up!");
           break;
       }
     } else {
@@ -214,8 +219,8 @@ function hero(w, h, x, y, angle, type, scale) {
     cenY = this.e.y-this.e.mhHScld;
 
     // remove after testing
-      this.handState=handState;
-  }
+    this.handState=handState;
+  } // End of Update
 
   this.reset = function(){
     this.done=false;
