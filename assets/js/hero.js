@@ -11,6 +11,7 @@ function hero(w, h, x, y, angle, type, scale) {
   let speed=0;
   let maxSpeed=3;
   let lastDir = RIGHT;
+  let dirs={right:0,left:0,up:0,down:0}
   let prevPos={x: this.e.x, y: this.e.y};
   let runtime=0;
   let respawnTime=0;
@@ -49,23 +50,27 @@ function hero(w, h, x, y, angle, type, scale) {
       if (up()){
         this.e.y -= this.gMove(0,-1);
         this.moved=true;
+        lastDir=UP;
       }
 
       if (down()){
         this.e.y += this.gMove(0,1);
         this.moved=true;
+        lastDir=DOWN;
       }
 
       if (left()){
         this.e.x -= this.gMove(-1,0);
-        this.e.flip = true;
+        if((handState != 'punch' && handState != 'retracting')) this.e.flip = true;
         this.moved=true;
+        lastDir=LEFT;
       }
 
       if (right()){
         this.e.x += this.gMove(1,0);
-        this.e.flip = false;
+        if((handState != 'punch' && handState != 'retracting')) this.e.flip = false;
         this.moved=true;
+        lastDir=RIGHT;
       }
 
       if(one()&&this.weapon!=1){
