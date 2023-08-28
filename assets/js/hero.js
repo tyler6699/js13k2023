@@ -23,7 +23,8 @@ function hero(w, h, x, y, angle, type, scale) {
   this.done=false;
   this.changeLevel=false;
   this.moved=false;
-  this.weapon=0; // 0 Sword, 1 Hammer, 2 Ax
+  this.weapon=4; // 0 Sword, 1 Hammer, 2 Ax, 4 Hands
+  this.eWep=new entity(10, 10, x, y, 45, types.SWD, "", scale);
   // Hands
   let theta = 0;  // This is the angle that will increase over time
   let punchProgress = 0;
@@ -100,7 +101,7 @@ function hero(w, h, x, y, angle, type, scale) {
     // Hero Draw
     //this.e.update(delta);
 
-    if(runtime>.35) this.addDust();
+    // if(runtime>.35) this.addDust();
 
     // Remove Particles
     // this.particles = this.particles.filter(function (p) {
@@ -124,11 +125,7 @@ function hero(w, h, x, y, angle, type, scale) {
     this.hands[1].x = 9;
 
     // Calculate Y position based on movement state
-    if (this.moved) {
-        this.hands[0].y = 29 + offsin + waterY;
-    } else {
-        this.hands[0].y = 29 + sin + waterY;
-    }
+    this.hands[0].y= this.moved? 29 + offsin + waterY : 29 + sin + waterY;
     this.hands[1].y = 29 + sin + waterY;
 
     // Handle hands' actions
@@ -167,7 +164,11 @@ function hero(w, h, x, y, angle, type, scale) {
         }
       }
     }
-    // HANDS
+    // END HANDS
+
+    // Set Weapon X,Y
+    this.eWep.x=this.hands[1].x-10;
+    this.eWep.y=this.hands[1].y-10;
 
     // Do I need these?
     cenX = this.e.x-this.e.mhWScld;
