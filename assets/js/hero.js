@@ -161,6 +161,7 @@ function hero(w, h, x, y, angle, type, scale) {
         punchProgress += punchSpeed;
         this.hands[1].x = punchProgress;
         this.hands[1].scale += 0.1;
+        this.eWep.scale += 0.1;
         handState = 'punch';
 
         if (punchProgress >= punchDistance) {
@@ -171,7 +172,7 @@ function hero(w, h, x, y, angle, type, scale) {
         punchProgress -= punchSpeed;
         this.hands[1].x = punchProgress;
         this.hands[1].scale -= 0.1;
-
+        this.eWep.scale -= 0.1;
         if (punchProgress <= 0) {
           punchProgress = 0;
           handState = 'idle';
@@ -268,7 +269,7 @@ function hero(w, h, x, y, angle, type, scale) {
     rec.w=20; // Fudge a smaller HB
     rec.h=10;
     rec.x += xx * speed;
-    rec.y += yy * speed;
+    rec.y += yy * speed/2;
     canMove = true;
 
     for (var t = 0; t < cart.level.objs.length; t++) {
@@ -283,7 +284,11 @@ function hero(w, h, x, y, angle, type, scale) {
       }
     }
     if(canMove){
-      return speed;
+      if(yy!=0){
+        return speed/2;
+      } else {
+        return speed;
+      }
     } else {
       return 0;
     }
