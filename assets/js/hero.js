@@ -85,41 +85,23 @@ function hero(w, h, x, y, angle, type, scale) {
       }
 
       // SWORD
-
       if(one()&&this.weapon!=0){
-        this.weapon=0;
-        this.eWep.type=types.SWD;
-        this.eWep.setType();
-        this.eWep.flip=false;
+        this.setWeapon(0,types.SWD);
       }
-      if (one() && this.weapon != 0) {
-        this.weapon = 0;
-        this.eWep.type = types.SWD;
-        this.eWep.setType();
-        this.eWep.flip = false;
-      }
+
       // HAMMER
       if(two()&&this.weapon!=1){
-        this.weapon=1;
-        this.eWep.type=types.HAM;
-        this.eWep.setType();
-        this.eWep.flip=false;
+        this.setWeapon(1,types.HAM);
       }
 
       // AXE
       if(three()&&this.weapon!=2){
-        this.weapon=2;
-        this.eWep.type=types.AX;
-        this.eWep.flip=true;
-        this.eWep.setType();
+        this.setWeapon(2,types.AX);
       }
 
       //HANDS
       if(four()&&this.weapon!=4){
-        this.weapon=4;
-        this.eWep.type=types.HAND;
-        this.eWep.setType();
-        this.eWep.flip=false;
+        this.setWeapon(4,types.HAND);
       }
     }
 
@@ -290,8 +272,11 @@ function hero(w, h, x, y, angle, type, scale) {
     runtime = 0;
   }
 
-  this.jump = function(){
-    // Jump Code
+  this.setWeapon = function(w,t,f=false){
+    this.weapon=w;
+    this.eWep.type=t;
+    this.eWep.setType();
+    this.eWep.flip=f;
   }
 
   this.gMove = function(xx,yy, grav=false, jump=false){

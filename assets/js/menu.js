@@ -23,6 +23,7 @@ function menu() {
           if(rectColiding(e.hb,clickedRec)){
             processClick=false;
             cart.hero.e.weapon=e.weapon;
+            cart.hero.setWeapon(1,e.weapon);
           }
         }
       }
