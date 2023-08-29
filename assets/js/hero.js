@@ -24,8 +24,8 @@ function hero(w, h, x, y, angle, type, scale) {
   this.changeLevel=false;
   this.moved=false;
   this.weapon=4; // 0 Sword, 1 Hammer, 2 Ax, 4 Hands
-  this.eWep=new entity(10, 10, x, y, 45, types.SWD, "", scale);
-  this.eWep.type=types.HAND;
+  this.eWep=new entity(10, 10, x, y, 0, types.SWD, "", scale);
+  //this.eWep.type=types.HAND;
   this.eWep.setType();
   // Hands
   this.restX = 0;       // Original hand X position
@@ -211,8 +211,8 @@ function hero(w, h, x, y, angle, type, scale) {
     }
 
     // Set Weapon X,Y
-    this.eWep.x=this.hands[1].x-10;
-    this.eWep.y=this.hands[1].y-10;
+    //this.eWep.x=this.hands[1].x-10;
+    //this.eWep.y=this.hands[1].y-10;
 
     // Do I need these?
     cenX = this.e.x-this.e.mhWScld;
