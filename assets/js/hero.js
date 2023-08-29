@@ -25,11 +25,9 @@ function hero(w, h, x, y, angle, type, scale) {
   this.moved=false;
   this.weapon=4; // 0 Sword, 1 Hammer, 2 Ax, 4 Hands
   this.eWep=new entity(10, 10, x, y, 0, types.SWD, "", scale);
-  //this.eWep.type=types.HAND;
   this.eWep.setType();
+
   // Hands
-  this.restX = 0;       // Original hand X position
-  this.restY = 0;       // Original hand Y position
   const swipeRadius = 30;  // The distance of the arc's radius
   const swipeSpeed = 0.2;  // Speed at which the swipe progresses
   let theta = 0;  // This is the angle that will increase over time
@@ -46,8 +44,6 @@ function hero(w, h, x, y, angle, type, scale) {
     this.time+=delta;
     idle+=delta;
     this.moved=false;
-    this.restX = this.hands[1].x;
-    this.restY = this.hands[1].y;
 
     // Controls
     if(this.active){
@@ -96,7 +92,7 @@ function hero(w, h, x, y, angle, type, scale) {
 
       // AXE
       if(three()&&this.weapon!=2){
-        this.setWeapon(2,types.AX);
+        this.setWeapon(2,types.AX,true);
       }
 
       //HANDS
@@ -134,11 +130,38 @@ function hero(w, h, x, y, angle, type, scale) {
     this.hands[0].y= this.moved? 29 + offsin + waterY : 29 + sin + waterY;
     this.hands[1].y = 29 + sin + waterY;
 
+    // Weapon Position in hand
+    // 0 Sword, 1 Hammer, 2 Ax, 4 Hands
+    if(handState=="idle"){
+      // Weapon position in hands
+      if(lastDir==RIGHT){
+        this.eWep.y=this.hands[0].y+this.e.y-this.e.z-17;
+      } else {
+        this.eWep.y=this.hands[1].y+this.e.y-this.e.z-17;
+      }
+
+      switch(this.weapon){
+        case 0:
+          this.eWep.angle=lastDir==RIGHT?80:45;
+          this.eWep.x=this.e.x+this.hands[1].x+1;
+          break;
+        case 1:
+          this.eWep.angle=lastDir==RIGHT?70:30;
+          this.eWep.x=this.e.x+this.hands[1].x+1;
+          break;
+        case 2:
+          this.eWep.angle=lastDir==RIGHT?30:30;
+          this.eWep.x=lastDir==RIGHT?this.e.x+this.hands[0].x+1 : this.e.x+this.hands[0].x-20;
+          this.eWep.flip=lastDir==RIGHT;
+          break;
+      }
+    }
+
     // Hand logic
     if(space() && (handState=='idle' || handState=='spin')){
       switch (handState) {
         case 'idle':
-          if(this.weapon ==4){ // HANDS
+          if(this.weapon==4){ // HANDS
             handState = 'spin';
           } else if(this.weapon==0) { // SWORD
             handState = 'swipe';
@@ -273,6 +296,7 @@ function hero(w, h, x, y, angle, type, scale) {
     this.eWep.type=t;
     this.eWep.setType();
     this.eWep.flip=f;
+    this.eWep.ui=false;
   }
 
   this.gMove = function(xx,yy, grav=false, jump=false){

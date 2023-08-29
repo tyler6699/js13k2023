@@ -6,7 +6,7 @@ function level(num, canvasW, canvasH, scale) {
   this.objs = [];
   this.castle = [];
   this.active = false;
-  this.startPos = [0, 260];
+  this.startPos = [-120, 280];
   this.cols = colz;
   this.rotate=false;
 
@@ -24,11 +24,7 @@ function level(num, canvasW, canvasH, scale) {
     this.objs.forEach(e => e.update(delta));
     this.castle.forEach(e => e.update(delta));
 
-    // Move to a weapon class
-    hero.eWep.x=hero.e.x+hero.hands[1].x;
-    hero.eWep.y=hero.hands[1].y+hero.e.y-hero.e.z-20;
-    hero.eWep.angle+=10;
-    hero.eWep.ui=false;
+    // Draw Weapon
     if(hero.eWep.type!=types.HAND){
         hero.eWep.update(delta);
     }
