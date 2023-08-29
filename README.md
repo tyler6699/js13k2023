@@ -1,6 +1,6 @@
-# js13k2022
-JS13k Game Jam #11
+# js13k2023
+JS13k Game Jam #12
 
-Theme is Death
+Theme is 13th Century
 
 https://jscompress.com/

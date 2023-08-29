@@ -75,7 +75,6 @@ function Cart() {
     }
 
     // Render Menu
-    //drawBox(ctx,0.5,"#041024",canvasW/2-125,canvasH-60,250,50)
     this.menu.ui.forEach(e => e.update(delta));
     this.menu.tick();
 
