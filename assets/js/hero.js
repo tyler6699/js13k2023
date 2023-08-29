@@ -192,10 +192,6 @@ function hero(w, h, x, y, angle, type, scale) {
       }
     }
 
-    // Set Weapon X,Y
-    //this.eWep.x=this.hands[1].x-10;
-    //this.eWep.y=this.hands[1].y-10;
-
     // Do I need these?
     cenX = this.e.x-this.e.mhWScld;
     cenY = this.e.y-this.e.mhHScld;

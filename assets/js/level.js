@@ -24,11 +24,15 @@ function level(num, canvasW, canvasH, scale) {
     this.objs.forEach(e => e.update(delta));
     this.castle.forEach(e => e.update(delta));
 
+    // Move to a weapon class
     hero.eWep.x=hero.e.x+hero.hands[1].x;
     hero.eWep.y=hero.hands[1].y+hero.e.y-hero.e.z-20;
     hero.eWep.angle+=10;
     hero.eWep.ui=false;
-    hero.eWep.update(delta);
+    if(hero.eWep.type!=types.HAND){
+        hero.eWep.update(delta);
+    }
+
     // TODO: if the hero is in front of any of the objects then draw the HERO
     // Putting these blocks and sorting them will probably be a pain as we
     // want them stacked

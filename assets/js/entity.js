@@ -135,9 +135,8 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
                 ctx.drawImage(img, i.sx, i.sy, i.width, i.height, i.x, i.y, i.width*i.scale, i.height*i.scale);
             });
             // Hero
-            console.log();
             ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh+f, w * s, h * s);
-            
+
             // Weapon Test
             let swd = cart.hero.eWep;
             if(swd.flip){
