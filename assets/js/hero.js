@@ -142,7 +142,7 @@ function hero(w, h, x, y, angle, type, scale) {
         case 'idle':
           if(this.weapon==4){ // HANDS
             handState = 'spin';
-          } else if(this.weapon==0) { // SWORD
+          } else { // SWORD, AXE, HAMMER
             handState = 'swipe';
           }
           break;
@@ -161,6 +161,7 @@ function hero(w, h, x, y, angle, type, scale) {
           break;
       }
     } else {
+      // If Hands
       if (punch) {
         this.punchProgress += this.punchSpeed;
         this.hands[1].x = this.punchProgress;
@@ -178,11 +179,6 @@ function hero(w, h, x, y, angle, type, scale) {
       switch (handState) {
         case 'idle':
           this.wepPower=0;
-          break;
-        case 'punch':
-          break;
-        case 'retracting':
-          this.weaponRetract();
           break;
         case 'swipe':
           handState = 'retracting'
@@ -270,16 +266,22 @@ function hero(w, h, x, y, angle, type, scale) {
     switch(this.weapon){
       case 0: // SWORD
         if(handState=='idle')this.eWep.angle=lastDir==RIGHT?80:45;
-        //if(handState=='swipe')this.eWep.angle=lastDir==RIGHT?45:80;
         if(handState=="swipe"){
           this.chargeUp();
           if(this.SwordSwiped<4){
-            // this.eWep.angle=lastDir==RIGHT?70:30
-            this.eWep.angle-=10;
+            this.eWep.angle=lastDir==RIGHT?this.eWep.angle-=10:this.eWep.angle+=10;
             this.SwordSwiped++;
           }
         }
-
+        if(handState=='retracting'){
+          let h=lastDir==RIGHT?1:0;
+          this.eWep.y=this.hands[h].y+this.e.y-this.e.z-17;
+          // testing a hit - needs to hold for longer
+          this.eWep.angle=lastDir==RIGHT?100:10;
+          this.SwordSwiped=0;
+          handState='idle';
+          //this.eWep.angle=lastDir==RIGHT?this.eWep.angle+=10:this.eWep.angle-=10;
+        }
         this.eWep.x=this.e.x+this.hands[1].x+1;
         break;
       case 1: // HAMMER
@@ -290,6 +292,18 @@ function hero(w, h, x, y, angle, type, scale) {
         this.eWep.angle=lastDir==RIGHT?30:30;
         this.eWep.x=lastDir==RIGHT?this.e.x+this.hands[0].x+1 : this.e.x+this.hands[0].x-20;
         this.eWep.flip=lastDir==RIGHT;
+        break;
+      case 4: // HANDS
+        if(handState=='retracting'){
+          this.punchProgress -= this.punchSpeed;
+          this.hands[1].x = this.punchProgress;
+          this.hands[1].scale -= 0.1;
+          this.eWep.scale -= 0.1;
+          if (this.punchProgress <= 0) {
+            this.punchProgress = 0;
+            handState = 'idle';
+          }
+        }
         break;
     }
   }
@@ -302,30 +316,31 @@ function hero(w, h, x, y, angle, type, scale) {
     }
   }
 
-  this.weaponRetract=function(){
-    switch(this.weapon){
-      case 0:   // SWORD
-        let h=lastDir==RIGHT?1:0;
-        this.eWep.y=this.hands[h].y+this.e.y-this.e.z-17;
-        break;
-      case 1: // HAMMER
-
-        break;
-      case 2: // AXE
-
-        break;
-      case 4: // HANDS
-        this.punchProgress -= this.punchSpeed;
-        this.hands[1].x = this.punchProgress;
-        this.hands[1].scale -= 0.1;
-        this.eWep.scale -= 0.1;
-        if (this.punchProgress <= 0) {
-          this.punchProgress = 0;
-          handState = 'idle';
-        }
-        break;
-    }
-  }
+  // this.weaponRetract=function(){
+  //   switch(this.weapon){
+  //     case 0:   // SWORD
+  //       let h=lastDir==RIGHT?1:0;
+  //       this.eWep.y=this.hands[h].y+this.e.y-this.e.z-17;
+  //       this.eWep.angle=lastDir==RIGHT?this.eWep.angle+=10:this.eWep.angle-=10;
+  //       break;
+  //     case 1: // HAMMER
+  //
+  //       break;
+  //     case 2: // AXE
+  //
+  //       break;
+  //     case 4: // HANDS
+  //       // this.punchProgress -= this.punchSpeed;
+  //       // this.hands[1].x = this.punchProgress;
+  //       // this.hands[1].scale -= 0.1;
+  //       // this.eWep.scale -= 0.1;
+  //       // if (this.punchProgress <= 0) {
+  //       //   this.punchProgress = 0;
+  //       //   handState = 'idle';
+  //       // }
+  //       break;
+  //   }
+  // }
 
   this.chargeUp=function(){
     this.wepPower=this.wepPower>=10?10:this.wepPower+=1;
