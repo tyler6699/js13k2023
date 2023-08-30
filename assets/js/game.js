@@ -142,6 +142,7 @@ function updateGameArea() {
     writeTxt(ctx, 1, font,"WHITE","Y: " + (cart.hero.e.y), 10, 250);
     writeTxt(ctx, 1, font,"WHITE","Y: " + (cart.hero.handState), 10, 280);
     writeTxt(ctx, 1, font,"WHITE","Y: " + (cart.hero.weapon), 10, 310);
+    writeTxt(ctx, 1, font,"WHITE","Power: " + (cart.hero.wepPower), 10, 340);
     let lvl=cart.hero.e.curLevel;
 
     // Music
