@@ -26,7 +26,6 @@ function hero(w, h, x, y, angle, type, scale) {
   this.weapon=4; // 0 Sword, 1 Hammer, 2 Ax, 4 Hands
   this.eWep=new entity(10, 10, x, y, 0, types.SWD, "", scale);
   this.eWep.setType();
-  this.SwordSwiped=0;
   this.wepPower=0;
   this.attackTime=0;
 
@@ -255,31 +254,36 @@ function hero(w, h, x, y, angle, type, scale) {
         if(hState=='idle')this.eWep.angle=lastDir==RIGHT?80:45;
         if(hState=="swipe"){
           this.chargeUp();
-          if(this.SwordSwiped<4){
-            this.eWep.angle=lastDir==RIGHT?this.eWep.angle-=15:this.eWep.angle+=15;
-            this.SwordSwiped++;
+          if(lastDir==RIGHT){
+            if(this.eWep.angle>10)this.eWep.angle-=3;
+          } else {
+            if(this.eWep.angle<90)this.eWep.angle+=3;
           }
         }
         if(hState=='retracting') this.retract();
         this.eWep.x=this.e.x+this.hands[1].x+1;
         break;
       case 1: // HAMMER
-        if(hState=="idle") this.eWep.angle=lastDir==RIGHT?70:30;
+        if(hState=="idle")this.eWep.angle=lastDir==RIGHT?70:30;
+        if(hState=="swipe"){
+          this.eWep.angle=this.eWep.angle=lastDir==RIGHT?30:70;
+          this.hands[0].y-=10;
+          this.hands[1].y-=7;
+        };
         if(hState=='retracting') this.retract();
         this.eWep.x=lastDir==RIGHT?this.e.x+this.hands[1].x+1:this.e.x+this.hands[1].x-20;
         this.hands[1].x = 30;
         break;
       case 2: // AXE
-        this.eWep.angle=lastDir==RIGHT?30:30;
+        if(hState=="idle")this.eWep.angle=30;
+        if(hState=="swipe"){
+          this.eWep.angle=90;
+          this.hands[0].y-=10;
+          this.hands[1].y-=7;
+        };
         if(hState=='retracting') this.retract();
         this.eWep.flip=lastDir==RIGHT;
-        if(lastDir==RIGHT){
-          this.hands[1].x = 30;
-          this.hands[0].x = 30;
-        } else {
-          this.hands[1].x = 30;
-          this.hands[0].x = 30;
-        }
+        this.hands[1].x = 30;
         this.eWep.x=lastDir==RIGHT?this.e.x+this.hands[0].x+1 : this.e.x+this.hands[0].x-40;
         break;
       case 4: // HANDS
@@ -317,7 +321,6 @@ function hero(w, h, x, y, angle, type, scale) {
     } else {
       this.eWep.angle=lastDir==RIGHT?120:330;
     }
-    this.SwordSwiped=0;
     if(this.attackTime>.2){
         hState='idle';
         this.attackTime=0;
