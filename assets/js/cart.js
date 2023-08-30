@@ -81,5 +81,10 @@ function Cart() {
     // Follow hero
     this.cam.x = lerp(-this.hero.e.x + (totalWidth/2)-20,this.cam.x ,.8);
     this.cam.y = lerp(-this.hero.e.y + (totalHeight/2)-80,this.cam.y ,.8);
+
+    // remove objects
+    this.level.objs = this.level.objs.filter(function (i) {
+      return i.hp >= 0;
+    });
   }
 }

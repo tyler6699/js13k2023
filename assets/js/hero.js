@@ -178,6 +178,22 @@ function hero(w, h, x, y, angle, type, scale) {
 
     // remove after testing
     this.hState=hState;
+
+    // Check if we have attacked anything
+    if(this.attackTime>0 || this.punchProgress > 0){
+      hb=new rectanlge(this.e.x-20, this.e.y,this.e.width, this.e.height);
+      cart.level.objs.forEach((i) => {
+        if(i.type!=types.HERO){
+          if(rectColiding(hb, i.hb)){
+            i.hp--;
+            console.log(i.hp);
+            // switch(i.type){
+            //
+            // }
+          }
+        }
+      });
+    }
   } // End of Update
 
   this.reset = function(){
