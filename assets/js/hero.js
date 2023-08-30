@@ -150,7 +150,7 @@ function hero(w, h, x, y, angle, type, scale) {
           this.chargeUp();
           break;
       }
-    } else {
+    } else { // Button is not down
       // If Hands
       if (punch) {
         this.punchProgress += this.punchSpeed;
@@ -259,22 +259,11 @@ function hero(w, h, x, y, angle, type, scale) {
         if(handState=="swipe"){
           this.chargeUp();
           if(this.SwordSwiped<4){
-            this.eWep.angle=lastDir==RIGHT?this.eWep.angle-=10:this.eWep.angle+=10;
+            this.eWep.angle=lastDir==RIGHT?this.eWep.angle-=15:this.eWep.angle+=15;
             this.SwordSwiped++;
           }
         }
-        if(handState=='retracting'){
-          let h=lastDir==RIGHT?1:0;
-          this.eWep.y=this.hands[h].y+this.e.y-this.e.z-17;
-          this.eWep.angle=lastDir==RIGHT?120:330;
-          this.SwordSwiped=0;
-          if(this.attackTime>.3){
-              handState='idle';
-              this.attackTime=0;
-          } else {
-            this.attackTime+=delta/1000;
-          }
-        }
+        if(handState=='retracting') this.retract();
         this.eWep.x=this.e.x+this.hands[1].x+1;
         break;
       case 1: // HAMMER
@@ -324,7 +313,7 @@ function hero(w, h, x, y, angle, type, scale) {
       this.eWep.angle=lastDir==RIGHT?120:330;
     }
     this.SwordSwiped=0;
-    if(this.attackTime>.3){
+    if(this.attackTime>.2){
         handState='idle';
         this.attackTime=0;
     } else {
