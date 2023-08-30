@@ -318,8 +318,15 @@ function hero(w, h, x, y, angle, type, scale) {
     this.eWep.y=this.hands[h].y+this.e.y-this.e.z-17;
     if(this.eWep.type==types.AX){
       this.eWep.angle=330;
-    } else {
+    } else if(this.eWep.type==types.HAM) {
       this.eWep.angle=lastDir==RIGHT?120:330;
+    } else if(this.eWep.type==types.SWD) {
+      if(lastDir==RIGHT){
+        this.eWep.angle=lerp(this.eWep.angle,120,.8);
+      } else {
+        console.log(this.eWep.angle);
+        this.eWep.angle=330;
+      }
     }
     if(this.attackTime>.2){
         hState='idle';
