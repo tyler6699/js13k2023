@@ -324,7 +324,6 @@ function hero(w, h, x, y, angle, type, scale) {
       if(lastDir==RIGHT){
         this.eWep.angle=lerp(this.eWep.angle,120,.8);
       } else {
-        console.log(this.eWep.angle);
         this.eWep.angle=330;
       }
     }
