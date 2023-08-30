@@ -28,6 +28,7 @@ function hero(w, h, x, y, angle, type, scale) {
   this.eWep.setType();
   this.SwordSwiped=0;
   this.wepPower=0;
+  this.attackTime=0;
 
   // Hands
   const swipeRadius = 30;  // The distance of the arc's radius
@@ -83,24 +84,13 @@ function hero(w, h, x, y, angle, type, scale) {
       }
 
       // SWORD
-      if(one()&&this.weapon!=0){
-        this.setWeapon(0,types.SWD);
-      }
-
+      if(one()&&this.weapon!=0)this.setWeapon(0,types.SWD);
       // HAMMER
-      if(two()&&this.weapon!=1){
-        this.setWeapon(1,types.HAM);
-      }
-
+      if(two()&&this.weapon!=1)this.setWeapon(1,types.HAM);
       // AXE
-      if(three()&&this.weapon!=2){
-        this.setWeapon(2,types.AX,true);
-      }
-
+      if(three()&&this.weapon!=2)this.setWeapon(2,types.AX,true);
       //HANDS
-      if(four()&&this.weapon!=4){
-        this.setWeapon(4,types.HAND);
-      }
+      if(four()&&this.weapon!=4)this.setWeapon(4,types.HAND);
     }
 
     // idle check
@@ -133,7 +123,7 @@ function hero(w, h, x, y, angle, type, scale) {
     this.hands[1].y = 29 + sin + waterY;
 
     // Weapon Position
-    this.setWeaponX();
+    this.setWeaponX(delta);
     this.setWeaponY();
 
     // Hand logic
@@ -262,7 +252,7 @@ function hero(w, h, x, y, angle, type, scale) {
     runtime = 0;
   }
 
-  this.setWeaponX = function(){
+  this.setWeaponX = function(delta){
     switch(this.weapon){
       case 0: // SWORD
         if(handState=='idle')this.eWep.angle=lastDir==RIGHT?80:45;
@@ -276,21 +266,26 @@ function hero(w, h, x, y, angle, type, scale) {
         if(handState=='retracting'){
           let h=lastDir==RIGHT?1:0;
           this.eWep.y=this.hands[h].y+this.e.y-this.e.z-17;
-          // testing a hit - needs to hold for longer
-          this.eWep.angle=lastDir==RIGHT?100:10;
+          this.eWep.angle=lastDir==RIGHT?120:330;
           this.SwordSwiped=0;
-          handState='idle';
-          //this.eWep.angle=lastDir==RIGHT?this.eWep.angle+=10:this.eWep.angle-=10;
+          if(this.attackTime>.3){
+              handState='idle';
+              this.attackTime=0;
+          } else {
+            this.attackTime+=delta/1000;
+          }
         }
         this.eWep.x=this.e.x+this.hands[1].x+1;
         break;
       case 1: // HAMMER
         if(handState=="idle")this.eWep.angle=lastDir==RIGHT?70:30;
+        if(handState=='retracting') this.retract();
         this.eWep.x=this.e.x+this.hands[1].x+1;
         break;
       case 2: // AXE
         this.eWep.angle=lastDir==RIGHT?30:30;
         this.eWep.x=lastDir==RIGHT?this.e.x+this.hands[0].x+1 : this.e.x+this.hands[0].x-20;
+        if(handState=='retracting') this.retract();
         this.eWep.flip=lastDir==RIGHT;
         break;
       case 4: // HANDS
@@ -316,43 +311,35 @@ function hero(w, h, x, y, angle, type, scale) {
     }
   }
 
-  // this.weaponRetract=function(){
-  //   switch(this.weapon){
-  //     case 0:   // SWORD
-  //       let h=lastDir==RIGHT?1:0;
-  //       this.eWep.y=this.hands[h].y+this.e.y-this.e.z-17;
-  //       this.eWep.angle=lastDir==RIGHT?this.eWep.angle+=10:this.eWep.angle-=10;
-  //       break;
-  //     case 1: // HAMMER
-  //
-  //       break;
-  //     case 2: // AXE
-  //
-  //       break;
-  //     case 4: // HANDS
-  //       // this.punchProgress -= this.punchSpeed;
-  //       // this.hands[1].x = this.punchProgress;
-  //       // this.hands[1].scale -= 0.1;
-  //       // this.eWep.scale -= 0.1;
-  //       // if (this.punchProgress <= 0) {
-  //       //   this.punchProgress = 0;
-  //       //   handState = 'idle';
-  //       // }
-  //       break;
-  //   }
-  // }
-
   this.chargeUp=function(){
     this.wepPower=this.wepPower>=10?10:this.wepPower+=1;
   }
 
+  this.retract=function(){
+    let h=lastDir==RIGHT?1:0;
+    this.eWep.y=this.hands[h].y+this.e.y-this.e.z-17;
+    if(this.eWep.type==types.AX){
+      this.eWep.angle=330;
+    } else {
+      this.eWep.angle=lastDir==RIGHT?120:330;
+    }
+    this.SwordSwiped=0;
+    if(this.attackTime>.3){
+        handState='idle';
+        this.attackTime=0;
+    } else {
+      this.attackTime+=delta/1000;
+    }
+  }
+
   this.setWeapon = function(w,t,f=false){
-    this.weapon=w;
-    this.eWep.type=t;
-    this.eWep.setType();
-    this.eWep.flip=f;
-    this.eWep.ui=false;
-    handState = 'idle';
+    if(handState=='idle'){
+      this.weapon=w;
+      this.eWep.type=t;
+      this.eWep.setType();
+      this.eWep.flip=f;
+      this.eWep.ui=false;
+    }
   }
 
   this.gMove = function(xx,yy, grav=false, jump=false){
