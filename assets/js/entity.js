@@ -143,6 +143,31 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
               ctx.scale(-1, 1);
               ctx.translate(-(w*s),0);
             }
+
+            if(cart.hero.renderPower){
+              // Draw power up
+              let arcX = w*s-10;
+              let arcY= -h-4;
+              let radius = 20; // Size of the arc (adjust if needed)
+              let startAngle = Math.PI; // Start at 180 degrees or π radians
+              let endAngle = 2 * Math.PI; // Full circle or 2π radians
+
+              // Draw the arc
+              ctx.beginPath();
+              ctx.arc(arcX, arcY, radius, startAngle, endAngle);
+              ctx.lineWidth = 10; // Width of the line, adjust if needed
+
+              // Fill based on power
+              let gradient = ctx.createLinearGradient(arcX - radius, arcY, arcX + radius, arcY);
+              gradient.addColorStop(0, '#0a910f'); // Start color (you can change it)
+              gradient.addColorStop(cart.hero.wepPower / 10, '#db6532'); // Color at the end of the power level
+              let val = cart.hero.wepPower / 10 + 0.01 > 1 ? 1 : cart.hero.wepPower / 10 + 0.01;
+              gradient.addColorStop(val, 'transparent'); // Rest of the arc
+
+              ctx.strokeStyle = gradient;
+              ctx.stroke();
+            }
+
             //if(swd.type!=types.HAND) ctx.drawImage(img, swd.sx, swd.sy, swd.width, swd.height, swd.x, swd.y,swd.width*swd.scale, swd.height*swd.scale);
           } else {
             ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh+f, w * s, h * s);

@@ -28,6 +28,7 @@ function hero(w, h, x, y, angle, type, scale) {
   this.eWep.setType();
   this.wepPower=0;
   this.attackTime=0;
+  this.renderPower=false;
 
   // Hands
   const swipeRadius = 30;  // The distance of the arc's radius
@@ -194,6 +195,8 @@ function hero(w, h, x, y, angle, type, scale) {
         }
       });
     }
+    // Show the power meter?
+    this.renderPower=((hState == 'spin' || hState == 'swipe') && (this.weapon == 0 || this.weapon == 4));
   } // End of Update
 
   this.reset = function(){
@@ -326,7 +329,7 @@ function hero(w, h, x, y, angle, type, scale) {
   }
 
   this.chargeUp=function(){
-    this.wepPower=this.wepPower>=10?10:this.wepPower+=1;
+    this.wepPower=this.wepPower>=10?10:this.wepPower+=.25;
   }
 
   this.retract=function(){
