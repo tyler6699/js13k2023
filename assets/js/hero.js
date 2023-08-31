@@ -189,7 +189,7 @@ function hero(w, h, x, y, angle, type, scale) {
       // move to a persistant object
       let xoff=lastDir==RIGHT?20:-20;
       hb=new rectanlge(this.e.x+xoff, this.e.y,this.e.width, this.e.height);
-      
+
       cart.level.objs.forEach((i) => {
         if(i.type!=types.HERO && !this.attackOver){
           if(rectColiding(hb, i.hb)){
@@ -197,10 +197,12 @@ function hero(w, h, x, y, angle, type, scale) {
             switch(i.type){
               case types.TREE:
                 if(this.tool.type==types.AX)i.hp--;
+                cart.shakeTime=.5;
                 this.attackOver=true;
                 break;
               case types.ROCK:
                 if(this.tool.type==types.HAM)i.hp--;
+                cart.shakeTime=.5;
                 this.attackOver=true;
                 break;
             }

@@ -63,6 +63,9 @@ function Cart() {
 
     // Screen shake
     this.shake = shaky ? Math.cos(TIME) : 0;
+    if(cart.shakeTime>0){
+      cart.shakeTime-=delta/1000;
+    }
     this.hero.setCurrentTile(this.scaled);
 
     // HERO

@@ -90,7 +90,6 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
       h   = this.height;
 
       if(cart.shakeTime>0){
-        cart.shakeTime-=delta/1000;
         ctx.translate(cart.shake,cart.shake);
       }
 
