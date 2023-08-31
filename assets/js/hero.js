@@ -31,6 +31,7 @@ function hero(w, h, x, y, angle, type, scale) {
   this.attackTime=0;
   this.renderPower=false;
   this.facing=lastDir;
+  this.attackOver=false;
 
   // Hands
   const swipeRadius = 30;  // The distance of the arc's radius
@@ -168,6 +169,7 @@ function hero(w, h, x, y, angle, type, scale) {
       switch (hState) {
         case 'idle':
           this.wepPower=0;
+          this.attackOver=false;
           break;
         case 'swipe':
           hState = 'retracting'
@@ -184,18 +186,22 @@ function hero(w, h, x, y, angle, type, scale) {
 
     // Check if we have attacked anything
     if(this.attackTime>0 || this.punchProgress > 0){
-      hb=new rectanlge(this.e.x-20, this.e.y,this.e.width, this.e.height);
+      // move to a persistant object
+      let xoff=lastDir==RIGHT?20:-20;
+      hb=new rectanlge(this.e.x+xoff, this.e.y,this.e.width, this.e.height);
+      
       cart.level.objs.forEach((i) => {
-        if(i.type!=types.HERO){
+        if(i.type!=types.HERO && !this.attackOver){
           if(rectColiding(hb, i.hb)){
             console.log(i.type);
             switch(i.type){
               case types.TREE:
                 if(this.tool.type==types.AX)i.hp--;
+                this.attackOver=true;
                 break;
               case types.ROCK:
-                console.log(this.tool.type);
                 if(this.tool.type==types.HAM)i.hp--;
+                this.attackOver=true;
                 break;
             }
           }
@@ -371,6 +377,8 @@ function hero(w, h, x, y, angle, type, scale) {
       this.tool.ui=false;
     }
   }
+
+  // todo add the isSword etc
 
   this.gMove = function(xx,yy, grav=false, jump=false){
     this.e.idle=0;
