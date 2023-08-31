@@ -25,8 +25,8 @@ function level(num, canvasW, canvasH, scale) {
     this.castle.forEach(e => e.update(delta));
 
     // Draw Weapon
-    if(hero.eWep.type!=types.HAND){
-        hero.eWep.update(delta);
+    if(hero.tool.type!=types.HAND){
+        hero.tool.update(delta);
     }
 
     // TODO: if the hero is in front of any of the objects then draw the HERO

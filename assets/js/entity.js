@@ -137,13 +137,6 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
             // Hero
             ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh+f, w * s, h * s);
 
-            // Weapon Test
-            let swd = cart.hero.eWep;
-            if(swd.flip){
-              ctx.scale(-1, 1);
-              ctx.translate(-(w*s),0);
-            }
-
             if(cart.hero.renderPower){
               // Draw power up
               let arcX = w*s-12;

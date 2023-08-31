@@ -7,7 +7,7 @@ const types = {
   SEA:5,
   SND:6,
   TREE:7,
-  RCK:8,
+  ROCK:8,
   CST:9,
   CNE:10,
   UI:11,
