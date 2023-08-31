@@ -5,12 +5,11 @@ grunt and use https://lifthrasiir.github.io/roadroller/
 UI
   - Intro screen
   - Player UI (stats)
-  - Add a pole behind the weapons bar? A pole with balls on the ends, like a flag post.
 
 General
   - Add the bottom later of objects of the castle to the obj array to stop the hero walking through the castle
   - Give the castle HP and you have to defeat it
-  - Destroy trees and stones to stop the caste from getting resources
+  - Destroy trees and stones to stop the caste from getting resources (in progress)
   - While trees and rocks are available the mobs keep spawning
   - Beating a level creates a bridge over to a new island
   - Shadows
