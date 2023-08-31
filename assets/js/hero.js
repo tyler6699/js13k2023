@@ -197,12 +197,12 @@ function hero(w, h, x, y, angle, type, scale) {
             switch(i.type){
               case types.TREE:
                 if(this.tool.type==types.AX)i.hp--;
-                cart.shakeTime=.5;
+                cart.shakeTime=.15;
                 this.attackOver=true;
                 break;
               case types.ROCK:
                 if(this.tool.type==types.HAM)i.hp--;
-                cart.shakeTime=.5;
+                cart.shakeTime=.1;
                 this.attackOver=true;
                 break;
             }

@@ -1,5 +1,10 @@
 function menu() {
   this.ui=[];
+  this.tree= new entity(16, 23, 0, 0, 0, types.TREE, "", 1.5);
+  this.tree.ui=true;
+  this.rock=new entity(16, 16, 0, 0, 0, types.ROCK, "", 1.5);
+  this.rock.ui=true;
+
   // IU AND MENU
   ms=[[-32,types.HAM],[-116,types.SWD],[52,types.AX]];
   for(i=0;i<ms.length;i++){

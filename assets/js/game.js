@@ -132,18 +132,10 @@ function updateGameArea() {
     cart.update(delta, TIME, false);
     let font = "30px Papyrus";
     writeTxt(ctx, 1, font,"WHITE","[M] Music: " + !pause, canvasW-230, 30);
-    writeTxt(ctx, 1, font,"WHITE","[T] Tips: " + (cart.tips), canvasW-230, 70);
-    writeTxt(ctx, 1, font,"WHITE","[R] Reset Level", canvasW-230, 110);
+    writeTxt(ctx, 1, font,"WHITE","[R] Reset Level", canvasW-230, 70);
 
     writeTxt(ctx, 1, font,"WHITE","Level: " + (cart.hero.e.curLevel+1), 10, 100);
-    writeTxt(ctx, 1, font,"WHITE","Lives: " + cart.hero.hp, 10, 140);
-    writeTxt(ctx, 1, font,"RED","Deaths: " + cart.hero.deaths, 10, 180);
-    writeTxt(ctx, 1, font,"WHITE","X: " + (cart.hero.e.x), 10, 210);
-    writeTxt(ctx, 1, font,"WHITE","Y: " + (cart.hero.e.y), 10, 250);
-    writeTxt(ctx, 1, font,"WHITE","Y: " + (cart.hero.hState), 10, 280);
-    writeTxt(ctx, 1, font,"WHITE","Y: " + (cart.hero.weapon), 10, 310);
-    writeTxt(ctx, 1, font,"WHITE","Power: " + (cart.hero.wepPower), 10, 340);
-    writeTxt(ctx, 1, font,"RED","Attack Over: " + (cart.hero.attackOver), 10, 370);
+    writeTxt(ctx, 1, font,"WHITE","Castle Resources:", 10, 140);
 
     let lvl=cart.hero.e.curLevel;
 

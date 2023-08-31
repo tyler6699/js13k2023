@@ -9,6 +9,8 @@ function level(num, canvasW, canvasH, scale) {
   this.startPos = [-120, 280];
   this.cols = colz;
   this.rotate=false;
+  this.rocks=0;
+  this.trees=0;
 
   // Isometric tileSize - Width remains the same, but height is half
   let tileWidth = 16;
@@ -21,7 +23,14 @@ function level(num, canvasW, canvasH, scale) {
     this.tiles.forEach(e => e.update(delta, intro));
     // sort
     this.objs.sort((a, b) => a.y - b.y);
-    this.objs.forEach(e => e.update(delta));
+    this.rocks=0;
+    this.trees=0;
+    this.objs.forEach((e) => {
+        e.update(delta);
+        if(e.type==types.ROCK)this.rocks++;
+        if(e.type==types.TREE)this.trees++;
+    });
+
     this.castle.forEach(e => e.update(delta));
 
     // Draw Weapon
@@ -90,7 +99,6 @@ function level(num, canvasW, canvasH, scale) {
 
     // Expand Water Areas
     const changes = [];
-
     this.tiles.forEach((tile, i) => {
         if (tile.e.type==types.WTR) {
             Array.from({ length: rndNo(3, 8) }, (_, r) => r).forEach(r => {
@@ -114,25 +122,24 @@ function level(num, canvasW, canvasH, scale) {
 
     // Add decor
     maxTrees=10;
-    trees=0;
     maxRocks=5;
-    rocks=0;
+
     this.tiles.forEach(t => {
-      if(t.e.type==types.GRASS && rndNo(0,100) > 98 && (trees<maxTrees)){
+      if(t.e.type==types.GRASS && rndNo(0,100) > 98 && (this.trees<maxTrees)){
         if(!nearCastle(t.e.x, t.e.y-t.drop-10-30, cen)){
-          obj = new entity(16, 23, t.e.x, t.e.y-t.drop-10-30, 0, types.TREE, "", scale, false, 0);
+          obj = new entity(16, 23, t.e.x, t.e.y-t.drop-10-30, 0, types.TREE, "", scale, false, 2);
           obj.parent=t;
           t.obj=obj;
           this.objs.push(obj);
-          trees++;
+          this.trees++;
         }
-      } else if(t.e.type==types.GRASS && rndNo(0,100) > 98 && (rocks<maxRocks)) {
+      } else if(t.e.type==types.GRASS && rndNo(0,100) > 98 && (this.rocks<maxRocks)) {
         if(!nearCastle(t.e.x, t.e.y-t.drop-10, cen)){
-          obj = new entity(16, 16, t.e.x, t.e.y-t.drop-10, 0, types.ROCK, "", scale, false, 0);
+          obj = new entity(16, 16, t.e.x, t.e.y-t.drop-10, 0, types.ROCK, "", scale, false, 4);
           obj.parent=t;
           t.obj=obj;
           this.objs.push(obj);
-          rocks++;
+          this.rocks++;
         }
       }
     });
