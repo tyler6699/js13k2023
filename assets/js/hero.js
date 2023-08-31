@@ -29,6 +29,7 @@ function hero(w, h, x, y, angle, type, scale) {
   this.wepPower=0;
   this.attackTime=0;
   this.renderPower=false;
+  this.facing=lastDir;
 
   // Hands
   const swipeRadius = 30;  // The distance of the arc's radius
@@ -197,6 +198,7 @@ function hero(w, h, x, y, angle, type, scale) {
     }
     // Show the power meter?
     this.renderPower=((hState == 'spin' || hState == 'swipe') && (this.weapon == 0 || this.weapon == 4));
+    this.facing=lastDir;
   } // End of Update
 
   this.reset = function(){

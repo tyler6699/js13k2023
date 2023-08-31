@@ -146,23 +146,24 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
 
             if(cart.hero.renderPower){
               // Draw power up
-              let arcX = w*s-10;
+              let arcX = w*s-12;
               let arcY= -h-4;
-              let radius = 20; // Size of the arc (adjust if needed)
-              let startAngle = Math.PI; // Start at 180 degrees or π radians
-              let endAngle = 2 * Math.PI; // Full circle or 2π radians
 
               // Draw the arc
+              if(cart.hero.facing!=RIGHT){
+                ctx.scale(-1, 1);
+                ctx.translate(-(w*s),0);
+              }
               ctx.beginPath();
-              ctx.arc(arcX, arcY, radius, startAngle, endAngle);
+              ctx.arc(arcX, arcY, 20, Math.PI, 2 * Math.PI);
               ctx.lineWidth = 10; // Width of the line, adjust if needed
 
               // Fill based on power
-              let gradient = ctx.createLinearGradient(arcX - radius, arcY, arcX + radius, arcY);
+              let gradient = ctx.createLinearGradient(arcX - 20, arcY, arcX + 20, arcY);
               gradient.addColorStop(0, '#0a910f'); // Start color (you can change it)
               gradient.addColorStop(cart.hero.wepPower / 10, '#db6532'); // Color at the end of the power level
               let val = cart.hero.wepPower / 10 + 0.01 > 1 ? 1 : cart.hero.wepPower / 10 + 0.01;
-              gradient.addColorStop(val, 'transparent'); // Rest of the arc
+              gradient.addColorStop(val, '#06062e'); // Rest of the arc
 
               ctx.strokeStyle = gradient;
               ctx.stroke();
