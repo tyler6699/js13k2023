@@ -345,6 +345,7 @@ function hero(w, h, x, y, angle, type, scale) {
 
   this.chargeUp=function(){
     this.wepPower=this.wepPower>=10?10:this.wepPower+=.25;
+    if(this.wepPower>=10)cart.shakeTime=.1;
   }
 
   this.retract=function(){
