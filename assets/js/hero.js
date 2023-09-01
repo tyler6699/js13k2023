@@ -7,7 +7,6 @@ function hero(w, h, x, y, angle, type, scale) {
   let curTile=null;
   let prevTile=null;
   let airTime=0;
-  let idle=0;
   let speed=0;
   let maxSpeed=3;
   let lastDir = RIGHT;
@@ -46,8 +45,7 @@ function hero(w, h, x, y, angle, type, scale) {
   this.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
 
   this.update = function(ctx, delta){
-    this.time+=delta;
-    idle+=delta;
+    this.time+=delta/1000;
     this.moved=false;
 
     // Controls
@@ -60,15 +58,8 @@ function hero(w, h, x, y, angle, type, scale) {
         this.moved=true;
       }
 
-      if (up()){
-        this.e.y -= this.gMove(0,-1);
-        //lastDir=UP;
-      }
-
-      if (down()){
-        this.e.y += this.gMove(0,1);
-        //lastDir=DOWN;
-      }
+      if (up())this.e.y -= this.gMove(0,-1);
+      if (down())this.e.y += this.gMove(0,1);
 
       if (left()){
         this.e.x -= this.gMove(-1,0);
@@ -96,10 +87,6 @@ function hero(w, h, x, y, angle, type, scale) {
       if(four()&&this.tool!=types.HAND)this.setWeapon(types.HAND);
     }
 
-    // idle check
-    if(up()||space()||one()||right()||left()) idle=0;
-    //if(idle>3){ }
-
     // Particles
     for (let i = 0; i <= this.particles.length-1; i++){
       this.particles[i].update(ctx,delta);
@@ -117,13 +104,22 @@ function hero(w, h, x, y, angle, type, scale) {
     const sin = Math.sin(this.time * amount) * 1.7;
     const offsin = Math.sin(this.time * amount + Math.PI) * 1.7;
 
-    // Set X position for both hands
+    // Set X position for both hand
     this.hands[0].x = 30;
     this.hands[1].x = 9;
 
     // Calculate Y position based on movement state
     this.hands[0].y= this.moved? 29 + offsin + waterY : 29 + sin + waterY;
     this.hands[1].y = 29 + sin + waterY;
+
+    // idle check
+    //if(up()||space()||one()||right()||left()) this.e.idle=0;
+    if(this.e.idle>5){
+      let m=Math.sin(this.time * 15)*.6;
+      this.e.z+=m;
+      this.hands[0].y-=m*6;
+      this.hands[1].y+=m*6;
+    }
 
     // Weapon Position
     this.setWeaponX(delta);

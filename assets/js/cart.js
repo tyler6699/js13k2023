@@ -50,7 +50,7 @@ function Cart() {
 
   // Render & Logic
   this.update = function(delta, time, intro=false) {
-    this.time=time;
+    this.time+=delta/1000;
     if(resize){
       resize=false;
       ctx.scale(this.ratio,this.ratio);

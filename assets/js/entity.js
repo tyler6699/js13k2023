@@ -71,7 +71,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
 
   // Render
   this.update = function(delta) {
-    this.idle+=delta;
+    this.idle+=delta/1000;
     this.updateHitbox();
 
     if(this.active) {

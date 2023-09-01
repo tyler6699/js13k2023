@@ -21,7 +21,7 @@ function particle(w, h, x, y, angle, type, win, lastDir=RIGHT) {
   this.lastDir=lastDir;
 
   this.update = function(ctx, delta) {
-    this.time+=delta;
+    this.time+=delta/1000;
     ctx.save();
     ctx.translate(cart.cam.x,cart.cam.y);
     if(this.type=="circle"){
@@ -56,7 +56,7 @@ function particle(w, h, x, y, angle, type, win, lastDir=RIGHT) {
       this.w+=.1;
       if(this.time > .5)this.remove=true;
     }
-    
+
     ctx.globalAlpha=1;
     ctx.restore();
   }
