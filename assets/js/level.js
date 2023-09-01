@@ -27,12 +27,15 @@ function level(num, canvasW, canvasH, scale) {
     this.trees=0;
     this.objs.forEach((e) => {
         e.update(delta);
+        e.update(delta,true);
         if(e.type==types.ROCK)this.rocks++;
         if(e.type==types.TREE)this.trees++;
     });
 
     this.castle.forEach(e => e.update(delta));
-
+    // TODO castle shadows
+    // this.castle.forEach(e => e.update(delta, true));
+    
     // Draw Weapon
     if(hero.tool.type!=types.HAND){
         hero.tool.update(delta);

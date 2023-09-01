@@ -70,7 +70,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
   }
 
   // Render
-  this.update = function(delta) {
+  this.update = function(delta, shadow=false) {
     this.idle+=delta/1000;
     this.updateHitbox();
 
@@ -117,7 +117,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
           } else {
             ctx.scale(1, 1);
           }
-          f=0; // float
+
           z=0; // hover
 
           if(this.angle > 0){
@@ -128,13 +128,13 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
           }
 
           if(this.wet) h-=2;
-          if(this.isHero()){
+          if(this.isHero()&&!shadow){
             // Draw the hands, hair etc, weapon
             cart.hero.hands.forEach((i) => {
                 ctx.drawImage(img, i.sx, i.sy, i.width, i.height, i.x, i.y, i.width*i.scale, i.height*i.scale);
             });
             // Hero
-            ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh+f, w * s, h * s);
+            ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
 
             if(cart.hero.renderPower){
               // Draw power up
@@ -160,18 +160,29 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
               ctx.strokeStyle = gradient;
               ctx.stroke();
             }
-
-            //if(swd.type!=types.HAND) ctx.drawImage(img, swd.sx, swd.sy, swd.width, swd.height, swd.x, swd.y,swd.width*swd.scale, swd.height*swd.scale);
           } else {
-            ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh+f, w * s, h * s);
+            // Where all entities get drawn
+            if(shadow){
+              // let t=30;
+              // ctx.translate(t,t);
+              // ctx.rotate(45*Math.PI/180);
+              // ctx.translate(-t,-t);
+              ctx.scale(1,-1);
+              ctx.shadowColor = "#000";  // Shadow color
+              ctx.shadowBlur = 5;        // Shadow blur level
+              ctx.globalAlpha = this.isHero()&&this.wet?0.2:0.08;
+              let yoff=this.isHero()?4:3.8;
 
+              ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, -yoff*h, w * s, h * s);
+            } else {
+              ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
+            }
           }
         }
       }
 
       ctx.restore();
     }
-
     this.cenX=this.x-this.mhWScld;
     this.cenY=this.y-this.mhHScld;
   }

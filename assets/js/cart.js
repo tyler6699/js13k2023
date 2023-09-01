@@ -65,8 +65,8 @@ function Cart() {
     // HERO
     if(!intro){
       this.level.draw(this.hero, delta);
+      // draw all the shadows
       this.hero.update(ctx, delta);
-
       // MOUSE
       //mg.canvas.style.cursor='none';
     }
