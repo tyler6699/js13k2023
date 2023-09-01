@@ -134,6 +134,11 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
                 ctx.drawImage(img, i.sx, i.sy, i.width, i.height, i.x, i.y, i.width*i.scale, i.height*i.scale);
             });
             // Hero
+            if(cart.hero.dance){
+              ctx.shadowColor = "gold";  // Shadow color
+              ctx.shadowBlur = 10;        // Shadow blur level
+            }
+
             ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
 
             if(cart.hero.renderPower){
@@ -163,10 +168,6 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
           } else {
             // Where all entities get drawn
             if(shadow){
-              // let t=30;
-              // ctx.translate(t,t);
-              // ctx.rotate(45*Math.PI/180);
-              // ctx.translate(-t,-t);
               ctx.scale(1,-1);
               ctx.shadowColor = "#000";  // Shadow color
               ctx.shadowBlur = 5;        // Shadow blur level

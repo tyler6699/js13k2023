@@ -30,6 +30,7 @@ function hero(w, h, x, y, angle, type, scale) {
   this.renderPower=false;
   this.facing=lastDir;
   this.attackOver=false;
+  this.dance=false;
 
   // Hands
   const swipeRadius = 30;  // The distance of the arc's radius
@@ -114,7 +115,7 @@ function hero(w, h, x, y, angle, type, scale) {
 
     // idle check
     //if(up()||space()||one()||right()||left()) this.e.idle=0;
-    if(this.e.idle>5){
+    if(this.e.idle>10 || this.dance){
       let m=Math.sin(this.time * 15)*.6;
       this.e.z+=m;
       this.hands[0].y-=m*6;
@@ -174,6 +175,13 @@ function hero(w, h, x, y, angle, type, scale) {
           hState = 'retracting'
           break;
       }
+    }
+
+    if(this.wepPower>=10){
+      cart.shakeTime=.1;
+      this.dance=true;
+    } else {
+      this.dance=false;
     }
 
     // Do I need these?
@@ -345,7 +353,7 @@ function hero(w, h, x, y, angle, type, scale) {
 
   this.chargeUp=function(){
     this.wepPower=this.wepPower>=10?10:this.wepPower+=.25;
-    if(this.wepPower>=10)cart.shakeTime=.1;
+    if(this.wepPower>=10);
   }
 
   this.retract=function(){
