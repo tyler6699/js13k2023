@@ -2,6 +2,10 @@
 TODO List
 ------------------------------------------------------------------------------------
 grunt and use https://lifthrasiir.github.io/roadroller/
+
+graphics
+  - Search for // Make grass dark
+  - Can we make grass darker and use less images?
 UI
   - Intro screen
   - Player UI (stats)
@@ -9,7 +13,6 @@ UI
 General
   - Add the bottom later of objects of the castle to the obj array to stop the hero walking through the castle
   - Give the castle HP and you have to defeat it
-  - Destroy trees and stones to stop the caste from getting resources (in progress)
   - While trees and rocks are available the mobs keep spawning
   - Beating a level creates a bridge over to a new island
   - Shadows

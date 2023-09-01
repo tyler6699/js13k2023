@@ -44,7 +44,7 @@ function hero(w, h, x, y, angle, type, scale) {
   this.hands = [];
   this.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
   this.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
-  
+
   this.update = function(ctx, delta){
     this.time+=delta;
     idle+=delta;
@@ -62,12 +62,12 @@ function hero(w, h, x, y, angle, type, scale) {
 
       if (up()){
         this.e.y -= this.gMove(0,-1);
-        lastDir=UP;
+        //lastDir=UP;
       }
 
       if (down()){
         this.e.y += this.gMove(0,1);
-        lastDir=DOWN;
+        //lastDir=DOWN;
       }
 
       if (left()){
