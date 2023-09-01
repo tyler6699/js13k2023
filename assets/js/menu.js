@@ -1,7 +1,12 @@
 function menu() {
   this.ui=[];
+  this.tree= new entity(16, 23, 0, 0, 0, types.TREE, "", 1.5);
+  this.tree.ui=true;
+  this.rock=new entity(16, 16, 0, 0, 0, types.ROCK, "", 1.5);
+  this.rock.ui=true;
+
   // IU AND MENU
-  ms=[[-32,types.HAM],[-116,types.SWD],[52,types.AX]];
+  ms=[[-32,types.HAM],[-116,types.SWD],[52,types.AX],[134,types.HAND]];
   for(i=0;i<ms.length;i++){
     this.ui.push(new entity(16, 16, canvasW/2+ms[i][0], canvasH-88, 0, types.UI, "", 4, 0,true,ms[i][1]));
     this.ui.push(new entity(10, 10, canvasW/2+ms[i][0]+14, canvasH-80, 0, ms[i][1], "", 4, true));
@@ -22,7 +27,7 @@ function menu() {
         if(processClick){
           if(rectColiding(e.hb,clickedRec)){
             processClick=false;
-            cart.hero.setWeapon(1,e.weapon);
+            cart.hero.setWeapon(e.weapon);
           }
         }
       }

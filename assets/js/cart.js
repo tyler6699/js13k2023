@@ -9,11 +9,6 @@ function Cart() {
   this.tips=true;
   this.time=0;
 
-  // console.log("Canvas W: " + canvasW + " Canvas H: " + canvasH + " newWidthToHeight:" + newWidthToHeight);
-  // console.log("totalWidth: " + totalWidth + " totalHeight: " + totalHeight );
-  // console.log("Width Ratio: " + newWidth + " Height Ratio: " + newHeight);
-  // console.log("Width:: " + (newWidth*totalWidth) + " Height:: " + (newHeight*totalHeight));
-
   if (canvasW > totalWidth) {
     this.ratio=canvasW / totalWidth;
   } else {
@@ -63,9 +58,8 @@ function Cart() {
 
     // Screen shake
     this.shake = shaky ? Math.cos(TIME) : 0;
-    if(cart.shakeTime>0){
-      cart.shakeTime-=delta/1000;
-    }
+    if(cart.shakeTime>0) cart.shakeTime-=delta/1000;
+
     this.hero.setCurrentTile(this.scaled);
 
     // HERO
@@ -80,6 +74,18 @@ function Cart() {
     // Render Menu
     this.menu.ui.forEach(e => e.update(delta));
     this.menu.tick();
+
+    // Draw resources
+    for(i=0;i<this.level.trees;i++){
+      this.menu.tree.x=8+(i*30);
+      this.menu.tree.y=150;
+      this.menu.tree.update(delta);
+    }
+    for(i=0;i<this.level.rocks;i++){
+      this.menu.rock.x=8+(i*30);
+      this.menu.rock.y=190;
+      this.menu.rock.update(delta);
+    }
 
     // Follow hero
     this.cam.x = lerp(-this.hero.e.x + (totalWidth/2)-20,this.cam.x ,.8);
