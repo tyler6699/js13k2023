@@ -120,6 +120,7 @@ function hero(w, h, x, y, angle, type, scale) {
       if(!this.moved)this.e.z+=m;
       this.hands[0].y-=m*6;
       this.hands[1].y+=m*6;
+      if(this.e.idle>15)this.e.idle=0;
     }
 
     // Weapon Position

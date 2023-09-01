@@ -142,9 +142,12 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
             ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
 
             if(cart.hero.renderPower){
+              ctx.globalAlpha = cart.hero.wepPower>2?cart.hero.wepPower/10:0;
               // Draw power up
-              let arcX = w*s-12;
-              let arcY= -h-4;
+              let f=cart.hero.wepPower<10;
+              // Patch the issue rather than fixing :D
+              let arcX = cart.hero.facing==RIGHT?w*s-10:w*s-20;
+              let arcY= -h+10;
 
               // Draw the arc
               if(cart.hero.facing!=RIGHT){
@@ -153,14 +156,14 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
               }
               ctx.beginPath();
               ctx.arc(arcX, arcY, 20, Math.PI, 2 * Math.PI);
-              ctx.lineWidth = 10; // Width of the line, adjust if needed
+              ctx.lineWidth = f?10:15; // Width of the line, adjust if needed
 
               // Fill based on power
               let gradient = ctx.createLinearGradient(arcX - 20, arcY, arcX + 20, arcY);
-              gradient.addColorStop(0, '#0a910f'); // Start color (you can change it)
+              gradient.addColorStop(0, f?'#0a910f':'#fff'); // Start color (you can change it)
               gradient.addColorStop(cart.hero.wepPower / 10, '#db6532'); // Color at the end of the power level
               let val = cart.hero.wepPower / 10 + 0.01 > 1 ? 1 : cart.hero.wepPower / 10 + 0.01;
-              gradient.addColorStop(val, '#06062e'); // Rest of the arc
+              gradient.addColorStop(val, f?'#06062e':'#db6532'); // Rest of the arc
 
               ctx.strokeStyle = gradient;
               ctx.stroke();
@@ -170,7 +173,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
             if(shadow){
               ctx.scale(1,-1);
               ctx.shadowColor = "#000";  // Shadow color
-              ctx.shadowBlur = 5;        // Shadow blur level
+              ctx.shadowBlur = 8;        // Shadow blur level
               ctx.globalAlpha = this.isHero()&&this.wet?0.3:0.08;
               let yoff=this.isHero()?4:3.8;
 
