@@ -24,7 +24,6 @@ function hero(w, h, x, y, angle, type, scale) {
   this.changeLevel=false;
   this.moved=false;
   // remove this and create this.isSword, this.isHammer, this.isHand, this.isAxe
-  this.weapon=4; // 0 Sword, 1 Hammer, 2 Ax, 4 Hands
   this.tool=new entity(10, 10, x, y, 0, types.SWD, "", scale);
   this.tool.setType();
   this.wepPower=0;
@@ -73,24 +72,28 @@ function hero(w, h, x, y, angle, type, scale) {
 
       if (left()){
         this.e.x -= this.gMove(-1,0);
-        if((hState != 'punch' && hState != 'retracting')) this.e.flip = true;
-        lastDir=LEFT;
+        if((hState != 'punch' && hState != 'retracting')){
+          this.e.flip = true;
+          lastDir=LEFT;
+        }
       }
 
       if (right()){
         this.e.x += this.gMove(1,0);
-        if((hState != 'punch' && hState != 'retracting')) this.e.flip = false;
-        lastDir=RIGHT;
+        if((hState != 'punch' && hState != 'retracting')){
+          this.e.flip = false;
+          lastDir=RIGHT;
+        }
       }
 
       // SWORD
-      if(one()&&this.weapon!=0)this.setWeapon(0,types.SWD);
+      if(one()&&this.tool!=types.SWD)this.setWeapon(types.SWD);
       // HAMMER
-      if(two()&&this.weapon!=1)this.setWeapon(1,types.HAM);
+      if(two()&&this.tool!=types.HAM)this.setWeapon(types.HAM);
       // AXE
-      if(three()&&this.weapon!=2)this.setWeapon(2,types.AX,true);
+      if(three()&&this.tool!=types.AX)this.setWeapon(types.AX,true);
       //HANDS
-      if(four()&&this.weapon!=4)this.setWeapon(4,types.HAND);
+      if(four()&&this.tool!=types.HAND)this.setWeapon(types.HAND);
     }
 
     // idle check
@@ -130,7 +133,7 @@ function hero(w, h, x, y, angle, type, scale) {
     if(space() && (hState=='idle' || hState=='spin' || hState=='swipe')){
       switch (hState) {
         case 'idle':
-          if(this.weapon==4){ // HANDS
+          if(this.tool.type==types.HAND){ // HANDS
             hState = 'spin';
           } else { // SWORD, AXE, HAMMER
             hState = 'swipe';
@@ -211,7 +214,7 @@ function hero(w, h, x, y, angle, type, scale) {
       });
     }
     // Show the power meter?
-    this.renderPower=((hState == 'spin' || hState == 'swipe') && (this.weapon == 0 || this.weapon == 4));
+    this.renderPower=((hState == 'spin' || hState == 'swipe') && (this.tool.type == types.HAND || this.tool.type == types.SWD));
     this.facing=lastDir;
   } // End of Update
 
@@ -284,8 +287,8 @@ function hero(w, h, x, y, angle, type, scale) {
   }
 
   this.setWeaponX = function(delta){
-    switch(this.weapon){
-      case 0: // SWORD
+    switch(this.tool.type){
+      case types.SWD: // SWORD
         if(hState=='idle')this.tool.angle=lastDir==RIGHT?80:45;
         if(hState=="swipe"){
           this.chargeUp();
@@ -298,7 +301,7 @@ function hero(w, h, x, y, angle, type, scale) {
         if(hState=='retracting') this.retract();
         this.tool.x=this.e.x+this.hands[1].x+1;
         break;
-      case 1: // HAMMER
+      case types.HAM: // HAMMER
         if(hState=="idle")this.tool.angle=lastDir==RIGHT?70:30;
         if(hState=="swipe"){
           this.tool.angle=this.tool.angle=lastDir==RIGHT?30:70;
@@ -309,7 +312,7 @@ function hero(w, h, x, y, angle, type, scale) {
         this.tool.x=lastDir==RIGHT?this.e.x+this.hands[1].x+1:this.e.x+this.hands[1].x-20;
         this.hands[1].x = 30;
         break;
-      case 2: // AXE
+      case types.AX: // AXE
         if(hState=="idle")this.tool.angle=30;
         if(hState=="swipe"){
           this.tool.angle=90;
@@ -321,7 +324,7 @@ function hero(w, h, x, y, angle, type, scale) {
         this.hands[1].x = 30;
         this.tool.x=lastDir==RIGHT?this.e.x+this.hands[0].x+1 : this.e.x+this.hands[0].x-40;
         break;
-      case 4: // HANDS
+      case types.HAND: // HANDS
         if(hState=='retracting'){
           this.punchProgress -= this.punchSpeed;
           this.hands[1].x = this.punchProgress;
@@ -370,9 +373,8 @@ function hero(w, h, x, y, angle, type, scale) {
     }
   }
 
-  this.setWeapon = function(w,t,f=false){
+  this.setWeapon = function(t,f=false){
     if(hState=='idle'){
-      this.weapon=w;
       this.tool.type=t;
       this.tool.setType();
       this.tool.flip=f;
