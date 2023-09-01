@@ -115,9 +115,9 @@ function hero(w, h, x, y, angle, type, scale) {
 
     // idle check
     //if(up()||space()||one()||right()||left()) this.e.idle=0;
-    if(this.e.idle>10 || this.dance){
+    if(this.e.idle>10 || this.dance || this.moved){
       let m=Math.sin(this.time * 15)*.6;
-      this.e.z+=m;
+      if(!this.moved)this.e.z+=m;
       this.hands[0].y-=m*6;
       this.hands[1].y+=m*6;
     }
