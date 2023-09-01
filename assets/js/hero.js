@@ -24,7 +24,7 @@ function hero(w, h, x, y, angle, type, scale) {
   this.changeLevel=false;
   this.moved=false;
   // remove this and create this.isSword, this.isHammer, this.isHand, this.isAxe
-  this.tool=new entity(10, 10, x, y, 0, types.SWD, "", scale);
+  this.tool=new entity(10, 10, x, y, 0, types.HAND, "", scale);
   this.tool.setType();
   this.wepPower=0;
   this.attackTime=0;
@@ -44,7 +44,7 @@ function hero(w, h, x, y, angle, type, scale) {
   this.hands = [];
   this.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
   this.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
-
+  
   this.update = function(ctx, delta){
     this.time+=delta;
     idle+=delta;

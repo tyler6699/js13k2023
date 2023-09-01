@@ -268,6 +268,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
       case types.HAND:
         this.sx=71;
         this.sy=42;
+        this.ui=true;
     }
   }
 
