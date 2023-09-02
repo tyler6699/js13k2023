@@ -1,5 +1,6 @@
 function mob(w, h, x, y, angle, type, scale, maxHP) {
   this.e = new entity(w, h, x, y, angle, type, "", scale, false, maxHP);
+  this.e.parent=this;
   this.type=mobtype.FOLLOW;
   // this.e.bow = new Bow();
   // this.e.bow.rate=rndNo(0,3)+.5-(STAGE/10);
@@ -14,6 +15,10 @@ function mob(w, h, x, y, angle, type, scale, maxHP) {
   this.tryXSpeed=this.spd;
   this.tryYSpeed=this.spd;
   this.facing=RIGHT;
+
+  this.hit = function(delta, type, power) {
+    console.log(delta + " type: " + type + " power: " + power + " HP: " + this.e.hp);
+  }
 
   this.update = function(delta) {
     this.time+=delta/1000;

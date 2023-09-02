@@ -213,6 +213,11 @@ function hero(w, h, x, y, angle, type, scale) {
                 cart.shakeTime=.1;
                 this.attackOver=true;
                 break;
+              case types.SKELLY:
+                i.parent.hit(delta, this.tool.type, this.wepPower);
+                cart.shakeTime=.1;
+                this.attackOver=true;
+                break;
             }
           }
         }
