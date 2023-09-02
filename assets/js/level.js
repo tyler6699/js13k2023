@@ -2,12 +2,13 @@ colz=40;
 
 function level(num, canvasW, canvasH, scale) {
   STAGE = num;
-  this.tiles = [];
-  this.objs = [];
-  this.castle = [];
-  this.active = false;
-  this.startPos = [-120, 280];
-  this.cols = colz;
+  this.tiles=[];
+  this.objs=[];
+  this.mobs=[];
+  this.castle=[];
+  this.active=false;
+  this.startPos=[-120, 280];
+  this.cols=colz;
   this.rotate=false;
   this.rocks=0;
   this.trees=0;
@@ -35,7 +36,7 @@ function level(num, canvasW, canvasH, scale) {
     this.castle.forEach(e => e.update(delta));
     // TODO castle shadows
     // this.castle.forEach(e => e.update(delta, true));
-    
+
     // Draw Weapon
     if(hero.tool.type!=types.HAND){
         hero.tool.update(delta);
@@ -146,6 +147,11 @@ function level(num, canvasW, canvasH, scale) {
         }
       }
     });
+
+    // Add some mobs
+    mob = new mob(16, 16, 60, 150, 0, types.SKELLY, scale, 10);
+    this.mobs.push(mob);
+    this.objs.push(mob.e);
 
     // Add a simple castle
     // Castle looks great! Very, uh, can't find the right word, but, like,

@@ -59,7 +59,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
       // Images are all scaled up so hitboxes are also scaled up
       this.hb.x = this.x + (this.scale/2);
       this.hb.y = this.y + (this.scale/2);
-      this.hb.w = (this.width * this.scale) - this.scale;
+      this.hb.w = (this.width * this.scale) - this.scale - 10;
       this.hb.h = (this.height * this.scale) - this.scale;
 
       this.sensor.x = this.x-5;
@@ -284,6 +284,10 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
         this.sx=71;
         this.sy=42;
         this.ui=true;
+        break;
+      case types.SKELLY:
+        this.sx=96;
+        this.sy=16;
     }
   }
 

@@ -16,7 +16,8 @@ const types = {
   AX:14,
   HP:15,
   HPE:16,
-  HAND:17
+  HAND:17,
+  SKELLY:18
 }
 
 const mobtype = {

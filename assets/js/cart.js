@@ -87,6 +87,9 @@ function Cart() {
       this.menu.rock.update(delta);
     }
 
+    // Tick the mobs but add the entities to the obj list to render!
+    this.level.mobs.forEach(m => m.update(delta));
+
     // Follow hero
     this.cam.x = lerp(-this.hero.e.x + (totalWidth/2)-20,this.cam.x ,.8);
     this.cam.y = lerp(-this.hero.e.y + (totalHeight/2)-80,this.cam.y ,.8);
