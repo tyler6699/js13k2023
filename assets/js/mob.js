@@ -54,7 +54,11 @@ function mob(w, h, x, y, angle, type, scale, maxHP) {
       e.x = nx;
     }
 
-    this.e.flip = x > cart.hero.e.x && this.facing==RIGHT;
+    if(this.e.x > cart.hero.e.x){
+          this.e.flip=true;
+    } else {
+          this.e.flip=false;
+    }
 
     //e.update(delta);
 
