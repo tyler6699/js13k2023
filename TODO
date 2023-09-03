@@ -16,13 +16,14 @@ UI
 
 General
   - Add the bottom later of objects of the castle to the obj array to stop the hero walking through the castle
-  - Give the castle HP and you have to defeat it
   - While trees and rocks are available the mobs keep spawning
   - Beating a level creates a bridge over to a new island
 
 HERO
   - Slowly, you die in the sea
   - Add HP
+  - this.axePower=1; Add upgrades
+  - this.hammerPower=1;
 
 Sounds
   - Walk
@@ -35,6 +36,7 @@ Particles
   - Blood spray on hits
   - Dust or foot prints
   - hitting the caste
+  = Show damage on hitting an enemy
 
 Enemies
   - Slimes

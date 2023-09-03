@@ -63,6 +63,10 @@ function level(num, canvasW, canvasH, scale) {
       this.complete=true;
     }
 
+    for (let i = 0; i < this.mobs.length; i++) {
+      this.mobs[i].update(delta, this.mobs);
+    }
+
     // When the level is complete drop the bridge
     if(this.complete && !this.bridge){
       this.bridge=true;
@@ -81,7 +85,7 @@ function level(num, canvasW, canvasH, scale) {
 
     // SPAWNER
     this.mobTime+=delta/1000;
-    if(this.mobTime>this.respawnDelay && this.trees>0 && this.rocks>0){
+    if(this.mobTime>this.respawnDelay && (this.trees>0 || this.rocks>0)){
       // Add some mobs
       this.mobTime=0;
       skelly = new mob(16, 16, this.cen.x, this.cen.y, 0, types.SKELLY, scale, 10);

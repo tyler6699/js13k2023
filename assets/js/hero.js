@@ -29,6 +29,8 @@ function hero(w, h, x, y, angle, type, scale) {
   this.facing=lastDir;
   this.attackOver=false;
   this.dance=false;
+  this.axePower=1;
+  this.hammerPower=1;
 
   // Hands
   const swipeRadius = 30;  // The distance of the arc's radius
@@ -207,14 +209,20 @@ function hero(w, h, x, y, angle, type, scale) {
           if(rectColiding(hb, i.hb)){
             switch(i.type){
               case types.TREE:
-                if(this.tool.type==types.AX)i.hp--;
+                if(this.tool.type==types.AX){
+                  i.hp-=this.axePower;
+                  this.attackOver=true;
+                }
                 cart.shakeTime=.15;
-                this.attackOver=true;
+
                 break;
               case types.ROCK:
-                if(this.tool.type==types.HAM)i.hp--;
+                if(this.tool.type==types.HAM){
+                  i.hp-=this.hammerPower;
+                  this.attackOver=true;
+                }
                 cart.shakeTime=.1;
-                this.attackOver=true;
+
                 break;
               case types.SKELLY:
                 i.parent.hit(delta, this.tool.type, this.wepPower);

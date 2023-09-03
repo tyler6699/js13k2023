@@ -77,22 +77,21 @@ function Cart() {
       this.hero.update(ctx, delta);
       // MOUSE
       //mg.canvas.style.cursor='none';
-    }
-
-    // Render Menu
-    this.menu.ui.forEach(e => e.update(delta));
-    this.menu.tick();
-
-    // Draw resources
-    for(i=0;i<this.level.trees;i++){
-      this.menu.tree.x=8+(i*30);
-      this.menu.tree.y=150;
-      this.menu.tree.update(delta);
-    }
-    for(i=0;i<this.level.rocks;i++){
-      this.menu.rock.x=8+(i*30);
-      this.menu.rock.y=190;
-      this.menu.rock.update(delta);
+      // Render Menu
+      this.menu.ui.forEach(e => e.update(delta));
+      this.menu.tick();
+      
+      // Draw resources
+      for(i=0;i<this.level.trees;i++){
+        this.menu.tree.x=8+(i*30);
+        this.menu.tree.y=150;
+        this.menu.tree.update(delta);
+      }
+      for(i=0;i<this.level.rocks;i++){
+        this.menu.rock.x=8+(i*30);
+        this.menu.rock.y=190;
+        this.menu.rock.update(delta);
+      }
     }
 
     // Tick the mobs but add the entities to the obj list to render!
