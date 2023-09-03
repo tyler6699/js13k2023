@@ -42,7 +42,7 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
       let dist = Math.sqrt(Math.pow(this.e.x - cart.hero.e.x, 2) + Math.pow(this.e.y - cart.hero.e.y, 2));
 
       // If the distance is less than 100, move the Goblin away from the hero
-      if (dist < 110) {
+      if (dist < 120) {
           let dx = this.e.x - cart.hero.e.x;
           let dy = this.e.y - cart.hero.e.y;
 

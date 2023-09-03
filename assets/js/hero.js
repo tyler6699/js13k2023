@@ -8,12 +8,11 @@ function hero(w, h, x, y, angle, type, scale) {
   let prevTile=null;
   let airTime=0;
   let speed=0;
-  let maxSpeed=3;
+  let maxSpeed=3.2;
   let lastDir = RIGHT;
   let dirs={right:0,left:0,up:0,down:0}
   let prevPos={x: this.e.x, y: this.e.y};
   let runtime=0;
-  let respawnTime=0;
   let cenX=0;
   let cenY=0;
   let offScreen=false;
@@ -61,7 +60,6 @@ function hero(w, h, x, y, angle, type, scale) {
       }
       // Progress level
       if(this.curTile && this.curTile.progress){
-        console.log("Move to next island");
         cart.nextLevel();
       }
 
@@ -266,7 +264,6 @@ function hero(w, h, x, y, angle, type, scale) {
       playSound(DIEFX,1);
       this.hp--;
       this.active=false;
-      respawnTime=.5;
       speed=0;
       this.e.sy=16;
 

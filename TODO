@@ -22,8 +22,10 @@ General
 HERO
   - Slowly, you die in the sea
   - Add HP
-  - this.axePower=1; Add upgrades
+  - Add upgrades
+  - this.axePower=1;
   - this.hammerPower=1;
+  - Speed from 3.2 ++
 
 Sounds
   - Walk
@@ -40,9 +42,9 @@ Particles
 
 Enemies
   - Slimes
-  - goblins
-  - skeletons
   - Boss?
+  -- Add ghost on death.d
+  -- Add a grave stone
 
 Weapons
  - Axe only hurt trees and do not count as a hit if they hit an enemy?

@@ -36,9 +36,10 @@ function Cart() {
     }
   }
 
-  this.setLevel = function(stage){
-    this.level = this.levels[stage];
-    this.hero.e.curLevel = stage;
+  this.setLevel = function(id){
+    console.log("Load Level: " + id);
+    this.level = this.levels[id];
+    this.hero.e.curLevel = id;
     this.hero.e.x=this.level.startPos[0];
     this.hero.e.y=this.level.startPos[1];
     this.level.objs.push(this.hero.e);
@@ -80,7 +81,7 @@ function Cart() {
       // Render Menu
       this.menu.ui.forEach(e => e.update(delta));
       this.menu.tick();
-      
+
       // Draw resources
       for(i=0;i<this.level.trees;i++){
         this.menu.tree.x=8+(i*30);

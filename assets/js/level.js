@@ -13,7 +13,7 @@ function level(num, canvasW, canvasH, scale) {
   this.bridge=false;
   this.mobTime=0;
   this.cen=findIsometricCenter(colz-1,colz-1);
-  this.respawnDelay=5;
+  this.respawnDelay=8;
   this.maxMobs=20;
 
   // Isometric tileSize - Width remains the same, but height is half
@@ -106,7 +106,7 @@ function level(num, canvasW, canvasH, scale) {
   }
 
   this.reset = function(id, scaled) {
-    console.log("RESET");
+    console.log("Generate Level: " + id);
     this.tiles = [];
     this.dTiles = [];
     mvd = 0;
