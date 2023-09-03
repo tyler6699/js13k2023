@@ -102,3 +102,10 @@ function getTile(x,y,h,offY){
 function getTileRC(r,c){
   return cart.level.tiles[c + (cart.levels[cart.hero.e.curLevel].cols * r)];
 }
+
+function nearCastle(x, y, cen) {
+  const tl = [-90, cen.y-80];
+  const br = [90, cen.y+20];
+
+  return x >= tl[0] && x <= br[0] && y >= tl[1] && y <= br[1];
+}

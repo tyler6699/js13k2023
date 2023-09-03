@@ -297,6 +297,11 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
       case types.SKELLY:
         this.sx=96;
         this.sy=16;
+        break
+      case types.GOB:
+        this.sx=83;
+        this.sy=33;
+        break
     }
   }
 

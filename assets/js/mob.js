@@ -1,7 +1,7 @@
-function mob(w, h, x, y, angle, type, scale, maxHP) {
+function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
   this.e = new entity(w, h, x, y, angle, type, "", scale, false, maxHP);
   this.e.parent=this;
-  this.type=mobtype.FOLLOW;
+  this.mtype=mtype;
   // this.e.bow = new Bow();
   // this.e.bow.rate=rndNo(0,3)+.5-(STAGE/10);
 
@@ -32,10 +32,34 @@ function mob(w, h, x, y, angle, type, scale, maxHP) {
     e.hands[0].x = 25;
     e.hands[1].x = 15;
 
-    // basic follow with steering
-    let steeringForce = this.steerFromNearbyMobs(cart.level.mobs, 26);
-    e.y = y < cart.hero.e.y ? y += this.spd/2 + steeringForce.y : y += -this.spd/2 + steeringForce.y;
-    e.x = x < cart.hero.e.x ? x += this.spd + steeringForce.x : x += -this.spd + steeringForce.x;
+    if(this.mtype==mobtype.FOLLOW){
+      // basic follow with steering
+      let steeringForce = this.steerFromNearbyMobs(cart.level.mobs, 26);
+      e.y = y < cart.hero.e.y ? y += this.spd/2 + steeringForce.y : y += -this.spd/2 + steeringForce.y;
+      e.x = x < cart.hero.e.x ? x += this.spd + steeringForce.x : x += -this.spd + steeringForce.x;
+    } else if(this.mtype==mobtype.RANGED){
+      // Check the distance between the Goblin and the hero
+      let dist = Math.sqrt(Math.pow(this.e.x - cart.hero.e.x, 2) + Math.pow(this.e.y - cart.hero.e.y, 2));
+
+      // If the distance is less than 100, move the Goblin away from the hero
+      if (dist < 100) {
+          let dx = this.e.x - cart.hero.e.x;
+          let dy = this.e.y - cart.hero.e.y;
+
+          // Normalize the direction vector
+          let magnitude = Math.sqrt(dx * dx + dy * dy);
+          dx /= magnitude;
+          dy /= magnitude;
+
+          // Move the Goblin away from the hero
+          this.e.x += dx * this.spd*.8;
+          this.e.y += dy * this.spd*.8;
+        } else {
+          let steeringForce = this.steerFromNearbyMobs(cart.level.mobs, 26);
+          e.y = y < cart.hero.e.y ? y += this.spd/2 + steeringForce.y : y += -this.spd/2 + steeringForce.y;
+          e.x = x < cart.hero.e.x ? x += this.spd + steeringForce.x : x += -this.spd + steeringForce.x;
+        }
+      }
 
     if(this.e.x > cart.hero.e.x){
           this.e.flip=true;

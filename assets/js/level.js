@@ -34,6 +34,12 @@ function level(num, canvasW, canvasH, scale) {
         if(e.type==types.TREE)this.trees++;
     });
 
+    // make castle transparent to check insaide for mobs
+    if(nearCastle(hero.e.x, hero.e.y, this.cen, )){
+      this.castle.forEach(e => e.alpha=.3);
+    } else {
+      this.castle.forEach(e => e.alpha=1);
+    }
     this.castle.forEach(e => e.update(delta));
     // TODO castle shadows
     // this.castle.forEach(e => e.update(delta, true));
@@ -48,7 +54,7 @@ function level(num, canvasW, canvasH, scale) {
     // want them stacked
 
     // Sort this mess out!!
-    if(hero.e.y>290&&nearCastle(hero.e.x, hero.e.y,findIsometricCenter(colz-1,colz-1))) hero.e.update(delta);
+    if(hero.e.y>290&&nearCastle(hero.e.x, hero.e.y,this.cen)) hero.e.update(delta);
 
     // The above only fixes the front pilar
     // Maybe put the bottom of the pilar coords into a var and just check it
@@ -88,9 +94,13 @@ function level(num, canvasW, canvasH, scale) {
     if(this.mobTime>this.respawnDelay && (this.trees>0 || this.rocks>0)){
       // Add some mobs
       this.mobTime=0;
-      skelly = new mob(16, 16, this.cen.x, this.cen.y, 0, types.SKELLY, scale, 10);
+      skelly = new mob(16, 16, this.cen.x, this.cen.y, 0, types.SKELLY, mobtype.FOLLOW, scale, 10);
       this.mobs.push(skelly);
       this.objs.push(skelly.e);
+
+      gob = new mob(18, 15, this.cen.x, this.cen.y, 0, types.GOB, mobtype.RANGED, scale, 20);
+      this.mobs.push(gob);
+      this.objs.push(gob.e);
     }
   }
 
@@ -182,7 +192,7 @@ function level(num, canvasW, canvasH, scale) {
     });
 
     // Add some mobs
-    skelly = new mob(16, 16, this.cen.x, this.cen.y, 0, types.SKELLY, scale, 10);
+    skelly = new mob(16, 16, this.cen.x, this.cen.y, 0, types.SKELLY, mobtype.FOLLOW, scale, 10);
     this.mobs.push(skelly);
     this.objs.push(skelly.e);
 
@@ -265,20 +275,6 @@ function level(num, canvasW, canvasH, scale) {
         }
     }
 
-    // Update Objects
-    // objs.forEach((e) => {
-    //   if(e.parent && e.parent.e && e.parent.obj){
-    //     //console.log(e.parent.obj);
-    //     e.parent.obj.x=e.parent.e.x;
-    //   }
-    // });
-  }
-
-  function nearCastle(x, y, cen) {
-    const topLeft = [-90, cen.y-100];
-    const bottomRight = [90, cen.y+20];
-
-    return x >= topLeft[0] && x <= bottomRight[0] && y >= topLeft[1] && y <= bottomRight[1];
   }
 
 }

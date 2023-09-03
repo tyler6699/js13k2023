@@ -32,6 +32,7 @@ function hero(w, h, x, y, angle, type, scale) {
   this.axePower=1;
   this.hammerPower=1;
   this.rotateTime=0;
+  this.castleDst=0;
 
   // Hands
   const swipeRadius = 30;  // The distance of the arc's radius
@@ -234,7 +235,10 @@ function hero(w, h, x, y, angle, type, scale) {
               case types.SKELLY:
                 i.parent.hit(delta, this.tool.type, this.wepPower);
                 cart.shakeTime=.1;
-                this.attackOver=true;
+                break;
+              case types.GOB:
+                i.parent.hit(delta, this.tool.type, this.wepPower);
+                cart.shakeTime=.1;
                 break;
             }
           }

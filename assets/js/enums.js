@@ -17,10 +17,11 @@ const types = {
   HP:15,
   HPE:16,
   HAND:17,
-  SKELLY:18
+  SKELLY:18,
+  GOB:19
 }
 
 const mobtype = {
   FOLLOW:0,
-  SIMPLE:1
+  RANGED:1
 }
