@@ -7,10 +7,6 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
 
   this.bspd=100;
   this.spd = .5;
-  this.noX=false;
-  this.noY=false;
-  this.waitX=1;
-  this.waitY=1;
   this.time=0;
   this.facing=RIGHT;
   this.e.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
@@ -32,11 +28,11 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
     e.hands[0].x = 25;
     e.hands[1].x = 15;
 
-    let steeringForce = this.steerFromNearbyMobs(cart.level.mobs, 26);
+    let steerPow = this.steerFromNearbyMobs(cart.level.mobs, 26);
     if(this.mtype==mobtype.FOLLOW){
       // basic follow with steering
-      e.y = y < cart.hero.e.y ? y += this.spd/2 + steeringForce.y : y += -this.spd/2 + steeringForce.y;
-      e.x = x < cart.hero.e.x ? x += this.spd + steeringForce.x : x += -this.spd + steeringForce.x;
+      e.y = y < cart.hero.e.y ? y += this.spd/2 + steerPow.y : y += -this.spd/2 + steerPow.y;
+      e.x = x < cart.hero.e.x ? x += this.spd + steerPow.x : x += -this.spd + steerPow.x;
     } else if(this.mtype==mobtype.RANGED){
       // Check the distance between the Goblin and the hero
       let dist = Math.sqrt(Math.pow(this.e.x - cart.hero.e.x, 2) + Math.pow(this.e.y - cart.hero.e.y, 2));
@@ -47,16 +43,16 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
           let dy = this.e.y - cart.hero.e.y;
 
           // Normalize the direction vector
-          let magnitude = Math.sqrt(dx * dx + dy * dy);
-          dx /= magnitude;
-          dy /= magnitude;
+          let mag = Math.sqrt(dx * dx + dy * dy);
+          dx /= mag;
+          dy /= mag;
 
           // Move the Goblin away from the hero
           this.e.x += dx * this.spd*.8;
           this.e.y += dy * this.spd*.8;
         } else {
-            e.y = y < cart.hero.e.y ? y += this.spd/4 + steeringForce.y : y += -this.spd/4 + steeringForce.y;
-            e.x = x < cart.hero.e.x ? x += this.spd/2 + steeringForce.x : x += -this.spd/2 + steeringForce.x;
+            e.y = y < cart.hero.e.y ? y += this.spd/4 + steerPow.y : y += -this.spd/4 + steerPow.y;
+            e.x = x < cart.hero.e.x ? x += this.spd/2 + steerPow.x : x += -this.spd/2 + steerPow.x;
         }
       }
 
@@ -98,15 +94,12 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
         steerY /= count;
     }
 
-    // Normalize steering force, and adjust its magnitude
-    let magnitude = Math.sqrt(steerX * steerX + steerY * steerY);
-    if (magnitude > 0) {
-        steerX /= magnitude;
-        steerY /= magnitude;
+    // Normalize steering force, and adjust its mag
+    let mag = Math.sqrt(steerX * steerX + steerY * steerY);
+    if (mag > 0) {
+        steerX /= mag;
+        steerY /= mag;
     }
-
     return { x: steerX, y: steerY };
-};
-
-
+  };
 }

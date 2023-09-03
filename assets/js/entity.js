@@ -19,10 +19,8 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
   this.active = true;
   this.colour = colour;
   this.image = atlas;
-  this.animated = false;
   this.alpha = 1;
   this.currentTile=0;
-  this.colArr = [];
   this.isSolid = false;
   this.isButton = isButton;
   this.time=0;
@@ -30,7 +28,6 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
   this.hp=this.maxHP;
   this.flip=false;
   this.idle=0;
-  this.chk=false;
   this.offsetY=0;
   this.parent=null;
   this.wet=false;
@@ -202,15 +199,6 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
 
   this.isHero = function(){
     return this.type == types.HERO;
-  }
-
-  this.isTile = function(){
-    return false;
-  }
-
-  this.setT = function(t){
-    this.type = t;
-    this.setType();
   }
 
   this.setType = function(){

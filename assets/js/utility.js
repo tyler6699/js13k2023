@@ -6,15 +6,6 @@ function rectanlge(x, y, w, h) {
   this.h = h;
 }
 
-function ranColor() {
-  let l = '0123456789ABCDEF';
-  let c = '#';
-  for (var i = 0; i < 6; i++) {
-    c += l[Math.floor(Math.random() * 16)];
-  }
-  return c;
-}
-
 function rndNo(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -54,20 +45,6 @@ function drawRect(ctx, ox, oy, x, y, w, h, col, alpha){
   ctx.fillStyle = col;
   ctx.fillRect(x,y,w,h);
   ctx.restore();
-}
-
-function resizeCanvas(){
-
-}
-
-function partDir(p) {
-  var angle = rndNo(0, 360) * Math.PI / 180;
-  var value = rndNo(50, 180);
-  var radius = [-1, 1][rndNo(0, 1)] * value;
-  return {
-    x: p.x + radius * Math.cos(angle),
-    y: p.y + radius * Math.sin(angle)
-  }
 }
 
 function lerp (start, end, amt){

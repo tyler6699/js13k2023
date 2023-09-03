@@ -48,11 +48,6 @@ function Tile(id, size, x, y, angle, type, solid, column, row, scale) {
 
     this.e.update(delta);
   }
-
-  this.isTile = function(){
-    return true;
-  }
-
 }
 
 function getCurveOffset(c, r, maxCols, maxRows) {

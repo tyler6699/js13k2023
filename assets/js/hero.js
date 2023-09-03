@@ -6,12 +6,9 @@ function hero(w, h, x, y, angle, type, scale) {
   this.particles=[];
   let curTile=null;
   let prevTile=null;
-  let airTime=0;
   let speed=0;
   let maxSpeed=3.2;
   let lastDir = RIGHT;
-  let dirs={right:0,left:0,up:0,down:0}
-  let prevPos={x: this.e.x, y: this.e.y};
   let runtime=0;
   let cenX=0;
   let cenY=0;
@@ -19,7 +16,6 @@ function hero(w, h, x, y, angle, type, scale) {
   this.time=0;
   this.deaths=0;
   this.moved=false;
-  // remove this and create this.isSword, this.isHammer, this.isHand, this.isAxe
   this.tool=new entity(10, 10, x, y, 0, types.HAND, "", scale);
   this.tool.setType();
   this.wepPower=0;
@@ -30,17 +26,14 @@ function hero(w, h, x, y, angle, type, scale) {
   this.dance=false;
   this.axePower=1;
   this.hammerPower=1;
-  this.rotateTime=0;
   this.castleDst=0;
 
   // Hands
-  const swipeRadius = 30;  // The distance of the arc's radius
-  const swipeSpeed = 0.2;  // Speed at which the swipe progresses
   let theta = 0;  // This is the angle that will increase over time
   this.punchProgress = 0;
   let punch=false;
   let hState = 'idle';
-  this.hState=hState;
+  this.hState=hState; // remove
   // BODY
   this.hands = [];
   this.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
@@ -52,12 +45,6 @@ function hero(w, h, x, y, angle, type, scale) {
 
     // Controls
     if(this.active){
-      if(t()&this.rotateTime<=0){
-        cart.level.rotate=true;
-        this.rotateTime=.2;
-      } else {
-        this.rotateTime-=delta/1000;
-      }
       // Progress level
       if(this.curTile && this.curTile.progress){
         cart.nextLevel();
@@ -106,7 +93,7 @@ function hero(w, h, x, y, angle, type, scale) {
     }
 
     // HANDS CONSTANTS
-    this.punchDistance = 65;
+    this.punchDistance = 75;
     this.punchSpeed = 5;
 
     // hands move when in water
@@ -125,8 +112,7 @@ function hero(w, h, x, y, angle, type, scale) {
     this.hands[0].y= this.moved? 29 + offsin + waterY : 29 + sin + waterY;
     this.hands[1].y = 29 + sin + waterY;
 
-    // idle check
-    //if(up()||space()||one()||right()||left()) this.e.idle=0;
+    // IDLE check
     if(this.e.idle>10 || this.dance || this.moved){
       let m=Math.sin(this.time * 15)*.6;
       if(!this.moved)this.e.z+=m;
@@ -259,15 +245,12 @@ function hero(w, h, x, y, angle, type, scale) {
 
   this.kill = function(){
     if(this.active){
-      this.deaths++;
-      cart.shakeTime=.15;
-      playSound(DIEFX,1);
-      this.hp--;
-      this.active=false;
-      speed=0;
-      this.e.sy=16;
-
-      if(this.hp==0){this.hp++;}
+      // cart.shakeTime=.15;
+      // playSound(DIEFX,1);
+      // this.hp--;
+      // this.active=false;
+      // this.e.sy=16;
+      // if(this.hp==0){this.hp++;}
     }
   }
 
@@ -291,7 +274,7 @@ function hero(w, h, x, y, angle, type, scale) {
         speed=1;
         this.e.wet=true;
       } else if(curTile.e.type==types.SEA){
-        speed=.25;
+        speed=.3;
         this.e.wet=true;
       } else {
         speed=maxSpeed;
@@ -299,10 +282,6 @@ function hero(w, h, x, y, angle, type, scale) {
       }
     }
     this.curTile=curTile;
-  }
-
-  this.addDust = function(both=false){
-    runtime = 0;
   }
 
   this.setWeaponX = function(delta){
@@ -403,7 +382,6 @@ function hero(w, h, x, y, angle, type, scale) {
   }
 
   // todo add the isSword etc
-
   this.gMove = function(xx,yy, grav=false, jump=false){
     this.e.idle=0;
 
@@ -435,5 +413,4 @@ function hero(w, h, x, y, angle, type, scale) {
       return 0;
     }
   }
-
 }

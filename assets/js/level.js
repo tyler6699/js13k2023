@@ -6,7 +6,6 @@ function level(num, canvasW, canvasH, scale) {
   this.active=false;
   this.startPos=[-120, 280];
   this.cols=colz;
-  this.rotate=false;
   this.rocks=0;
   this.trees=0;
   this.complete=false;
@@ -59,12 +58,6 @@ function level(num, canvasW, canvasH, scale) {
 
     // The above only fixes the front pilar
     // Maybe put the bottom of the pilar coords into a var and just check it
-
-    if(this.rotate){
-      rotateMap90Degrees(cart, this.objs);
-      // printMap(cart);
-      this.rotate=false;
-    }
 
     if(this.mobs.length==0 && this.rocks==0 && this.trees==0){
       this.complete=true;
@@ -228,54 +221,4 @@ function level(num, canvasW, canvasH, scale) {
       tiles.push(new entity(16, 16, x + dx, y + dy - 20, 0, types.CNE, "", scale, false, 0));
     }
 };
-
-  function printMap(cart) {
-      let size = colz;
-      let mapRepresentation = "";
-
-      for (let i = 0; i < size; i++) {
-          for (let j = 0; j < size; j++) {
-              let tile = cart.level.tiles[i * size + j];
-              mapRepresentation += tile.entity.type + " ";
-          }
-          mapRepresentation += "\n";
-      }
-      console.log(mapRepresentation);
-  }
-
-  function swapTileTypes(tileA, tileB) {
-      let tempType = tileA.e.type;
-      let tempY = tileA.initialY;
-      tileA.e.type = tileB.e.type;
-      tileB.e.type = tempType;
-      tileA.e.setType();
-      tileB.e.setType();
-
-      tileA.e.z = tileB.e.z;
-  }
-
-  function rotateMap90Degrees(cart,objs) {
-    // todo loop through objects and update their X & Y based on the parent
-    let size = colz;
-
-    // Step 1: Transpose the matrix
-    for (let i = 0; i < size; i++) {
-        for (let j = i + 1; j < size; j++) {
-            let tileA = cart.level.tiles[i * size + j];
-            let tileB = cart.level.tiles[j * size + i];
-            swapTileTypes(tileA, tileB);
-        }
-    }
-
-    // Step 2: Reverse each row
-    for (let i = 0; i < size; i++) {
-        for (let j = 0; j < size / 2; j++) {
-            let tileA = cart.level.tiles[i * size + j];
-            let tileB = cart.level.tiles[i * size + (size - j - 1)];
-            swapTileTypes(tileA, tileB);
-        }
-    }
-
-  }
-
 }
