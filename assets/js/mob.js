@@ -17,7 +17,7 @@ function mob(w, h, x, y, angle, type, scale, maxHP) {
   this.facing=RIGHT;
 
   this.hit = function(delta, type, power) {
-    console.log(delta + " type: " + type + " power: " + power + " HP: " + this.e.hp);
+    this.e.hp -= 1+power;
   }
 
   this.update = function(delta) {

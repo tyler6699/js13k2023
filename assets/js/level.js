@@ -54,11 +54,15 @@ function level(num, canvasW, canvasH, scale) {
     // Maybe put the bottom of the pilar coords into a var and just check it
 
     if(this.rotate){
-      rotateMap90Degrees(cart);
+      rotateMap90Degrees(cart, this.objs);
       // printMap(cart);
       this.rotate=false;
     }
-    
+
+    if(this.mobs.length==0 && this.rocks==0 && this.trees==0){
+    this.complete=true;
+    }
+
     // When the level is complete drop the bridge
     if(this.complete && !this.bridge){
       this.bridge=true;
@@ -141,8 +145,8 @@ function level(num, canvasW, canvasH, scale) {
     let cen=findIsometricCenter(colz-1,colz-1);
 
     // Add decor
-    maxTrees=10;
-    maxRocks=5;
+    maxTrees=1;
+    maxRocks=1;
 
     this.tiles.forEach(t => {
       if(t.e.type==types.GRASS && rndNo(0,100) > 98 && (this.trees<maxTrees)){
@@ -215,23 +219,24 @@ function level(num, canvasW, canvasH, scale) {
 
   function swapTileTypes(tileA, tileB) {
       let tempType = tileA.e.type;
+      let tempY = tileA.initialY;
       tileA.e.type = tileB.e.type;
       tileB.e.type = tempType;
       tileA.e.setType();
       tileB.e.setType();
+
+      tileA.e.z = tileB.e.z;
   }
 
-  function rotateMap90Degrees(cart) {
+  function rotateMap90Degrees(cart,objs) {
     // todo loop through objects and update their X & Y based on the parent
     let size = colz;
 
     // Step 1: Transpose the matrix
     for (let i = 0; i < size; i++) {
         for (let j = i + 1; j < size; j++) {
-            // Swap tile[i][j] and tile[j][i]
             let tileA = cart.level.tiles[i * size + j];
             let tileB = cart.level.tiles[j * size + i];
-
             swapTileTypes(tileA, tileB);
         }
     }
@@ -239,13 +244,19 @@ function level(num, canvasW, canvasH, scale) {
     // Step 2: Reverse each row
     for (let i = 0; i < size; i++) {
         for (let j = 0; j < size / 2; j++) {
-            // Swap tile[i][j] and tile[i][size-j-1]
             let tileA = cart.level.tiles[i * size + j];
             let tileB = cart.level.tiles[i * size + (size - j - 1)];
-
             swapTileTypes(tileA, tileB);
         }
     }
+
+    // Update Objects
+    // objs.forEach((e) => {
+    //   if(e.parent && e.parent.e && e.parent.obj){
+    //     //console.log(e.parent.obj);
+    //     e.parent.obj.x=e.parent.e.x;
+    //   }
+    // });
   }
 
   function nearCastle(x, y, cen) {

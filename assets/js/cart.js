@@ -98,5 +98,9 @@ function Cart() {
     this.level.objs = this.level.objs.filter(function (i) {
       return i.hp >= 0;
     });
+
+    this.level.mobs = this.level.mobs.filter(function (i) {
+     return i.e.hp >= 0;
+    });
   }
 }
