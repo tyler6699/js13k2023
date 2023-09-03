@@ -14,6 +14,7 @@ function level(num, canvasW, canvasH, scale) {
   this.mobTime=0;
   this.cen=findIsometricCenter(colz-1,colz-1);
   this.respawnDelay=5;
+  this.maxMobs=20;
 
   // Isometric tileSize - Width remains the same, but height is half
   let tileWidth = 16;
@@ -91,7 +92,7 @@ function level(num, canvasW, canvasH, scale) {
 
     // SPAWNER
     this.mobTime+=delta/1000;
-    if(this.mobTime>this.respawnDelay && (this.trees>0 || this.rocks>0)){
+    if(this.mobTime>this.respawnDelay && (this.trees>0 || this.rocks>0) && this.mobs.length < this.maxMobs){
       // Add some mobs
       this.mobTime=0;
       skelly = new mob(16, 16, this.cen.x, this.cen.y, 0, types.SKELLY, mobtype.FOLLOW, scale, 10);

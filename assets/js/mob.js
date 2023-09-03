@@ -32,9 +32,9 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
     e.hands[0].x = 25;
     e.hands[1].x = 15;
 
+    let steeringForce = this.steerFromNearbyMobs(cart.level.mobs, 26);
     if(this.mtype==mobtype.FOLLOW){
       // basic follow with steering
-      let steeringForce = this.steerFromNearbyMobs(cart.level.mobs, 26);
       e.y = y < cart.hero.e.y ? y += this.spd/2 + steeringForce.y : y += -this.spd/2 + steeringForce.y;
       e.x = x < cart.hero.e.x ? x += this.spd + steeringForce.x : x += -this.spd + steeringForce.x;
     } else if(this.mtype==mobtype.RANGED){
@@ -42,7 +42,7 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
       let dist = Math.sqrt(Math.pow(this.e.x - cart.hero.e.x, 2) + Math.pow(this.e.y - cart.hero.e.y, 2));
 
       // If the distance is less than 100, move the Goblin away from the hero
-      if (dist < 100) {
+      if (dist < 110) {
           let dx = this.e.x - cart.hero.e.x;
           let dy = this.e.y - cart.hero.e.y;
 
@@ -55,9 +55,8 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
           this.e.x += dx * this.spd*.8;
           this.e.y += dy * this.spd*.8;
         } else {
-          let steeringForce = this.steerFromNearbyMobs(cart.level.mobs, 26);
-          e.y = y < cart.hero.e.y ? y += this.spd/2 + steeringForce.y : y += -this.spd/2 + steeringForce.y;
-          e.x = x < cart.hero.e.x ? x += this.spd + steeringForce.x : x += -this.spd + steeringForce.x;
+            e.y = y < cart.hero.e.y ? y += this.spd/4 + steeringForce.y : y += -this.spd/4 + steeringForce.y;
+            e.x = x < cart.hero.e.x ? x += this.spd/2 + steeringForce.x : x += -this.spd/2 + steeringForce.x;
         }
       }
 
