@@ -35,6 +35,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
   this.parent=null;
   this.wet=false;
   this.ui=false;
+  this.hands = [];
 
   // ATLAS Positions
   this.sx=0;
@@ -128,6 +129,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
           }
 
           if(this.wet) h-=2;
+          // HERO
           if(this.isHero()&&!shadow){
             // Draw the hands, hair etc, weapon
             cart.hero.hands.forEach((i) => {
@@ -180,6 +182,13 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
               ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, -yoff*h, w * s, h * s);
             } else {
               ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
+
+              // MOB HANDS
+              if(this.type==types.SKELLY){
+                this.hands.forEach((i) => {
+                    ctx.drawImage(img, i.sx, i.sy, i.width, i.height, i.x, i.y, i.width*i.scale, i.height*i.scale);
+                });
+              }
             }
           }
         }

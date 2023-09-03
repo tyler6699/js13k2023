@@ -5,16 +5,16 @@ function mob(w, h, x, y, angle, type, scale, maxHP) {
   // this.e.bow = new Bow();
   // this.e.bow.rate=rndNo(0,3)+.5-(STAGE/10);
 
-  this.bspd=150;
+  this.bspd=100;
   this.spd = .5;
   this.noX=false;
   this.noY=false;
   this.waitX=1;
   this.waitY=1;
   this.time=0;
-  this.tryXSpeed=this.spd;
-  this.tryYSpeed=this.spd;
   this.facing=RIGHT;
+  this.e.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
+  this.e.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
 
   this.hit = function(delta, type, power) {
     this.e.hp -= 1+power;
@@ -25,6 +25,12 @@ function mob(w, h, x, y, angle, type, scale, maxHP) {
     let x = this.e.x;
     let y = this.e.y;
     e = this.e;
+
+    let sin = Math.sin(this.time*500 * 0.008) * 1.7;
+    e.hands[0].y = 25+sin;
+    e.hands[1].y = 25-sin;
+    e.hands[0].x = 25;
+    e.hands[1].x = 15;
 
     // basic follow with steering
     let steeringForce = this.steerFromNearbyMobs(cart.level.mobs, 26);
