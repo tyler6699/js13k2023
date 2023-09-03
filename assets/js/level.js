@@ -14,6 +14,8 @@ function level(num, canvasW, canvasH, scale) {
   this.trees=0;
   this.complete=false;
   this.bridge=false;
+  this.mobTime=0;
+  this.cen=findIsometricCenter(colz-1,colz-1);
 
   // Isometric tileSize - Width remains the same, but height is half
   let tileWidth = 16;
@@ -76,6 +78,15 @@ function level(num, canvasW, canvasH, scale) {
           tile.initialY-=5;
         }
       }
+    }
+
+    this.mobTime+=delta/1000;
+    if(this.mobTime>3){
+      // Add some mobs
+      this.mobTime=0;
+      skelly = new mob(16, 16, this.cen.x, this.cen.y, 0, types.SKELLY, scale, 10);
+      this.mobs.push(skelly);
+      this.objs.push(skelly.e);
     }
   }
 
@@ -142,15 +153,13 @@ function level(num, canvasW, canvasH, scale) {
         }
     });
 
-    let cen=findIsometricCenter(colz-1,colz-1);
-
     // Add decor
-    maxTrees=1;
-    maxRocks=1;
+    maxTrees=2+STAGE;
+    maxRocks=1+STAGE;
 
     this.tiles.forEach(t => {
       if(t.e.type==types.GRASS && rndNo(0,100) > 98 && (this.trees<maxTrees)){
-        if(!nearCastle(t.e.x, t.e.y-t.drop-10-30, cen)){
+        if(!nearCastle(t.e.x, t.e.y-t.drop-10-30, this.cen)){
           obj = new entity(16, 23, t.e.x, t.e.y-t.drop-10-30, 0, types.TREE, "", scale, false, 2);
           obj.parent=t;
           t.obj=obj;
@@ -158,7 +167,7 @@ function level(num, canvasW, canvasH, scale) {
           this.trees++;
         }
       } else if(t.e.type==types.GRASS && rndNo(0,100) > 98 && (this.rocks<maxRocks)) {
-        if(!nearCastle(t.e.x, t.e.y-t.drop-10, cen)){
+        if(!nearCastle(t.e.x, t.e.y-t.drop-10, this.cen)){
           obj = new entity(16, 16, t.e.x, t.e.y-t.drop-10, 0, types.ROCK, "", scale, false, 4);
           obj.parent=t;
           t.obj=obj;
@@ -169,25 +178,27 @@ function level(num, canvasW, canvasH, scale) {
     });
 
     // Add some mobs
-    mob = new mob(16, 16, 60, 150, 0, types.SKELLY, scale, 10);
-    this.mobs.push(mob);
-    this.objs.push(mob.e);
+    skelly = new mob(16, 16, 60, 150, 0, types.SKELLY, scale, 10);
+    this.mobs.push(skelly);
+    this.objs.push(skelly.e);
 
     // Add a simple castle
     // Castle looks great! Very, uh, can't find the right word, but, like,
     // it means business, you know? No nonsense castle vibe, fortification lvl 99
-    buildTower(this.castle, cen.x+5, cen.y-86, 4, 0, 16, true, types.CST, true); // Back Right Tower
-    buildTower(this.castle, cen.x-10, cen.y-64, 1, 0, 16); // Back Left Wall (R)
-    buildTower(this.castle, cen.x-26, cen.y-56, 1, 0, 16); // Back Left Wall (L)
-    buildTower(this.castle, cen.x-41, cen.y-64, 4, 0, 16,true, types.CST, true); // Back Left Tower
-    buildTower(this.castle, cen.x+22, cen.y-64, 1, 0, -16, false); // Right back wall
-    buildTower(this.castle, cen.x+38, cen.y-56, 1, 0, -16, false); // Right front wall
-    buildTower(this.castle, cen.x+54, cen.y-64, 4, 0, 16,true, types.CST, true); // Front Right Tower
-    buildTower(this.castle, cen.x+38, cen.y-24, 2, 0, -16, false); // Front Right Wall (R) OPEN
-    buildTower(this.castle, cen.x+22, cen.y-18, 2, 0, -16, false); // Front Right Wall (L) OPEN
-    buildTower(this.castle, cen.x-26, cen.y-8, 3, 0, -16, false); // Front Left Wall (L) CLOSED
-    buildTower(this.castle, cen.x-10, cen.y, 3, 0, -16, false); // Front Left Wall (R) CLOSED
-    buildTower(this.castle, cen.x+6, cen.y-40, 4, 0, 16, true, types.CST, true); // Front Left Tower
+    let cx =  this.cen.x;
+    let cy =  this.cen.y;
+    buildTower(this.castle, cx+5, cy-86, 4, 0, 16, true, types.CST, true); // Back Right Tower
+    buildTower(this.castle, cx-10, cy-64, 1, 0, 16); // Back Left Wall (R)
+    buildTower(this.castle, cx-26, cy-56, 1, 0, 16); // Back Left Wall (L)
+    buildTower(this.castle, cx-41, cy-64, 4, 0, 16,true, types.CST, true); // Back Left Tower
+    buildTower(this.castle, cx+22, cy-64, 1, 0, -16, false); // Right back wall
+    buildTower(this.castle, cx+38, cy-56, 1, 0, -16, false); // Right front wall
+    buildTower(this.castle, cx+54, cy-64, 4, 0, 16,true, types.CST, true); // Front Right Tower
+    buildTower(this.castle, cx+38, cy-24, 2, 0, -16, false); // Front Right Wall (R) OPEN
+    buildTower(this.castle, cx+22, cy-18, 2, 0, -16, false); // Front Right Wall (L) OPEN
+    buildTower(this.castle, cx-26, cy-8, 3, 0, -16, false); // Front Left Wall (L) CLOSED
+    buildTower(this.castle, cx-10, cy, 3, 0, -16, false); // Front Left Wall (R) CLOSED
+    buildTower(this.castle, cx+6, cy-40, 4, 0, 16, true, types.CST, true); // Front Left Tower
   }
 
   const buildTower = (tiles, x, y, count, dx = 0, dy = 8, decrement = true, type=types.CST, tower=false) => {
