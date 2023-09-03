@@ -81,7 +81,7 @@ function level(num, canvasW, canvasH, scale) {
     }
 
     this.mobTime+=delta/1000;
-    if(this.mobTime>3){
+    if(this.mobTime>5 && this.trees>0 && this.rocks>0){
       // Add some mobs
       this.mobTime=0;
       skelly = new mob(16, 16, this.cen.x, this.cen.y, 0, types.SKELLY, scale, 10);
@@ -178,7 +178,7 @@ function level(num, canvasW, canvasH, scale) {
     });
 
     // Add some mobs
-    skelly = new mob(16, 16, 60, 150, 0, types.SKELLY, scale, 10);
+    skelly = new mob(16, 16, this.cen.x, this.cen.y, 0, types.SKELLY, scale, 10);
     this.mobs.push(skelly);
     this.objs.push(skelly.e);
 
