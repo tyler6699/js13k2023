@@ -51,6 +51,11 @@ function hero(w, h, x, y, angle, type, scale) {
 
     // Controls
     if(this.active){
+      // Progress level
+      if(this.curTile && this.curTile.progress){
+        console.log("Move to next island");
+      }
+
       if(!left() && !right() && !up() && !down()){
         speed = 0;
         runtime = 0;

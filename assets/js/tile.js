@@ -23,6 +23,7 @@ function Tile(id, size, x, y, angle, type, solid, column, row, scale) {
   if(type==types.GRASS) this.e.y -= 4;
   // Water is generated after the entities are made.
   if(type==types.SND) this.e.y +=2;
+  this.progress=false;
 
   // SEA
   this.oscillationSpeed = 0.8;  // How fast it moves up and down.

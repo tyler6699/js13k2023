@@ -73,6 +73,7 @@ function level(num, canvasW, canvasH, scale) {
         for(c=1;c<7;c++){
           let tile = getTileRC(m+r,colz-c);
           tile.e.type=types.BRDE;
+          if(c<3)tile.progress=true;
           tile.e.setType();
           tile.e.y=200;
           tile.initialY-=5;
@@ -80,8 +81,9 @@ function level(num, canvasW, canvasH, scale) {
       }
     }
 
+    // SPAWNER
     this.mobTime+=delta/1000;
-    if(this.mobTime>5 && this.trees>0 && this.rocks>0){
+    if(this.mobTime>10 && this.trees>0 && this.rocks>0){
       // Add some mobs
       this.mobTime=0;
       skelly = new mob(16, 16, this.cen.x, this.cen.y, 0, types.SKELLY, scale, 10);
