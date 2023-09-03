@@ -1,7 +1,4 @@
-colz=40;
-
 function level(num, canvasW, canvasH, scale) {
-  STAGE = num;
   this.tiles=[];
   this.objs=[];
   this.mobs=[];
@@ -16,6 +13,7 @@ function level(num, canvasW, canvasH, scale) {
   this.bridge=false;
   this.mobTime=0;
   this.cen=findIsometricCenter(colz-1,colz-1);
+  this.respawnDelay=5;
 
   // Isometric tileSize - Width remains the same, but height is half
   let tileWidth = 16;
@@ -62,7 +60,7 @@ function level(num, canvasW, canvasH, scale) {
     }
 
     if(this.mobs.length==0 && this.rocks==0 && this.trees==0){
-    this.complete=true;
+      this.complete=true;
     }
 
     // When the level is complete drop the bridge
@@ -83,7 +81,7 @@ function level(num, canvasW, canvasH, scale) {
 
     // SPAWNER
     this.mobTime+=delta/1000;
-    if(this.mobTime>10 && this.trees>0 && this.rocks>0){
+    if(this.mobTime>this.respawnDelay && this.trees>0 && this.rocks>0){
       // Add some mobs
       this.mobTime=0;
       skelly = new mob(16, 16, this.cen.x, this.cen.y, 0, types.SKELLY, scale, 10);
@@ -156,8 +154,8 @@ function level(num, canvasW, canvasH, scale) {
     });
 
     // Add decor
-    maxTrees=2+STAGE;
-    maxRocks=1+STAGE;
+    maxTrees=2+id;
+    maxRocks=1+id;
 
     this.tiles.forEach(t => {
       if(t.e.type==types.GRASS && rndNo(0,100) > 98 && (this.trees<maxTrees)){

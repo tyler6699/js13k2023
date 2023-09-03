@@ -29,21 +29,29 @@ function Cart() {
   this.genLevel = function(num){
     this.levels = []; // Array to get tiles surrounding an entity
 
-    var lvl = new level(1, canvasW, canvasH, this.scale);
-    lvl.reset(1, this.scaled);
-    this.levels.push(lvl);
-
-    // TODO Function this
-    this.level = this.levels[0];
-    this.hero.e.curLevel = 0;
-    this.hero.e.x=this.level.startPos[0];
-    this.hero.e.y=this.level.startPos[1];
+    for(let i=1;i<=10;i++){
+      var lvl = new level(1, canvasW, canvasH, this.scale);
+      lvl.reset(i, this.scaled);
+      this.levels.push(lvl);
+    }
   }
 
+  this.setLevel = function(stage){
+    this.level = this.levels[stage];
+    this.hero.e.curLevel = stage;
+    this.hero.e.x=this.level.startPos[0];
+    this.hero.e.y=this.level.startPos[1];
+    this.level.objs.push(this.hero.e);
+  }
+
+  this.nextLevel  = function(){
+    this.setLevel(STAGE);
+    STAGE++;
+  }
+
+  // Set up levels and start at level 1
   this.genLevel(0);
-  this.level.objs.push(this.hero.e);
-  // Changing the number of columns changes the surrounding tiles array.
-  var c = this.levels[this.hero.e.curLevel].cols;
+  this.setLevel(0);
 
   // UI
   this.menu = new menu();

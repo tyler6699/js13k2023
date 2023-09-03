@@ -19,8 +19,6 @@ function hero(w, h, x, y, angle, type, scale) {
   let offScreen=false;
   this.time=0;
   this.deaths=0;
-  this.done=false;
-  this.changeLevel=false;
   this.moved=false;
   // remove this and create this.isSword, this.isHammer, this.isHand, this.isAxe
   this.tool=new entity(10, 10, x, y, 0, types.HAND, "", scale);
@@ -54,6 +52,7 @@ function hero(w, h, x, y, angle, type, scale) {
       // Progress level
       if(this.curTile && this.curTile.progress){
         console.log("Move to next island");
+        cart.nextLevel();
       }
 
       if(!left() && !right() && !up() && !down()){

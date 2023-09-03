@@ -20,6 +20,7 @@ let RELOAD=false;
 let COL1 = "990099";
 let WIN = false;
 let STAGE=1;
+colz=40+(STAGE*2);
 let atlas = new Image();
 atlas.src = "atlas.png";
 let shaky = true;
@@ -139,6 +140,8 @@ function updateGameArea() {
     if(cart.hero.curTile){
       writeTxt(ctx, 1, font,"WHITE","Row: " + cart.hero.curTile.row + " Col: " + cart.hero.curTile.column, 10, 400);
     }
+    writeTxt(ctx, 1, font,"WHITE","STAGE: " + STAGE, 10, 450);
+
     let lvl=cart.hero.e.curLevel;
 
     // Music
