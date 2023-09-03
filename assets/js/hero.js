@@ -201,7 +201,6 @@ function hero(w, h, x, y, angle, type, scale) {
       cart.level.objs.forEach((i) => {
         if(i.type!=types.HERO && !this.attackOver){
           if(rectColiding(hb, i.hb)){
-            console.log(i.type);
             switch(i.type){
               case types.TREE:
                 if(this.tool.type==types.AX)i.hp--;
@@ -256,19 +255,8 @@ function hero(w, h, x, y, angle, type, scale) {
     if(this.moved){
       prevTile=curTile;
       // Convert hero's Cartesian position to grid position
-      const gridX = (this.e.x) / scaled;
-      const gridY = (this.e.y+this.e.height*2+this.e.z) / scaled * 2;
+      curTile=getTile(this.e.x,this.e.y,this.e.height,this.e.z);
 
-      // Convert this grid position to isometric grid position based on your setup
-      const isoGridRow = gridY - gridX;
-      const isoGridCol = gridX + gridY;
-
-      heroRow = Math.floor(isoGridRow);
-      heroCol = Math.floor(isoGridCol);
-
-      heroTileIndex = heroCol + (cart.levels[this.e.curLevel].cols * heroRow);
-
-      curTile = cart.level.tiles[heroTileIndex];
       // Deal with the elevation
       if (curTile && prevTile && curTile.id !== prevTile.id) {
           // Changed Tiles
@@ -290,6 +278,7 @@ function hero(w, h, x, y, angle, type, scale) {
         this.e.wet=false;
       }
     }
+    this.curTile=curTile;
   }
 
   this.addDust = function(both=false){

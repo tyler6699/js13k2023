@@ -136,6 +136,7 @@ function updateGameArea() {
 
     writeTxt(ctx, 1, font,"WHITE","Level: " + (cart.hero.e.curLevel+1), 10, 100);
     writeTxt(ctx, 1, font,"WHITE","Castle Resources:", 10, 140);
+    writeTxt(ctx, 1, font,"WHITE","Row: " + cart.hero.curTile.row + " Col: " + cart.hero.curTile.column, 10, 160);
 
     let lvl=cart.hero.e.curLevel;
 

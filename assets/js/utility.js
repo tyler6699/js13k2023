@@ -84,3 +84,21 @@ function findIsometricCenter(numColumns, numRows) {
     // Calculating the pixel coordinates of the center tile
     return { x: (cenX - cenY) * size / 2, y: (cenX + cenY) * size / 2 };
 }
+
+function getTile(x,y,h,offY){
+  let gridX = x / 32;
+  let gridY = (y+h*2+offY) / 32 * 2;
+
+  // Convert this grid position to isometric grid position based on your setup
+  let isoRow = gridY - gridX;
+  let isoCol = gridX + gridY;
+
+  r = Math.floor(isoRow);
+  c = Math.floor(isoCol);
+
+  return getTileRC(r,c);
+}
+
+function getTileRC(r,c){
+  return cart.level.tiles[c + (cart.levels[cart.hero.e.curLevel].cols * r)];
+}

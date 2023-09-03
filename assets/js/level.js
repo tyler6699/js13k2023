@@ -12,11 +12,12 @@ function level(num, canvasW, canvasH, scale) {
   this.rotate=false;
   this.rocks=0;
   this.trees=0;
+  this.complete=false;
+  this.bridge=false;
 
   // Isometric tileSize - Width remains the same, but height is half
   let tileWidth = 16;
   let tileHeight = 8;
-
   let levelArray;
   let mvd = 0;
 
@@ -56,6 +57,21 @@ function level(num, canvasW, canvasH, scale) {
       rotateMap90Degrees(cart);
       // printMap(cart);
       this.rotate=false;
+    }
+    
+    // When the level is complete drop the bridge
+    if(this.complete && !this.bridge){
+      this.bridge=true;
+      let m=colz/2;
+      for(r=0;r<3;r++){
+        for(c=1;c<7;c++){
+          let tile = getTileRC(m+r,colz-c);
+          tile.e.type=types.BRDE;
+          tile.e.setType();
+          tile.e.y=200;
+          tile.initialY-=5;
+        }
+      }
     }
   }
 
