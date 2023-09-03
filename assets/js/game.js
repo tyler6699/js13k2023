@@ -226,6 +226,10 @@ function four() {
   return mg.keys && (mg.keys[FOUR]);
 }
 
+function t() {
+  return mg.keys && (mg.keys[T]);
+}
+
 function setclicks(){
   clickedAt.set(mousePos.x, mousePos.y);
   clickedRec.x=mousePos.x-5;

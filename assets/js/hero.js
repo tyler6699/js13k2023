@@ -31,6 +31,7 @@ function hero(w, h, x, y, angle, type, scale) {
   this.dance=false;
   this.axePower=1;
   this.hammerPower=1;
+  this.rotateTime=0;
 
   // Hands
   const swipeRadius = 30;  // The distance of the arc's radius
@@ -51,6 +52,12 @@ function hero(w, h, x, y, angle, type, scale) {
 
     // Controls
     if(this.active){
+      if(t()&this.rotateTime<=0){
+        cart.level.rotate=true;
+        this.rotateTime=.2;
+      } else {
+        this.rotateTime-=delta/1000;
+      }
       // Progress level
       if(this.curTile && this.curTile.progress){
         console.log("Move to next island");
