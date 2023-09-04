@@ -180,11 +180,22 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
             } else {
               ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
 
-              // MOB HANDS
+              // MOB
               if(this.type==types.SKELLY){
                 this.hands.forEach((i) => {
                     ctx.drawImage(img, i.sx, i.sy, i.width, i.height, i.x, i.y, i.width*i.scale, i.height*i.scale);
                 });
+              }
+
+              if(this.type==types.SKELLY || this.type==types.GOB){
+                // HP
+                //Draw HP
+                //if(this.hp < this.maxHP){
+                  ctx.globalAlpha = .7;
+                  ctx.fillRect(8, -15, 26, 10);
+                  ctx.fillStyle = "#00dcf8";
+                  ctx.fillRect(10, -13, (22/this.maxHP)*this.hp, 6);
+                //}
               }
             }
           }

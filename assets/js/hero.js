@@ -219,10 +219,12 @@ function hero(w, h, x, y, angle, type, scale) {
               case types.SKELLY:
                 i.parent.hit(delta, this.tool.type, this.wepPower);
                 cart.shakeTime=.1;
+                this.attackOver=true;
                 break;
               case types.GOB:
                 i.parent.hit(delta, this.tool.type, this.wepPower);
                 cart.shakeTime=.1;
+                this.attackOver=true;
                 break;
             }
           }

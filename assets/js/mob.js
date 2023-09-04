@@ -62,12 +62,6 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
           this.e.flip=false;
     }
 
-    //Draw HP
-    //if(e.hp < e.maxHP){
-      // drawImg(ctx, e.image, 0, 32, 16, 8, e.x, e.y+(64+10), .8, e.scale);
-      // drawRect(ctx, e.x, e.y+(64+8),16,14,(48/e.maxHP)*e.hp,12,"#00dcf8",.8)
-    //}
-
     // SHOOTING ARROWS and Attacks
     //this.e.gun.addBullets(this.e.x+32,this.e.y+32,cart.hero.e.x+32,cart.hero.e.y+32,true,this.e.type, this.bspd);
     //this.e.gun.drawBullets(delta, true);
