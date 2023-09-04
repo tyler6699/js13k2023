@@ -203,6 +203,10 @@ function hero(w, h, x, y, angle, type, scale) {
               case types.TREE:
                 if(this.tool.type==types.AX){
                   i.hp-=this.axePower;
+                  if(i.hp<=0){
+                    cart.level.dead.push(i);
+                    // cart.level.decor.push(); grave stones
+                  }
                   this.attackOver=true;
                 }
                 cart.shakeTime=.15;
@@ -220,11 +224,13 @@ function hero(w, h, x, y, angle, type, scale) {
                 i.parent.hit(delta, this.tool.type, this.wepPower);
                 cart.shakeTime=.1;
                 this.attackOver=true;
+                if(i.parent.e.hp<=0)cart.level.dead.push(i.parent);
                 break;
               case types.GOB:
                 i.parent.hit(delta, this.tool.type, this.wepPower);
                 cart.shakeTime=.1;
                 this.attackOver=true;
+                if(i.parent.e.hp<=0)cart.level.dead.push(i.parent);
                 break;
             }
           }

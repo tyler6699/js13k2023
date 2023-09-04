@@ -145,7 +145,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
               // Draw power up
               let f=cart.hero.wepPower<10;
               // Patch the issue rather than fixing :D
-              let arcX = cart.hero.facing==RIGHT?w*s-10:w*s-20;
+              let arcX=cart.hero.facing==RIGHT?w*s-10:w*s-20;
               let arcY= -h+10;
 
               // Draw the arc
@@ -190,7 +190,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
               if(this.type==types.SKELLY || this.type==types.GOB || this.type==types.ROCK || this.type==types.TREE){
                 // HP
                 //Draw HP
-                if(this.hp < this.maxHP){
+                if(this.hp < this.maxHP && this.alpha==1){
                   ctx.globalAlpha = .7;
                   ctx.fillRect(8, -15, 26, 10);
                   ctx.fillStyle = this.type==types.ROCK? "#ededed" : "#00dcf8";

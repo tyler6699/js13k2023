@@ -14,6 +14,7 @@ function level(num, canvasW, canvasH, scale) {
   this.cen=findIsometricCenter(colz-1,colz-1);
   this.respawnDelay=8;
   this.maxMobs=20;
+  this.dead=[];
 
   // Isometric tileSize - Width remains the same, but height is half
   let tileWidth = 16;
@@ -96,12 +97,18 @@ function level(num, canvasW, canvasH, scale) {
       this.mobs.push(gob);
       this.objs.push(gob.e);
     }
+
+    // Dead mobs
+    this.dead.forEach((d, i) => {
+      d.update(delta);
+      d.e.update(delta);
+    });
   }
 
   this.reset = function(id, scaled) {
     console.log("Generate Level: " + id);
     this.tiles = [];
-    this.dTiles = [];
+    this.dead = [];
     mvd = 0;
     let trigger = false;
     let t = 0;
@@ -184,11 +191,6 @@ function level(num, canvasW, canvasH, scale) {
         }
       }
     });
-
-    // Add some mobs
-    skelly = new mob(16, 16, this.cen.x, this.cen.y, 0, types.SKELLY, mobtype.FOLLOW, scale, 10);
-    this.mobs.push(skelly);
-    this.objs.push(skelly.e);
 
     // Add a simple castle
     // Castle looks great! Very, uh, can't find the right word, but, like,

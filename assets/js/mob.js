@@ -22,45 +22,52 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
     let y = this.e.y;
     e = this.e;
 
-    let sin = Math.sin(this.time*500 * 0.008) * 1.7;
-    e.hands[0].y = 25+sin;
-    e.hands[1].y = 25-sin;
-    e.hands[0].x = 25;
-    e.hands[1].x = 15;
-
-    let steerPow = this.steerFromNearbyMobs(cart.level.mobs, 26);
-    if(this.mtype==mobtype.FOLLOW){
-      // basic follow with steering
-      e.y = y < cart.hero.e.y ? y += this.spd/2 + steerPow.y : y += -this.spd/2 + steerPow.y;
-      e.x = x < cart.hero.e.x ? x += this.spd + steerPow.x : x += -this.spd + steerPow.x;
-    } else if(this.mtype==mobtype.RANGED){
-      // Check the distance between the Goblin and the hero
-      let dist = Math.sqrt(Math.pow(this.e.x - cart.hero.e.x, 2) + Math.pow(this.e.y - cart.hero.e.y, 2));
-
-      // If the distance is less than 100, move the Goblin away from the hero
-      if (dist < 120) {
-          let dx = this.e.x - cart.hero.e.x;
-          let dy = this.e.y - cart.hero.e.y;
-
-          // Normalize the direction vector
-          let mag = Math.sqrt(dx * dx + dy * dy);
-          dx /= mag;
-          dy /= mag;
-
-          // Move the Goblin away from the hero
-          this.e.x += dx * this.spd*.8;
-          this.e.y += dy * this.spd*.8;
-        } else {
-            e.y = y < cart.hero.e.y ? y += this.spd/4 + steerPow.y : y += -this.spd/4 + steerPow.y;
-            e.x = x < cart.hero.e.x ? x += this.spd/2 + steerPow.x : x += -this.spd/2 + steerPow.x;
-        }
-      }
-
-    if(this.e.x > cart.hero.e.x){
-          this.e.flip=true;
+    if(e.hp<=0){ // dead
+      e.x-= Math.cos(this.time*1000 * 0.008)*2;
+      e.y-=0.7;
+      e.alpha=e.alpha-0.03>0?e.alpha-=0.03:0;
     } else {
-          this.e.flip=false;
+      let sin = Math.sin(this.time*500 * 0.008) * 1.7;
+      e.hands[0].y = 25+sin;
+      e.hands[1].y = 25-sin;
+      e.hands[0].x = 25;
+      e.hands[1].x = 15;
+
+      let steerPow = this.steerFromNearbyMobs(cart.level.mobs, 26);
+      if(this.mtype==mobtype.FOLLOW){
+        // basic follow with steering
+        e.y = y < cart.hero.e.y ? y += this.spd/2 + steerPow.y : y += -this.spd/2 + steerPow.y;
+        e.x = x < cart.hero.e.x ? x += this.spd + steerPow.x : x += -this.spd + steerPow.x;
+      } else if(this.mtype==mobtype.RANGED){
+        // Check the distance between the Goblin and the hero
+        let dist = Math.sqrt(Math.pow(this.e.x - cart.hero.e.x, 2) + Math.pow(this.e.y - cart.hero.e.y, 2));
+
+        // If the distance is less than 100, move the Goblin away from the hero
+        if (dist < 120) {
+            let dx = this.e.x - cart.hero.e.x;
+            let dy = this.e.y - cart.hero.e.y;
+
+            // Normalize the direction vector
+            let mag = Math.sqrt(dx * dx + dy * dy);
+            dx /= mag;
+            dy /= mag;
+
+            // Move the Goblin away from the hero
+            this.e.x += dx * this.spd*.8;
+            this.e.y += dy * this.spd*.8;
+          } else {
+              e.y = y < cart.hero.e.y ? y += this.spd/4 + steerPow.y : y += -this.spd/4 + steerPow.y;
+              e.x = x < cart.hero.e.x ? x += this.spd/2 + steerPow.x : x += -this.spd/2 + steerPow.x;
+          }
+        }
+
+      if(this.e.x > cart.hero.e.x){
+            this.e.flip=true;
+      } else {
+            this.e.flip=false;
+      }
     }
+
 
     // SHOOTING ARROWS and Attacks
     //this.e.gun.addBullets(this.e.x+32,this.e.y+32,cart.hero.e.x+32,cart.hero.e.y+32,true,this.e.type, this.bspd);
