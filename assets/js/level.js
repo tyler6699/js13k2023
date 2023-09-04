@@ -15,6 +15,7 @@ function level(num, canvasW, canvasH, scale) {
   this.respawnDelay=8;
   this.maxMobs=20;
   this.dead=[];
+  this.decor=[];
 
   // Isometric tileSize - Width remains the same, but height is half
   let tileWidth = 16;
@@ -28,6 +29,12 @@ function level(num, canvasW, canvasH, scale) {
     this.objs.sort((a, b) => a.y - b.y);
     this.rocks=0;
     this.trees=0;
+
+    // Graves and other decorations
+    this.decor.forEach((e) => {
+      e.update(delta);
+    });
+    
     this.objs.forEach((e) => {
         e.update(delta);
         e.update(delta,true);
@@ -50,15 +57,8 @@ function level(num, canvasW, canvasH, scale) {
         hero.tool.update(delta);
     }
 
-    // TODO: if the hero is in front of any of the objects then draw the HERO
-    // Putting these blocks and sorting them will probably be a pain as we
-    // want them stacked
-
-    // Sort this mess out!!
+    // Draw hero in front of castle, it is what it is! #wontfix
     if(hero.e.y>290&&nearCastle(hero.e.x, hero.e.y,this.cen)) hero.e.update(delta);
-
-    // The above only fixes the front pilar
-    // Maybe put the bottom of the pilar coords into a var and just check it
 
     if(this.mobs.length==0 && this.rocks==0 && this.trees==0){
       this.complete=true;
@@ -67,6 +67,8 @@ function level(num, canvasW, canvasH, scale) {
     for (let i = 0; i < this.mobs.length; i++) {
       this.mobs[i].update(delta, this.mobs);
     }
+
+    cart.level.decor
 
     // When the level is complete drop the bridge
     if(this.complete && !this.bridge){
@@ -168,7 +170,7 @@ function level(num, canvasW, canvasH, scale) {
         }
     });
 
-    // Add decor
+    // Add resources
     maxTrees=2+id;
     maxRocks=1+id;
 
