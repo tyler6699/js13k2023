@@ -190,12 +190,12 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
               if(this.type==types.SKELLY || this.type==types.GOB){
                 // HP
                 //Draw HP
-                //if(this.hp < this.maxHP){
+                if(this.hp < this.maxHP){
                   ctx.globalAlpha = .7;
                   ctx.fillRect(8, -15, 26, 10);
                   ctx.fillStyle = "#00dcf8";
                   ctx.fillRect(10, -13, (22/this.maxHP)*this.hp, 6);
-                //}
+                }
               }
             }
           }
