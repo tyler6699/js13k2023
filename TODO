@@ -19,14 +19,21 @@ Graphics
 UI
   - Intro screen
   - Player UI (stats)
+    - Weapon power
+    - Speed
+    - HP
 
 HERO
   - Add HP
+  - Extend the punch (Goes further, extend the Hitbox when it is thrown)
   - Add upgrades
     - this.axePower=1;
     - this.hammerPower=1;
   - Speed from 3.2 ++
   - Shield?
+  - Add mana
+  - Add Helmet
+  - Add AOE attack (Drains mana, spins sword around body 360)
 
 Sounds
   - Walk
@@ -37,11 +44,12 @@ Sounds
 
 Particles
   - Blood spray on hits
-  - Dust or foot prints
+  - Add Foot prints when running
 
 Enemies
   - Slimes
   - Boss?
+  - Add LERP to knockback
 
 Weapons
  - Axe only hurt trees and do not count as a hit if they hit an enemy?
