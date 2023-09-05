@@ -2,8 +2,8 @@
 TODO List
 ------------------------------------------------------------------------------------
 
+Loop stuff
 this.objs.forEach((e) => {
-
 });
 
 grunt and use https://lifthrasiir.github.io/roadroller/
@@ -12,25 +12,21 @@ https://www.imagerecycle.com/?atid=79
 https://tinypng.com/
 https://compressor.io/
 
-graphics
+Graphics
   - Search for // Make grass dark
   - Can we make grass darker and use less images?
+
 UI
   - Intro screen
   - Player UI (stats)
 
-General
-  - Add the bottom later of objects of the castle to the obj array to stop the hero walking through the castle
-  - While trees and rocks are available the mobs keep spawning
-  - Beating a level creates a bridge over to a new island
-
 HERO
-  - Slowly, you die in the sea
   - Add HP
   - Add upgrades
-  - this.axePower=1;
-  - this.hammerPower=1;
+    - this.axePower=1;
+    - this.hammerPower=1;
   - Speed from 3.2 ++
+  - Shield?
 
 Sounds
   - Walk
@@ -42,13 +38,10 @@ Sounds
 Particles
   - Blood spray on hits
   - Dust or foot prints
-  - hitting the caste
-  = Show damage on hitting an enemy
 
 Enemies
   - Slimes
   - Boss?
-  -- Add a grave stone
 
 Weapons
  - Axe only hurt trees and do not count as a hit if they hit an enemy?
