@@ -12,7 +12,7 @@ function level(num, canvasW, canvasH, scale) {
   this.bridge=false;
   this.mobTime=0;
   this.cen=findIsometricCenter(colz-1,colz-1);
-  this.respawnDelay=8;
+  this.respawnDelay=10;
   this.maxMobs=20;
   this.dead=[];
   this.decor=[];
@@ -33,8 +33,9 @@ function level(num, canvasW, canvasH, scale) {
     // Graves and other decorations
     this.decor.forEach((e) => {
       e.update(delta);
+      e.update(delta,true);
     });
-    
+
     this.objs.forEach((e) => {
         e.update(delta);
         e.update(delta,true);
@@ -67,8 +68,6 @@ function level(num, canvasW, canvasH, scale) {
     for (let i = 0; i < this.mobs.length; i++) {
       this.mobs[i].update(delta, this.mobs);
     }
-
-    cart.level.decor
 
     // When the level is complete drop the bridge
     if(this.complete && !this.bridge){

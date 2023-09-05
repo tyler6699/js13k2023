@@ -1,6 +1,6 @@
 function hero(w, h, x, y, angle, type, scale) {
   this.e = new entity(w, h, x, y, angle, type, "", scale, false, 100);
-  this.e.z = 24; // Hero always starts on raised ground. Calculate this if island layout changes
+  this.e.z = 12; // Hero always starts on raised ground. Calculate this if island layout changes
   this.active=true;
   this.hp=2;
   this.particles=[];
@@ -218,15 +218,16 @@ function hero(w, h, x, y, angle, type, scale) {
                 break;
               case types.SKELLY:
                 i.parent.hit(delta, this.tool.type, this.wepPower);
-                cart.shakeTime=.1;
+                cart.shakeTime=.2;
                 this.attackOver=true;
                 if(i.parent.e.hp<=0){
                   cart.level.dead.push(i.parent);
                 }
+                 applyKnockback(this, i.parent.e, this.wepPower);
                 break;
               case types.GOB:
                 i.parent.hit(delta, this.tool.type, this.wepPower);
-                cart.shakeTime=.1;
+                cart.shakeTime=.2;
                 this.attackOver=true;
                 if(i.parent.e.hp<=0){
                   cart.level.dead.push(i.parent);

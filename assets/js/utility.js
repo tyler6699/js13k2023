@@ -86,3 +86,18 @@ function nearCastle(x, y, cen) {
 
   return x >= tl[0] && x <= br[0] && y >= tl[1] && y <= br[1];
 }
+
+function applyKnockback(hero, entity, wepPower) {
+    let push = 25 + wepPower;
+    let dx = entity.x - hero.e.x;
+    let dy = entity.y - hero.e.y;
+    let length = Math.sqrt(dx * dx + dy * dy);
+
+    if (length !== 0) { // To prevent division by zero
+        dx /= length;
+        dy /= length;
+    }
+
+    entity.x += dx * push;
+    entity.y += dy * push;
+}
