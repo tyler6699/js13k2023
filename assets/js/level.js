@@ -13,7 +13,7 @@ function level(num, canvasW, canvasH, scale) {
   this.mobTime=0;
   this.cen=findIsometricCenter(colz-1,colz-1);
   this.respawnDelay=10;
-  this.maxMobs=20;
+  this.maxMobs=10;
   this.dead=[];
   this.decor=[];
 
@@ -184,7 +184,7 @@ function level(num, canvasW, canvasH, scale) {
         }
       } else if(t.e.type==types.GRASS && rndNo(0,100) > 98 && (this.rocks<maxRocks)) {
         if(!nearCastle(t.e.x, t.e.y-t.drop-10, this.cen)){
-          obj = new entity(16, 16, t.e.x, t.e.y-t.drop-10, 0, types.ROCK, "", scale, false, 4);
+          obj = new entity(16, 16, t.e.x, t.e.y-t.drop-10, 0, types.ROCK, "", scale, false, 3);
           obj.parent=t;
           t.obj=obj;
           this.objs.push(obj);

@@ -2,7 +2,6 @@ function hero(w, h, x, y, angle, type, scale) {
   this.e = new entity(w, h, x, y, angle, type, "", scale, false, 100);
   this.e.z = 12; // Hero always starts on raised ground. Calculate this if island layout changes
   this.active=true;
-  this.hp=2;
   this.particles=[];
   let curTile=null;
   let prevTile=null;
@@ -192,9 +191,13 @@ function hero(w, h, x, y, angle, type, scale) {
 
     // Check if we have attacked anything
     if(this.attackTime>0 || this.punchProgress > 0){
-      // move to a persistant object
-      let xoff=lastDir==RIGHT?20:-20;
-      hb=new rectanlge(this.e.x+xoff, this.e.y,this.e.width, this.e.height);
+      if(lastDir==RIGHT){
+         xtra=this.tool.type==types.HAND?25:0;
+        hb=new rectanlge(this.e.x+16, this.e.y-10,33+xtra, 35);
+      } else {
+        xtra=this.tool.type==types.HAND?35:0;
+        hb=new rectanlge(this.e.x-15-xtra, this.e.y-10,33+xtra, 35);
+      }
 
       cart.level.objs.forEach((i) => {
         if(i.type!=types.HERO && !this.attackOver){
@@ -248,7 +251,6 @@ function hero(w, h, x, y, angle, type, scale) {
   this.reset = function(){
     this.done=false;
     this.particles=[];
-    this.hp=2;
     let lvl=cart.levels[this.e.curLevel];
     this.e.x=lvl.startPos[0];
     this.e.y=lvl.startPos[1];

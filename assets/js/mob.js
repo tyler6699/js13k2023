@@ -6,7 +6,7 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
   // this.e.bow.rate=rndNo(0,3)+.5-(STAGE/10);
 
   this.bspd=100;
-  this.spd = .5;
+  this.spd = .3;
   this.time=0;
   this.facing=RIGHT;
   this.e.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));

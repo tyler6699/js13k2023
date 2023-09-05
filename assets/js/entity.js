@@ -139,7 +139,6 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
             }
 
             ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
-
             if(cart.hero.renderPower){
               ctx.globalAlpha = cart.hero.wepPower>2?cart.hero.wepPower/10:0;
               // Draw power up
@@ -167,6 +166,16 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
               ctx.strokeStyle = gradient;
               ctx.stroke();
             }
+
+            // testing
+            //ctx.drawImage(img, 0, 32, 16, 16, 33, 10, 33, 35);
+
+            // if(lastDir==RIGHT){
+            //   hb=new rectanlge(this.e.x+10, this.e.y+3,this.e.width+10+xtra, this.e.height+3);
+            // } else {
+            //   hb=new rectanlge(this.e.x-10, this.e.y+3,this.e.width+10+xtra, this.e.height+3);
+            // }
+            // test
           } else {
             // Where all entities get drawn
             if(shadow){

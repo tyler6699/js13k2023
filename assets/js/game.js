@@ -138,7 +138,7 @@ function updateGameArea() {
     writeTxt(ctx, 1, font,"WHITE","Level: " + (cart.hero.e.curLevel+1), 10, 100);
     writeTxt(ctx, 1, font,"WHITE","Castle Resources:", 10, 140);
     if(cart.hero.curTile){
-      writeTxt(ctx, 1, font,"WHITE","Row: " + cart.hero.curTile.row + " Col: " + cart.hero.curTile.column, 10, 400);
+      writeTxt(ctx, 1, font,"WHITE","HP: " + cart.hero.e.hp, 10, 400);
     }
     writeTxt(ctx, 1, font,"WHITE","STAGE: " + STAGE, 10, 450);
 
