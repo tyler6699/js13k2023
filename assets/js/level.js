@@ -8,11 +8,12 @@ function level(num, canvasW, canvasH, scale) {
   this.cols=colz;
   this.rocks=0;
   this.trees=0;
+  this.mobs;
   this.complete=false;
   this.bridge=false;
   this.mobTime=0;
   this.cen=findIsometricCenter(colz-1,colz-1);
-  this.respawnDelay=5;
+  this.respawnDelay=10;
   this.maxMobs=10;
   this.dead=[];
   this.decor=[];
@@ -29,7 +30,7 @@ function level(num, canvasW, canvasH, scale) {
 
   // Setup levels
   switch(num){
-    case 1:
+    case 1: // Learn Axe
       this.tip="Use the Axe (3) to cut (space) down the trees.";
       this.tip2="Good job! Cross the bridge!!";
       this.maxMobs=0;
@@ -37,7 +38,7 @@ function level(num, canvasW, canvasH, scale) {
       this.maxRocks=0;
       this.allowGobs=false;
       break;
-    case 2:
+    case 2: // Learn Hammer
       this.tip="Use the Hammer (2) to break (Space) the rock.";
       this.tip2="Clearing resources stops a castle spawning mobs!";
       this.maxMobs=0;
@@ -45,13 +46,17 @@ function level(num, canvasW, canvasH, scale) {
       this.maxRocks=1;
       this.allowGobs=false;
       break;
-    case 3:
-      this.tip="Attack using Sword (1) or Hand (4) to defeat the mob (press / hold space)";
-      this.tip2="Holding and charging up attacks deals more damage!";
+    case 3: // Learn Fight
+      this.tip="Attack with Sword (1) or fist (4) - (press / hold space)";
+      this.tip2="Hold space to charging up attacks!";
       this.maxMobs=1;
       this.maxTrees=1;
       this.maxRocks=0;
       this.allowGobs=false;
+      this.respawnDelay=20;
+      skelly = new mob(16, 16, this.cen.x, this.cen.y, 0, types.SKELLY, mobtype.FOLLOW, scale, 10);
+      this.mobs.push(skelly);
+      this.objs.push(skelly.e);
       break;
     case 4:
       this.tip="Looks like you are ready to battle!";
@@ -87,8 +92,8 @@ function level(num, canvasW, canvasH, scale) {
       this.objs.forEach((e) => {
           e.update(delta);
           e.update(delta,true);
-          if(e.type==types.ROCK)this.rocks++;
-          if(e.type==types.TREE)this.trees++;
+          if(e.type==types.ROCK && e.hp >= 0)this.rocks++;
+          if(e.type==types.TREE && e.hp >= 0)this.trees++;
       });
 
       // make castle transparent to check insaide for mobs

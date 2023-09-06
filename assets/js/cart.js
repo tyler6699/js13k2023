@@ -60,6 +60,7 @@ function Cart() {
   // Render & Logic
   this.update = function(delta, time, intro=false) {
     this.time+=delta/1000;
+
     if(resize){
       resize=false;
       ctx.scale(this.ratio,this.ratio);
@@ -79,18 +80,32 @@ function Cart() {
       // MOUSE
       //mg.canvas.style.cursor='none';
       // Render Menu
+      drawBox(ctx,0.8,"black",0,0,canvasW,75);
+
+      if(this.level.tip){
+        font="25px Papyrus";
+        drawBox(ctx,0.8,"black",0,canvasH-100,canvasW,100)
+        if(cart.level.complete){
+          writeTxt(ctx, 1, font,"WHITE",this.level.tip2, 20, canvasH-10);
+        } else {
+          writeTxt(ctx, 1, font,"WHITE",this.level.tip, 20, canvasH-10);
+        }
+      }
+      font = "30px Papyrus";
+      writeTxt(ctx, 1, font,"WHITE","[M] Music: " + !pause, canvasW-230, canvasH-10);
+
       this.menu.ui.forEach(e => e.update(delta));
       this.menu.tick();
 
       // Draw resources
-      for(i=0;i<this.level.trees;i++){
-        this.menu.tree.x=8+(i*30);
-        this.menu.tree.y=150;
+      for(i=1;i<=this.level.trees;i++){
+        this.menu.tree.x=canvasW-(i*30);
+        this.menu.tree.y=18;
         this.menu.tree.update(delta);
       }
-      for(i=0;i<this.level.rocks;i++){
-        this.menu.rock.x=8+(i*30);
-        this.menu.rock.y=190;
+      for(i=1;i<this.level.rocks;i++){
+        this.menu.rock.x=canvasW-(i*30);
+        this.menu.rock.y=45;
         this.menu.rock.update(delta);
       }
     } else {
@@ -105,13 +120,16 @@ function Cart() {
     this.cam.x = lerp(-this.hero.e.x + (totalWidth/2)-20,this.cam.x ,.8);
     this.cam.y = lerp(-this.hero.e.y + (totalHeight/2)-80,this.cam.y ,.8);
 
+    // TODO - Cannot trust the filter!
+    // Loop and do a count
+
     // remove objects
     this.level.objs = this.level.objs.filter(function (i) {
       return i.hp >= 0;
     });
 
     this.level.dead = this.level.dead.filter(function (i) {
-      return i.e.alpha > 0;
+      return i.e.alpha >= 0;
     });
 
     this.level.mobs = this.level.mobs.filter(function (i) {
