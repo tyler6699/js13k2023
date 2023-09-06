@@ -12,10 +12,6 @@ https://www.imagerecycle.com/?atid=79
 https://tinypng.com/
 https://compressor.io/
 
-Graphics
-  - Search for // Make grass dark
-  - Can we make grass darker and use less images?
-
 UI
   - Intro screen
   - Player UI (stats)
@@ -25,14 +21,13 @@ UI
 
 HERO
   - Add HP
-  - Extend the punch (Goes further, extend the Hitbox when it is thrown)
   - Add upgrades
     - this.axePower=1;
     - this.hammerPower=1;
   - Speed from 3.2 ++
   - Shield?
   - Add mana
-  - Add Helmet
+  - Add Helmet (Goblin Head)
   - Add AOE attack (Drains mana, spins sword around body 360)
 
 Sounds
