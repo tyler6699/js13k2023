@@ -20,7 +20,7 @@ function Projectile(x, y, targetX, targetY, speed) {
         this.hb.h = (5 * 2) - 2;
 
         if(rectColiding(this.hb, cart.hero.e.hb)){
-          console.log("Direct Hit!");
+          //console.log("Direct Hit!");
           cart.shakeTime=.2;
         }
         // Handle collisions and other logic
@@ -28,11 +28,21 @@ function Projectile(x, y, targetX, targetY, speed) {
 
     this.draw = function(ctx) {
       ctx.save();
-      ctx.translate(cart.cam.x, cart.cam.y);
-      ctx.translate(this.x+8, this.y+1.5);
+      ctx.translate(cart.cam.x + this.x, cart.cam.y + this.y);
       ctx.rotate(this.angle);
-      ctx.translate(-8, -1.5);
-      ctx.fillRect(0, 0, 16, 3);
+      ctx.fillStyle = "#7B3F00";
+      ctx.fillRect(0, -1.5, 16, 3);
+
+      // Draw the arrowhead (triangle)
+      ctx.fillStyle = "silver";
+      ctx.strokeStyle = "#56675B";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(20, 0);     // tip of the arrowhead (middle)
+      ctx.lineTo(14, -4);   // upper corner of the triangle
+      ctx.lineTo(14, 4);    // lower corner of the triangle
+      ctx.fill();
+      ctx.stroke();
       ctx.restore();
     };
 }

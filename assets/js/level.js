@@ -12,7 +12,7 @@ function level(num, canvasW, canvasH, scale) {
   this.bridge=false;
   this.mobTime=0;
   this.cen=findIsometricCenter(colz-1,colz-1);
-  this.respawnDelay=8;
+  this.respawnDelay=5;
   this.maxMobs=10;
   this.dead=[];
   this.decor=[];

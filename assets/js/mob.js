@@ -10,7 +10,7 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
   this.facing=RIGHT;
   this.e.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
   this.e.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
-  this.shotDelay=8+rndNo(0,5);
+  this.shotDelay=1+rndNo(0,5);
 
   this.hit = function(delta, type, power) {
     this.e.hp -= 1+power;
