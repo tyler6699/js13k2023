@@ -10,6 +10,7 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
   this.facing=RIGHT;
   this.e.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
   this.e.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
+  this.shotDelay=8+rndNo(0,5);
 
   this.hit = function(delta, type, power) {
     this.e.hp -= 1+power;
@@ -61,20 +62,18 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
 
           // Projectile
           // Check if it's time to shoot
-          if (this.time - this.lastShotTime >= 5) {  // 5 seconds have passed
+          if (this.time - this.lastShotTime >= this.shotDelay) {  // 5 seconds have passed
               // Create a new projectile towards the hero
               let proj = new Projectile(this.e.x+20, this.e.y+20, cart.hero.e.x+16, cart.hero.e.y+16, 2); // speed of 5, adjust as needed
-              // Add this projectile to some global projectiles array
               this.projectiles.push(proj);  // Assuming you have a global `projectiles` array
-
               this.lastShotTime = this.time;  // Reset the timer
           }
         }
 
       if(this.e.x > cart.hero.e.x){
-            this.e.flip=true;
+        this.e.flip=true;
       } else {
-            this.e.flip=false;
+        this.e.flip=false;
       }
 
       // Update and draw all projectiles

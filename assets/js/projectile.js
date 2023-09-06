@@ -8,10 +8,21 @@ function Projectile(x, y, targetX, targetY, speed) {
     this.dx = dx / len * speed;
     this.dy = dy / len * speed;
     this.angle = Math.atan2(dy, dx);
+    this.hb=new rectanlge(0, 0, 0, 0);
 
     this.update = function(delta) {
         this.x += this.dx;
         this.y += this.dy;
+
+        this.hb.x = this.x;
+        this.hb.y = this.y;
+        this.hb.w = (5 * 2) - 2 - 10;
+        this.hb.h = (5 * 2) - 2;
+
+        if(rectColiding(this.hb, cart.hero.e.hb)){
+          console.log("Direct Hit!");
+          cart.shakeTime=.2;
+        }
         // Handle collisions and other logic
     };
 

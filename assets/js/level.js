@@ -12,8 +12,8 @@ function level(num, canvasW, canvasH, scale) {
   this.bridge=false;
   this.mobTime=0;
   this.cen=findIsometricCenter(colz-1,colz-1);
-  this.respawnDelay=1;
-  this.maxMobs=1;
+  this.respawnDelay=8;
+  this.maxMobs=10;
   this.dead=[];
   this.decor=[];
 
@@ -91,8 +91,8 @@ function level(num, canvasW, canvasH, scale) {
       // Add some mobs
       this.mobTime=0;
       skelly = new mob(16, 16, this.cen.x, this.cen.y, 0, types.SKELLY, mobtype.FOLLOW, scale, 10);
-      //this.mobs.push(skelly);
-      //this.objs.push(skelly.e);
+      this.mobs.push(skelly);
+      this.objs.push(skelly.e);
 
       gob = new mob(18, 15, this.cen.x, this.cen.y, 0, types.GOB, mobtype.RANGED, scale, 20);
       this.mobs.push(gob);
