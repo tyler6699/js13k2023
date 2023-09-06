@@ -178,6 +178,10 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
 
               ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, -yoff*h, w * s, h * s);
             } else {
+              if((this.type==types.ROCK || this.type==types.TREE) && STAGE < 5){
+                ctx.shadowColor = "gold";  // Shadow color
+                ctx.shadowBlur = 10;        // Shadow blur level
+              }
               ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
 
               // MOB

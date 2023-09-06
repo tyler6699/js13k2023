@@ -144,11 +144,20 @@ function updateGameArea() {
     writeTxt(ctx, 1, font,"WHITE","[R] Reset Level", canvasW-230, 70);
     writeTxt(ctx, 1, font,"WHITE","Level: " + (cart.hero.e.curLevel+1), 10, 100);
     writeTxt(ctx, 1, font,"WHITE","Castle Resources:", 10, 140);
-    if(cart.hero.curTile){
-      writeTxt(ctx, 1, font,"WHITE","HP: " + cart.hero.e.hp, 10, 400);
-    }
+    writeTxt(ctx, 1, font,"WHITE","HP: " + cart.hero.e.hp, 20, 40);
     writeTxt(ctx, 1, font,"WHITE","STAGE: " + STAGE, 10, 450);
     let lvl=cart.hero.e.curLevel;
+
+    if(cart.level.tip){
+      font="25px Papyrus";
+      drawBox(ctx,0.8,"black",0,canvasH-40,canvasW,70)
+      if(cart.level.complete){
+        writeTxt(ctx, 1, font,"WHITE",cart.level.tip2, 20, canvasH-5);
+      } else {
+        console.log("false");
+        writeTxt(ctx, 1, font,"WHITE",cart.level.tip, 20, canvasH-5);
+      }
+    }
 
     // Music
     if(pause){

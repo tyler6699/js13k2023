@@ -16,12 +16,51 @@ function level(num, canvasW, canvasH, scale) {
   this.maxMobs=10;
   this.dead=[];
   this.decor=[];
+  this.maxTrees=num-1;
+  this.maxRocks=num-2;
+  this.allowGobs=true;
+  this.tip=null;
 
   // Isometric tileSize - Width remains the same, but height is half
   let tileWidth = 16;
   let tileHeight = 8;
   let levelArray;
   let mvd = 0;
+
+  // Setup levels
+  switch(num){
+    case 1:
+      this.tip="Use the Axe (3) to cut (space) down the trees.";
+      this.tip2="Good job! Cross the bridge!!";
+      this.maxMobs=0;
+      this.maxTrees=2;
+      this.maxRocks=0;
+      this.allowGobs=false;
+      break;
+    case 2:
+      this.tip="Use the Hammer (2) to break (Space) the rock.";
+      this.tip2="Clearing resources stops a castle spawning mobs!";
+      this.maxMobs=0;
+      this.maxTrees=0;
+      this.maxRocks=1;
+      this.allowGobs=false;
+      break;
+    case 3:
+      this.tip="Attack using Sword (1) or Hand (4) to defeat the mob (press / hold space)";
+      this.tip2="Holding and charging up attacks deals more damage!";
+      this.maxMobs=1;
+      this.maxTrees=1;
+      this.maxRocks=0;
+      this.allowGobs=false;
+      break;
+    case 4:
+      this.tip="Looks like you are ready to battle!";
+      this.tip2="Keep an eye out for upgrades after each level!";
+      this.maxMobs=4;
+      this.maxTrees=2;
+      this.maxRocks=2;
+      break;
+  }
 
   this.draw = function(hero, delta, intro) {
     this.tiles.forEach(e => e.update(delta, intro));
@@ -103,9 +142,11 @@ function level(num, canvasW, canvasH, scale) {
         this.mobs.push(skelly);
         this.objs.push(skelly.e);
 
-        gob = new mob(18, 15, this.cen.x, this.cen.y, 0, types.GOB, mobtype.RANGED, scale, 20);
-        this.mobs.push(gob);
-        this.objs.push(gob.e);
+        if(this.allowGobs){
+          gob = new mob(18, 15, this.cen.x, this.cen.y, 0, types.GOB, mobtype.RANGED, scale, 20);
+          this.mobs.push(gob);
+          this.objs.push(gob.e);
+        }
       }
 
       // Dead mobs
@@ -181,11 +222,8 @@ function level(num, canvasW, canvasH, scale) {
     });
 
     // Add resources
-    maxTrees=2+id;
-    maxRocks=1+id;
-
     this.tiles.forEach(t => {
-      if(t.e.type==types.GRASS && rndNo(0,100) > 98 && (this.trees<maxTrees)){
+      if(t.e.type==types.GRASS && rndNo(0,100) > 98 && (this.trees<this.maxTrees)){
         if(!nearCastle(t.e.x, t.e.y-t.drop-10-30, this.cen)){
           obj = new entity(16, 23, t.e.x, t.e.y-t.drop-10-30, 0, types.TREE, "", scale, false, 2);
           obj.parent=t;
@@ -193,7 +231,7 @@ function level(num, canvasW, canvasH, scale) {
           this.objs.push(obj);
           this.trees++;
         }
-      } else if(t.e.type==types.GRASS && rndNo(0,100) > 98 && (this.rocks<maxRocks)) {
+      } else if(t.e.type==types.GRASS && rndNo(0,100) > 98 && (this.rocks<this.maxRocks)) {
         if(!nearCastle(t.e.x, t.e.y-t.drop-10, this.cen)){
           obj = new entity(16, 16, t.e.x, t.e.y-t.drop-10, 0, types.ROCK, "", scale, false, 3);
           obj.parent=t;

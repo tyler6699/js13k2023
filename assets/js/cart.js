@@ -30,7 +30,7 @@ function Cart() {
     this.levels = []; // Array to get tiles surrounding an entity
 
     for(let i=1;i<=10;i++){
-      var lvl = new level(1, canvasW, canvasH, this.scale);
+      var lvl = new level(i, canvasW, canvasH, this.scale);
       lvl.reset(i, this.scaled);
       this.levels.push(lvl);
     }
