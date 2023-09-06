@@ -2,9 +2,8 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
   this.e = new entity(w, h, x, y, angle, type, "", scale, false, maxHP);
   this.e.parent=this;
   this.mtype=mtype;
-  // this.e.bow = new Bow();
-  // this.e.bow.rate=rndNo(0,3)+.5-(STAGE/10);
-
+  this.lastShotTime = 0;  // Initialize a timer variable
+  this.projectiles=[];
   this.bspd=100;
   this.spd = .3;
   this.time=0;
@@ -59,6 +58,17 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
               e.y = y < cart.hero.e.y ? y += this.spd/4 + steerPow.y : y += -this.spd/4 + steerPow.y;
               e.x = x < cart.hero.e.x ? x += this.spd/2 + steerPow.x : x += -this.spd/2 + steerPow.x;
           }
+
+          // Projectile
+          // Check if it's time to shoot
+          if (this.time - this.lastShotTime >= 5) {  // 5 seconds have passed
+              // Create a new projectile towards the hero
+              let proj = new Projectile(this.e.x+20, this.e.y+10, cart.hero.e.x+16, cart.hero.e.y+16, 2); // speed of 5, adjust as needed
+              // Add this projectile to some global projectiles array
+              this.projectiles.push(proj);  // Assuming you have a global `projectiles` array
+
+              this.lastShotTime = this.time;  // Reset the timer
+          }
         }
 
       if(this.e.x > cart.hero.e.x){
@@ -66,12 +76,13 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
       } else {
             this.e.flip=false;
       }
+
+      // Update and draw all projectiles
+      for(let i = 0; i < this.projectiles.length; i++) {
+          this.projectiles[i].update(delta);
+          this.projectiles[i].draw(ctx);
+      }
     }
-
-
-    // SHOOTING ARROWS and Attacks
-    //this.e.gun.addBullets(this.e.x+32,this.e.y+32,cart.hero.e.x+32,cart.hero.e.y+32,true,this.e.type, this.bspd);
-    //this.e.gun.drawBullets(delta, true);
   }
 
   this.steerFromNearbyMobs = function(allMobs, maxDist) {
