@@ -164,7 +164,6 @@ function level(num, canvasW, canvasH, scale) {
   }
 
   this.reset = function(id, scaled) {
-    console.log("Generate Level: " + id);
     this.tiles = [];
     this.dead = [];
     mvd = 0;
