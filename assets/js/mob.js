@@ -63,7 +63,7 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
           // Check if it's time to shoot
           if (this.time - this.lastShotTime >= 5) {  // 5 seconds have passed
               // Create a new projectile towards the hero
-              let proj = new Projectile(this.e.x+20, this.e.y+10, cart.hero.e.x+16, cart.hero.e.y+16, 2); // speed of 5, adjust as needed
+              let proj = new Projectile(this.e.x+20, this.e.y+20, cart.hero.e.x+16, cart.hero.e.y+16, 2); // speed of 5, adjust as needed
               // Add this projectile to some global projectiles array
               this.projectiles.push(proj);  // Assuming you have a global `projectiles` array
 
