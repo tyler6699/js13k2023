@@ -124,9 +124,17 @@ function updateGameArea() {
     ctx = mg.context;
     cart.update(delta, TIME, true);
     ctx.save();
-    drawBox(ctx,0.1,"#"+COL1,0,0,canvasW,canvasH)
-    let font="30px Papyrus";
-    writeTxt(ctx, 1, font,"WHITE","Main Screen", 30, 40);
+    drawBox(ctx,0.8,"black",0,0,canvasW,canvasH)
+    let font="70px Papyrus";
+    writeTxt(ctx, 1, font,"WHITE","Fort Knight", 30, 90);
+    font="50px Papyrus";
+    writeTxt(ctx, 1, font,"WHITE","Press any key to start", 30, canvasH-120);
+    font="30px Papyrus";
+    writeTxt(ctx, 1, font,"RED","Controls", 30, 160);
+    writeTxt(ctx, 1, font,"WHITE","WASD or Arrows to move", 30, 200);
+    writeTxt(ctx, 1, font,"WHITE","Space to attack (Hold for charge)", 30, 250);
+    writeTxt(ctx, 1, font,"WHITE","1,2,3,4 or click icons to change weapon", 30, 300);
+    writeTxt(ctx, 1, font,"WHITE","A game by @CarelessLabs and @AdamTheWilliams for JS13k", 30, canvasH-50);
     ctx.restore();
   } else {
     mg.clear();
@@ -134,14 +142,12 @@ function updateGameArea() {
     let font = "30px Papyrus";
     writeTxt(ctx, 1, font,"WHITE","[M] Music: " + !pause, canvasW-230, 30);
     writeTxt(ctx, 1, font,"WHITE","[R] Reset Level", canvasW-230, 70);
-
     writeTxt(ctx, 1, font,"WHITE","Level: " + (cart.hero.e.curLevel+1), 10, 100);
     writeTxt(ctx, 1, font,"WHITE","Castle Resources:", 10, 140);
     if(cart.hero.curTile){
       writeTxt(ctx, 1, font,"WHITE","HP: " + cart.hero.e.hp, 10, 400);
     }
     writeTxt(ctx, 1, font,"WHITE","STAGE: " + STAGE, 10, 450);
-
     let lvl=cart.hero.e.curLevel;
 
     // Music

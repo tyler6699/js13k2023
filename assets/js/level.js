@@ -25,85 +25,96 @@ function level(num, canvasW, canvasH, scale) {
 
   this.draw = function(hero, delta, intro) {
     this.tiles.forEach(e => e.update(delta, intro));
-    // sort
-    this.objs.sort((a, b) => a.y - b.y);
-    this.rocks=0;
-    this.trees=0;
 
-    // Graves and other decorations
-    this.decor.forEach((e) => {
-      e.update(delta);
-      e.update(delta,true);
-    });
+    if(intro){
+      this.castle.forEach(e => e.update(delta));
+      hero.e.update(0);
+      hero.hands[0].x = 30;
+      hero.hands[1].x = 9;
+      hero.hands[0].y = 29;
+      hero.hands[1].y = 29;
+    } else {
+      // sort
+      this.objs.sort((a, b) => a.y - b.y);
+      this.rocks=0;
+      this.trees=0;
 
-    this.objs.forEach((e) => {
+      // Graves and other decorations
+      this.decor.forEach((e) => {
         e.update(delta);
         e.update(delta,true);
-        if(e.type==types.ROCK)this.rocks++;
-        if(e.type==types.TREE)this.trees++;
-    });
+      });
 
-    // make castle transparent to check insaide for mobs
-    if(nearCastle(hero.e.x, hero.e.y, this.cen, )){
-      this.castle.forEach(e => e.alpha=.3);
-    } else {
-      this.castle.forEach(e => e.alpha=1);
-    }
-    this.castle.forEach(e => e.update(delta));
-    // TODO castle shadows
-    // this.castle.forEach(e => e.update(delta, true));
+      this.objs.forEach((e) => {
+          e.update(delta);
+          e.update(delta,true);
+          if(e.type==types.ROCK)this.rocks++;
+          if(e.type==types.TREE)this.trees++;
+      });
 
-    // Draw Weapon
-    if(hero.tool.type!=types.HAND){
+      // make castle transparent to check insaide for mobs
+      if(nearCastle(hero.e.x, hero.e.y, this.cen, )){
+        this.castle.forEach(e => e.alpha=.3);
+      } else {
+        this.castle.forEach(e => e.alpha=1);
+      }
+      this.castle.forEach(e => e.update(delta));
+      // TODO castle shadows
+      // this.castle.forEach(e => e.update(delta, true));
+
+      // Draw Weapon
+      if(hero.tool.type!=types.HAND){
         hero.tool.update(delta);
-    }
+      }
 
-    // Draw hero in front of castle, it is what it is! #wontfix
-    if(hero.e.y>290&&nearCastle(hero.e.x, hero.e.y,this.cen)) hero.e.update(delta);
+      // Draw hero in front of castle, it is what it is! #wontfix
+      if(hero.e.y>290&&nearCastle(hero.e.x, hero.e.y,this.cen)) hero.e.update(delta);
 
-    if(this.mobs.length==0 && this.rocks==0 && this.trees==0){
-      this.complete=true;
-    }
+      if(this.mobs.length==0 && this.rocks==0 && this.trees==0){
+        this.complete=true;
+      }
 
-    for (let i = 0; i < this.mobs.length; i++) {
-      this.mobs[i].update(delta, this.mobs);
-    }
+      for (let i = 0; i < this.mobs.length; i++) {
+        this.mobs[i].update(delta, this.mobs);
+      }
 
-    // When the level is complete drop the bridge
-    if(this.complete && !this.bridge){
-      this.bridge=true;
-      let m=colz/2;
-      for(r=0;r<3;r++){
-        for(c=1;c<7;c++){
-          let tile = getTileRC(m+r,colz-c);
-          tile.e.type=types.BRDE;
-          if(c<3)tile.progress=true;
-          tile.e.setType();
-          tile.e.y=200;
-          tile.initialY-=5;
+      // When the level is complete drop the bridge
+      if(this.complete && !this.bridge){
+        this.bridge=true;
+        let m=colz/2;
+        for(r=0;r<3;r++){
+          for(c=1;c<7;c++){
+            let tile = getTileRC(m+r,colz-c);
+            tile.e.type=types.BRDE;
+            if(c<3)tile.progress=true;
+            tile.e.setType();
+            tile.e.y=200;
+            tile.initialY-=5;
+          }
         }
       }
+
+      // SPAWNER
+      this.mobTime+=delta/1000;
+      if(this.mobTime>this.respawnDelay && (this.trees>0 || this.rocks>0) && this.mobs.length < this.maxMobs){
+        // Add some mobs
+        this.mobTime=0;
+        skelly = new mob(16, 16, this.cen.x, this.cen.y, 0, types.SKELLY, mobtype.FOLLOW, scale, 10);
+        this.mobs.push(skelly);
+        this.objs.push(skelly.e);
+
+        gob = new mob(18, 15, this.cen.x, this.cen.y, 0, types.GOB, mobtype.RANGED, scale, 20);
+        this.mobs.push(gob);
+        this.objs.push(gob.e);
+      }
+
+      // Dead mobs
+      this.dead.forEach((d, i) => {
+        d.update(delta);
+        d.e.update(delta);
+      });
     }
 
-    // SPAWNER
-    this.mobTime+=delta/1000;
-    if(this.mobTime>this.respawnDelay && (this.trees>0 || this.rocks>0) && this.mobs.length < this.maxMobs){
-      // Add some mobs
-      this.mobTime=0;
-      skelly = new mob(16, 16, this.cen.x, this.cen.y, 0, types.SKELLY, mobtype.FOLLOW, scale, 10);
-      this.mobs.push(skelly);
-      this.objs.push(skelly.e);
-
-      gob = new mob(18, 15, this.cen.x, this.cen.y, 0, types.GOB, mobtype.RANGED, scale, 20);
-      this.mobs.push(gob);
-      this.objs.push(gob.e);
-    }
-
-    // Dead mobs
-    this.dead.forEach((d, i) => {
-      d.update(delta);
-      d.e.update(delta);
-    });
   }
 
   this.reset = function(id, scaled) {

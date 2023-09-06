@@ -61,12 +61,11 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
           }
 
           // Projectile
-          // Check if it's time to shoot
-          if (this.time - this.lastShotTime >= this.shotDelay) {  // 5 seconds have passed
+          if (this.time - this.lastShotTime >= this.shotDelay) {
               // Create a new projectile towards the hero
-              let proj = new Projectile(this.e.x+20, this.e.y+20, cart.hero.e.x+16, cart.hero.e.y+16, 2); // speed of 5, adjust as needed
-              this.projectiles.push(proj);  // Assuming you have a global `projectiles` array
-              this.lastShotTime = this.time;  // Reset the timer
+              let proj = new Projectile(this.e.x+20, this.e.y+20, cart.hero.e.x+16, cart.hero.e.y+16, 2.5); // speed of 5, adjust as needed
+              this.projectiles.push(proj);
+              this.lastShotTime = this.time;
           }
         }
 

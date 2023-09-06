@@ -206,6 +206,7 @@ function hero(w, h, x, y, angle, type, scale) {
               case types.TREE:
                 if(this.tool.type==types.AX){
                   i.hp-=this.axePower;
+                  playSound(JUMPFX,.3);
                   this.attackOver=true;
                 }
                 cart.shakeTime=.15;
@@ -214,6 +215,7 @@ function hero(w, h, x, y, angle, type, scale) {
               case types.ROCK:
                 if(this.tool.type==types.HAM){
                   i.hp-=this.hammerPower;
+                  playSound(JUMPFX,.3);
                   this.attackOver=true;
                 }
                 cart.shakeTime=.1;

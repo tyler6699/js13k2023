@@ -93,6 +93,9 @@ function Cart() {
         this.menu.rock.y=190;
         this.menu.rock.update(delta);
       }
+    } else {
+      // Intro Screen
+      this.level.draw(this.hero, delta, intro);
     }
 
     // Tick the mobs but add the entities to the obj list to render!

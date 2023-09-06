@@ -44,7 +44,9 @@ Particles
 Enemies
   - Slimes
   - Boss?
-  - Add LERP to knockback
+  - Add LERP to applyKnockback
+  - remove arrows when they are off the map
+  - reload time for gobs
 
 Weapons
  - Axe only hurt trees and do not count as a hit if they hit an enemy?

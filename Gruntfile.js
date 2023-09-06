@@ -16,7 +16,7 @@ module.exports = function(grunt) {
           expand: false,
           src: ["assets/js/menu.js",
                 "assets/js/audio.js",
-                "assets/js/particle.js",
+                "assets/js/projectile.js",
                 "assets/js/camera.js",
                 "assets/js/sound.js",
                 "assets/js/cart.js",
