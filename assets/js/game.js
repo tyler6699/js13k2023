@@ -28,6 +28,7 @@ let cart = new Cart();
 let start=false;
 let music=true;
 let pause=false;
+let shadowImage=new Image();
 
 // Load the music player
 genAudio();
@@ -57,6 +58,13 @@ let mg = {
     this.frameNo = 0;
     this.interval = setInterval(updateGameArea, 20);
 
+    // Shadows
+    shadowImage.crossOrigin = "anonymous";
+    shadowImage.src = 'atlas.png';
+
+    shadowImage.onload = function() {
+      shadowImage = makeImageBlack(shadowImage);
+    }
     // Generate intro screen
     // cart.genLevel(0);
 
@@ -95,6 +103,32 @@ let mg = {
   clear: function() {
     this.context.clearRect(0, 0, 4*this.canvas.width, 4*this.canvas.height);
   }
+}
+
+function makeImageBlack(image) {
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = image.width;
+    tempCanvas.height = image.height;
+    const tempCtx = tempCanvas.getContext('2d');
+    tempCtx.drawImage(image, 0, 0);
+
+    const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+    const data = imageData.data;
+
+    // Convert all non-transparent pixels to black
+    for (let i = 0; i < data.length; i += 4) {
+        if (data[i + 3] !== 0) { // Check if pixel is not transparent
+            data[i] = 0;     // Red
+            data[i + 1] = 0; // Green
+            data[i + 2] = 0; // Blue
+        }
+    }
+
+    tempCtx.putImageData(imageData, 0, 0);
+
+    const blackImage = new Image();
+    blackImage.src = tempCanvas.toDataURL("image/png");
+    return blackImage;
 }
 
 function updateGameArea() {

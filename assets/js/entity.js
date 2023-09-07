@@ -177,7 +177,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
               ctx.globalAlpha = this.isHero()&&this.wet?0.3:0.08;
               let yoff=this.isHero()?4:3.8;
 
-              ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, -yoff*h, w * s, h * s);
+              ctx.drawImage(shadowImage, this.sx, this.sy, w, h, hw+z, -yoff*h, w * s, h * s);
             } else {
               if((this.type==types.ROCK || this.type==types.TREE) && STAGE < 5){
                 ctx.shadowColor = "gold";  // Shadow color
