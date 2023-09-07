@@ -19,11 +19,5 @@ var FOUR = 52;
 var R = 82;
 var T = 84;
 // NOISES
-var NOISEFX=0;
-var COINFX=1;
-var JUMPFX=2;
-var FALLFX=3;
-var PORTALFX=4;
-var DIEFX=5;
 var SHOOT=6;
 var LEVEL=7;

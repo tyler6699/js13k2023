@@ -37,7 +37,6 @@ function Cart() {
   }
 
   this.setLevel = function(id){
-    console.log("Load Level: " + id);
     this.level = this.levels[id];
     this.hero.e.curLevel = id;
     this.hero.e.x=this.level.startPos[0];
@@ -103,7 +102,7 @@ function Cart() {
         this.menu.tree.y=18;
         this.menu.tree.update(delta);
       }
-      for(i=1;i<this.level.rocks;i++){
+      for(i=1;i<=this.level.rocks;i++){
         this.menu.rock.x=canvasW-(i*30);
         this.menu.rock.y=45;
         this.menu.rock.update(delta);
@@ -125,7 +124,7 @@ function Cart() {
 
     // remove objects
     this.level.objs = this.level.objs.filter(function (i) {
-      return i.hp >= 0;
+      return i.hp > 0;
     });
 
     this.level.dead = this.level.dead.filter(function (i) {
@@ -133,7 +132,7 @@ function Cart() {
     });
 
     this.level.mobs = this.level.mobs.filter(function (i) {
-     return i.e.hp >= 0;
+      return i.e.hp > 0;
     });
   }
 }

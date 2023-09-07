@@ -205,8 +205,11 @@ function hero(w, h, x, y, angle, type, scale) {
             switch(i.type){
               case types.TREE:
                 if(this.tool.type==types.AX){
+                  // SOUND
+                  zzfx(...[2.15,,312,.02,.08,.13,4,.08,,1.7,,,.1,.9,,.1,.08,.7,,.25]);
                   i.hp-=this.axePower;
-                  playSound(JUMPFX,.3);
+                  if(i.hp==0) zzfx(...[2.03,,585,.05,.18,.35,2,3.08,,.4,,,.06,1.7,,.1,.42,.33,.14]);
+                  // SOUND
                   this.attackOver=true;
                 }
                 cart.shakeTime=.15;
@@ -215,7 +218,9 @@ function hero(w, h, x, y, angle, type, scale) {
               case types.ROCK:
                 if(this.tool.type==types.HAM){
                   i.hp-=this.hammerPower;
-                  playSound(JUMPFX,.3);
+                  // SOUND
+                  zzfx(...[2.04,,265,,,.13,4,.74,,-9.2,,,.15,1.9,,.2,.16,.71,.08]);
+                  i.hp-=this.axePower;
                   this.attackOver=true;
                 }
                 cart.shakeTime=.1;
@@ -232,6 +237,8 @@ function hero(w, h, x, y, angle, type, scale) {
                 break;
               case types.GOB:
                 i.parent.hit(delta, this.tool.type, this.wepPower);
+                // SOUND
+                zzfx(...[,,354,.01,.08,.13,2,.3,-1.5,.1,,.01,,1.7,,.4,,.75,.02,.22]); 
                 cart.shakeTime=.2;
                 this.attackOver=true;
                 if(i.parent.e.hp<=0){

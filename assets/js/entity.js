@@ -33,6 +33,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
   this.wet=false;
   this.ui=false;
   this.hands = [];
+  this.dead=false;
 
   // ATLAS Positions
   this.sx=0;

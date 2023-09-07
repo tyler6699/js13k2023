@@ -124,6 +124,8 @@ function level(num, canvasW, canvasH, scale) {
 
       // When the level is complete drop the bridge
       if(this.complete && !this.bridge){
+        // SOUND
+        zzfx(...[1.02,,72,.02,.17,.26,,.01,,,100,.01,.14,,15,.1,,.7,.12,.24]);
         this.bridge=true;
         let m=colz/2;
         for(r=0;r<3;r++){
@@ -229,7 +231,7 @@ function level(num, canvasW, canvasH, scale) {
     this.tiles.forEach(t => {
       if(t.e.type==types.GRASS && rndNo(0,100) > 98 && (this.trees<this.maxTrees)){
         if(!nearCastle(t.e.x, t.e.y-t.drop-10-30, this.cen)){
-          obj = new entity(16, 23, t.e.x, t.e.y-t.drop-10-30, 0, types.TREE, "", scale, false, 2);
+          obj = new entity(16, 23, t.e.x, t.e.y-t.drop-10-30, 0, types.TREE, "", scale, false, 3);
           obj.parent=t;
           t.obj=obj;
           this.objs.push(obj);

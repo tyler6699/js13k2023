@@ -18,7 +18,6 @@ module.exports = function(grunt) {
                 "assets/js/audio.js",
                 "assets/js/projectile.js",
                 "assets/js/camera.js",
-                "assets/js/sound.js",
                 "assets/js/cart.js",
                 "assets/js/enums.js",
                 "assets/js/tile.js",

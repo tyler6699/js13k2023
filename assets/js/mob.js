@@ -11,6 +11,7 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
   this.e.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
   this.e.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
   this.shotDelay=1+rndNo(0,5);
+  this.dead=false;
 
   this.hit = function(delta, type, power) {
     this.e.hp -= 1+power;
@@ -23,6 +24,11 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
     e = this.e;
 
     if(e.hp<=0){ // dead
+      if(!this.dead){
+        zzfx(...[2.02,,164,.01,.05,.01,,.96,-5.1,,,-0.01,,,,.3,.12,.53,.04,.01]); // Shoot 130 - Mutation 2
+        this.dead=true;
+      }
+
       e.x-= Math.cos(this.time*1000 * 0.008)*2;
       e.y-=0.7;
       e.alpha=e.alpha-0.03>0?e.alpha-=0.03:0;
@@ -66,6 +72,12 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
               let proj = new Projectile(this.e.x+20, this.e.y+20, cart.hero.e.x+16, cart.hero.e.y+16, 2.5); // speed of 5, adjust as needed
               this.projectiles.push(proj);
               this.lastShotTime = this.time;
+              // SOUND
+              if(rndNo(0,100)>50){
+                zzfx(...[1.02,,947,.04,.05,.14,2,.8,-1.1,-0.4,-100,.04,-0.01,,,,.01,.6,.02,.1]);
+              } else {
+                zzfx(...[1.02,,947,.04,.06,.14,2,.8,-1.1,-0.4,-100,.04,-0.01,,,-0.1,.01,.6,.02,.1]);
+              }  
           }
         }
 

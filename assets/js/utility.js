@@ -88,6 +88,8 @@ function nearCastle(x, y, cen) {
 }
 
 function applyKnockback(hero, entity, wepPower) {
+    // SOUND
+    zzfx(...[,,102,,.03,.15,3,1.95,-1.5,,,,,1,,.1,,.55,.07,.28]);
     let push = 25 + wepPower;
     let dx = entity.x - hero.e.x;
     let dy = entity.y - hero.e.y;

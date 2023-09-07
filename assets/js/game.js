@@ -32,6 +32,8 @@ let pause=false;
 // Load the music player
 genAudio();
 
+// ZzFXMicro - Zuper Zmall Zound Zynth - v1.2.0 by Frank Force ~ 880 bytes
+
 // Called by body onload on index page
 function startGame() {
   mg.start();
@@ -109,7 +111,6 @@ function updateGameArea() {
   if(start){
     if(cart.hero != null)cart.hero.e.active=true;
     gameStarted=true;
-    if(audioCtx == null) audioCtx = new AudioContext();
   }
 
   // Delta
