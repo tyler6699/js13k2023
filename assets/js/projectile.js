@@ -1,6 +1,7 @@
 function Projectile(x, y, targetX, targetY, speed) {
     this.x = x;
     this.y = y;
+    this.dst = 0;  // initialize it to 0
     this.remove=false;
     // Calculate the direction to the target
     let dx = targetX - x;
@@ -12,6 +13,7 @@ function Projectile(x, y, targetX, targetY, speed) {
     this.hb=new rectanlge(0, 0, 0, 0);
 
     this.update = function(delta) {
+        this.dst += Math.sqrt(this.dx * this.dx + this.dy * this.dy);
         this.x += this.dx;
         this.y += this.dy;
 
@@ -41,7 +43,7 @@ function Projectile(x, y, targetX, targetY, speed) {
       ctx.strokeStyle = "#56675B";
       ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.moveTo(20, 0);     // tip of the arrowhead (middle)
+      ctx.moveTo(20, 0);    // tip of the arrowhead (middle)
       ctx.lineTo(14, -4);   // upper corner of the triangle
       ctx.lineTo(14, 4);    // lower corner of the triangle
       ctx.fill();

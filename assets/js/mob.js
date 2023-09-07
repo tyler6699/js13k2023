@@ -93,6 +93,11 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
           this.spears[i].draw(ctx);
       }
     }
+
+    // Remove Spears
+    this.spears = this.spears.filter(function (s) {
+      return (!s.remove && s.dst<400);
+    });
   }
 
   this.steerFromNearbyMobs = function(allMobs, maxDist) {

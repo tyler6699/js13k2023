@@ -30,7 +30,6 @@ start=false;
 let music=true;
 let pause=false;
 
-
 // Load the music player
 genAudio();
 
@@ -180,7 +179,6 @@ function updateGameArea() {
     writeTxt(ctx, 1, font,"WHITE","Castle Resources:", canvasW-260, 20);
 
     let lvl=cart.hero.e.curLevel;
-
 
     // Music
     if(pause){

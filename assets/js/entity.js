@@ -144,6 +144,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
 
             // Render HERO
             ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
+
             if(cart.hero.renderPower){
               ctx.globalAlpha = cart.hero.wepPower>2?cart.hero.wepPower/10:0;
               // Draw power up
