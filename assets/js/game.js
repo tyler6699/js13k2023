@@ -70,7 +70,6 @@ let mg = {
     // Keyboard
     window.addEventListener('keydown', function(e) {
       start=true;
-      zzfxX=new AudioContext; // Sounds System
       e.preventDefault();
       mg.keys = (mg.keys || []);
       mg.keys[e.keyCode] = (e.type == "keydown");
