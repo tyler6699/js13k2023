@@ -242,6 +242,10 @@ function space() {
   return mg.keys && mg.keys[SPACE];
 }
 
+function shift() {
+  return mg.keys && mg.keys[SHIFT];
+}
+
 function map() {
   return mg.keys && mg.keys[M];
 }

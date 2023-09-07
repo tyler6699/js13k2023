@@ -3,6 +3,7 @@ var LEFT = 37;
 var RIGHT = 39;
 var UP = 38;
 var DOWN = 40;
+var SHIFT = 17;
 var W = 87;
 var A = 65;
 var S = 83;
@@ -18,6 +19,3 @@ var THREE = 51;
 var FOUR = 52;
 var R = 82;
 var T = 84;
-// NOISES
-var SHOOT=6;
-var LEVEL=7;
