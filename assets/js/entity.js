@@ -88,11 +88,8 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
       w   = this.width;
       h   = this.height;
 
-      if(cart.shakeTime>0){
-        ctx.translate(cart.shake,cart.shake);
-      }
+      if(cart.shakeTime>0){ctx.translate(cart.shake,cart.shake);}
 
-      // Camera
       if(this.ui){
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         if (this.flip){
@@ -102,6 +99,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
 
         ctx.drawImage(img, this.sx, this.sy, w, h, this.x, this.y, w*s, h*s);
       } else {
+        // Camera Tracking
         ctx.translate(cart.cam.x,cart.cam.y);
 
         // Animate Image
@@ -117,8 +115,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
             ctx.scale(1, 1);
           }
 
-          z=0; // hover
-
+          z=0;
           if(this.angle > 0){
             let z=24;
             ctx.translate(z,z);
@@ -139,6 +136,13 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
               ctx.shadowBlur = 10;        // Shadow blur level
             }
 
+            // Show some blood
+            if(cart.hero.isGad){
+              ctx.shadowColor = "red";
+              ctx.shadowBlur = 20;
+            }
+
+            // Render HERO
             ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
             if(cart.hero.renderPower){
               ctx.globalAlpha = cart.hero.wepPower>2?cart.hero.wepPower/10:0;

@@ -81,8 +81,8 @@ function getTileRC(r,c){
 }
 
 function nearCastle(x, y, cen) {
-  const tl = [-90, cen.y-80];
-  const br = [90, cen.y+20];
+  const tl = [-80, cen.y-85];
+  const br = [85, cen.y+50];
 
   return x >= tl[0] && x <= br[0] && y >= tl[1] && y <= br[1];
 }
@@ -102,4 +102,14 @@ function applyKnockback(hero, entity, wepPower) {
 
     entity.x += dx * push;
     entity.y += dy * push;
+}
+
+function knockback(hero, damageSource, knockbackAmount) {
+    // calculate direction based on position of damage source and hero's position
+    let directionX = hero.e.x > damageSource.x ? 1 : -1;
+    let directionY = hero.e.y > damageSource.y ? 1 : -1;
+
+    // apply knockback
+    hero.e.x += directionX * knockbackAmount;
+    hero.e.y += directionY * knockbackAmount;
 }

@@ -3,7 +3,7 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
   this.e.parent=this;
   this.mtype=mtype;
   this.lastShotTime = 0;  // Initialize a timer variable
-  this.projectiles=[];
+  this.spears=[];
   this.bspd=100;
   this.spd = .3;
   this.time=0;
@@ -70,14 +70,14 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
           if (this.time - this.lastShotTime >= this.shotDelay) {
               // Create a new projectile towards the hero
               let proj = new Projectile(this.e.x+20, this.e.y+20, cart.hero.e.x+16, cart.hero.e.y+16, 2.5); // speed of 5, adjust as needed
-              this.projectiles.push(proj);
+              this.spears.push(proj);
               this.lastShotTime = this.time;
               // SOUND
               if(rndNo(0,100)>50){
                 zzfx(...[1.02,,947,.04,.05,.14,2,.8,-1.1,-0.4,-100,.04,-0.01,,,,.01,.6,.02,.1]);
               } else {
                 zzfx(...[1.02,,947,.04,.06,.14,2,.8,-1.1,-0.4,-100,.04,-0.01,,,-0.1,.01,.6,.02,.1]);
-              }  
+              }
           }
         }
 
@@ -87,10 +87,10 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
         this.e.flip=false;
       }
 
-      // Update and draw all projectiles
-      for(let i = 0; i < this.projectiles.length; i++) {
-          this.projectiles[i].update(delta);
-          this.projectiles[i].draw(ctx);
+      // Update and draw all spears
+      for(let i = 0; i < this.spears.length; i++) {
+          this.spears[i].update(delta);
+          this.spears[i].draw(ctx);
       }
     }
   }

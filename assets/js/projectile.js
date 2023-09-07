@@ -1,6 +1,7 @@
 function Projectile(x, y, targetX, targetY, speed) {
     this.x = x;
     this.y = y;
+    this.remove=false;
     // Calculate the direction to the target
     let dx = targetX - x;
     let dy = targetY - y;
@@ -22,6 +23,8 @@ function Projectile(x, y, targetX, targetY, speed) {
         if(rectColiding(this.hb, cart.hero.e.hb)){
           //console.log("Direct Hit!");
           cart.shakeTime=.2;
+          cart.hero.hit(3, this);
+          this.remove=true;
         }
         // Handle collisions and other logic
     };

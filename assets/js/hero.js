@@ -26,6 +26,9 @@ function hero(w, h, x, y, angle, type, scale) {
   this.axePower=1;
   this.hammerPower=1;
   this.castleDst=0;
+  this.isGad = false;
+  this.gadDur = 1000;
+  this.dmgTime = 0;
 
   // Hands
   let theta = 0;  // This is the angle that will increase over time
@@ -238,7 +241,7 @@ function hero(w, h, x, y, angle, type, scale) {
               case types.GOB:
                 i.parent.hit(delta, this.tool.type, this.wepPower);
                 // SOUND
-                zzfx(...[,,354,.01,.08,.13,2,.3,-1.5,.1,,.01,,1.7,,.4,,.75,.02,.22]); 
+                zzfx(...[,,354,.01,.08,.13,2,.3,-1.5,.1,,.01,,1.7,,.4,,.75,.02,.22]);
                 cart.shakeTime=.2;
                 this.attackOver=true;
                 if(i.parent.e.hp<=0){
@@ -255,7 +258,22 @@ function hero(w, h, x, y, angle, type, scale) {
     // Show the power meter?
     this.renderPower=((hState == 'spin' || hState == 'swipe') && (this.tool.type == types.HAND || this.tool.type == types.SWD));
     this.facing=lastDir;
+
+    // invincible
+    if(this.isGad && Date.now() - this.dmgTime >= this.gadDur){
+      this.isGad = false;
+    }
   } // End of Update
+
+  this.hit = function(damage, e){
+    if(!this.isGad){
+        zzfx(...[.9,-0.05,105,.04,.06,.03,3,1.1,-2.6,-1.1,,,,.4,,.4,,.7,.01,.21]); // Shoot 230
+        this.e.hp -= damage;
+        this.isGad = true;
+        this.dmgTime = Date.now();
+        knockback(this, e, 5);
+    }
+}
 
   this.reset = function(){
     this.done=false;
@@ -267,12 +285,7 @@ function hero(w, h, x, y, angle, type, scale) {
 
   this.kill = function(){
     if(this.active){
-      // cart.shakeTime=.15;
-      // playSound(DIEFX,1);
-      // this.hp--;
-      // this.active=false;
-      // this.e.sy=16;
-      // if(this.hp==0){this.hp++;}
+      cart.shakeTime=3;
     }
   }
 

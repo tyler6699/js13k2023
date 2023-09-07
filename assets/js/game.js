@@ -17,23 +17,22 @@ let clickedRec = new rectanlge(0,0,0,0);
 let processClick = false;
 let GAMEOVER=false;
 let RELOAD=false;
-let COL1 = "990099";
 let WIN = false;
 let STAGE=1;
 colz=40+(STAGE*2);
 let atlas = new Image();
 atlas.src = "atlas.png";
+atlas.crossOrigin = "anonymous";
+let shadowImage=new Image();
 let shaky = true;
 let cart = new Cart();
-let start=false;
+start=false;
 let music=true;
 let pause=false;
-let shadowImage=new Image();
+
 
 // Load the music player
 genAudio();
-
-// ZzFXMicro - Zuper Zmall Zound Zynth - v1.2.0 by Frank Force ~ 880 bytes
 
 // Called by body onload on index page
 function startGame() {
@@ -63,7 +62,7 @@ let mg = {
     shadowImage.src = 'atlas.png';
 
     shadowImage.onload = function() {
-      shadowImage = makeImageBlack(shadowImage);
+      shadowImage = mkShadows(shadowImage);
     }
     // Generate intro screen
     // cart.genLevel(0);
@@ -71,6 +70,7 @@ let mg = {
     // Keyboard
     window.addEventListener('keydown', function(e) {
       start=true;
+      zzfxX=new AudioContext; // Sounds System
       e.preventDefault();
       mg.keys = (mg.keys || []);
       mg.keys[e.keyCode] = (e.type == "keydown");
@@ -105,7 +105,7 @@ let mg = {
   }
 }
 
-function makeImageBlack(image) {
+function mkShadows(image) {
     const tempCanvas = document.createElement('canvas');
     tempCanvas.width = image.width;
     tempCanvas.height = image.height;
