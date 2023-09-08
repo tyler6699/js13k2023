@@ -16,6 +16,7 @@ function hero(w, h, x, y, angle, type, scale) {
   this.deaths=0;
   this.moved=false;
   this.tool=new entity(10, 10, x, y, 0, types.HAND, "", scale);
+  this.shield=new entity(6, 8, x, y, 0, types.SHIELD, "", scale);
   this.tool.setType();
   this.wepPower=0;
   this.attackTime=0;
@@ -122,6 +123,10 @@ function hero(w, h, x, y, angle, type, scale) {
       this.hands[1].y+=m*6;
       if(this.e.idle>15)this.e.idle=0;
     }
+
+    // set shield
+    this.shield.x=this.hands[0].x;
+    this.shield.y=this.hands[0].y-3;
 
     // Weapon Position
     this.setWeaponX(delta);

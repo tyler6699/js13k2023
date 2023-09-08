@@ -18,7 +18,8 @@ const types = {
   HPE:16,
   HAND:17,
   SKELLY:18,
-  GOB:19
+  GOB:19,
+  SHIELD:20
 }
 
 const mobtype = {

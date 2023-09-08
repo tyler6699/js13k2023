@@ -130,6 +130,12 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
             cart.hero.hands.forEach((i) => {
                 ctx.drawImage(img, i.sx, i.sy, i.width, i.height, i.x, i.y, i.width*i.scale, i.height*i.scale);
             });
+
+            if(shift()){
+              let sh = cart.hero.shield;
+              ctx.drawImage(img, sh.sx, sh.sy, sh.width, sh.height, sh.x, sh.y, sh.width*sh.scale, sh.height*sh.scale);
+            }
+
             // Hero
             if(cart.hero.dance){
               ctx.shadowColor = "gold";  // Shadow color
@@ -314,6 +320,10 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
       case types.GRAVE:
         this.sx=85;
         this.sy=23;
+        break;
+      case types.SHIELD:
+        this.sx=77;
+        this.sy=32;
         break;
     }
   }

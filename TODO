@@ -19,7 +19,7 @@ UI
     - Weapon power
     - Speed
 
-HER\o
+HERO
   - Add upgrades
     - this.axePower=1;
     - this.hammerPower=1;

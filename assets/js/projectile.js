@@ -3,6 +3,7 @@ function Projectile(x, y, targetX, targetY, speed) {
     this.y = y;
     this.dst = 0;  // initialize it to 0
     this.remove=false;
+    this.dud=false;
     // Calculate the direction to the target
     let dx = targetX - x;
     let dy = targetY - y;
@@ -24,11 +25,22 @@ function Projectile(x, y, targetX, targetY, speed) {
 
         if(rectColiding(this.hb, cart.hero.e.hb)){
           //console.log("Direct Hit!");
-          cart.shakeTime=.2;
-          cart.hero.hit(3, this);
-          this.remove=true;
+          if(this.dud){
+          } else {
+            if(!shift()){
+              cart.shakeTime=.2;
+              cart.hero.hit(3, this);
+              this.remove=true;
+            } else {
+              cart.shakeTime=.2;
+              zzfx(...[1.12,,205,,.02,,1,2.25,,-5.5,,,,.2,,.2,,.45,.1,.09]); // Hit 244
+              this.dud=true;
+              this.dx *= -0.8;
+              this.dy *= -0.8;
+              this.angle = Math.atan2(this.dy, this.dx);              
+            }
+          }
         }
-        // Handle collisions and other logic
     };
 
     this.draw = function(ctx,held) {
