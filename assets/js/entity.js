@@ -131,11 +131,6 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
                 ctx.drawImage(img, i.sx, i.sy, i.width, i.height, i.x, i.y, i.width*i.scale, i.height*i.scale);
             });
 
-            if(shift()){
-              let sh = cart.hero.shield;
-              ctx.drawImage(img, sh.sx, sh.sy, sh.width, sh.height, sh.x, sh.y, sh.width*sh.scale, sh.height*sh.scale);
-            }
-
             // Hero
             if(cart.hero.dance){
               ctx.shadowColor = "gold";  // Shadow color
@@ -150,6 +145,11 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
 
             // Render HERO
             ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
+
+            if(shift()){
+              let sh = cart.hero.shield;
+              ctx.drawImage(img, sh.sx, sh.sy, sh.width, sh.height, sh.x, sh.y, sh.width*sh.scale, sh.height*sh.scale);
+            }
 
             if(cart.hero.renderPower){
               ctx.globalAlpha = cart.hero.wepPower>2?cart.hero.wepPower/10:0;

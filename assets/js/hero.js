@@ -124,10 +124,6 @@ function hero(w, h, x, y, angle, type, scale) {
       if(this.e.idle>15)this.e.idle=0;
     }
 
-    // set shield
-    this.shield.x=this.hands[0].x;
-    this.shield.y=this.hands[0].y-3;
-
     // Weapon Position
     this.setWeaponX(delta);
     this.setWeaponY();
@@ -267,6 +263,15 @@ function hero(w, h, x, y, angle, type, scale) {
     // invincible
     if(this.isGad && Date.now() - this.dmgTime >= this.gadDur){
       this.isGad = false;
+    }
+
+    // set shield
+    if(lastDir==RIGHT){
+      this.shield.x=this.hands[1].x;
+      this.shield.y=this.hands[1].y-3;
+    } else {
+      this.shield.x=this.hands[0].x;
+      this.shield.y=this.hands[0].y-3;
     }
   } // End of Update
 
