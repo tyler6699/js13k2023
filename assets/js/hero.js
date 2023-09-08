@@ -34,6 +34,7 @@ function hero(w, h, x, y, angle, type, scale) {
   this.isGad = false;
   this.gadDur = 1000;
   this.dmgTime = 0;
+  this.stopsound=0;
 
   // Hands
   let theta = 0;  // This is the angle that will increase over time
@@ -219,6 +220,12 @@ function hero(w, h, x, y, angle, type, scale) {
                   if(i.hp==0) zzfx(...[2.03,,585,.05,.18,.35,2,3.08,,.4,,,.06,1.7,,.1,.42,.33,.14]);
                   // SOUND
                   this.attackOver=true;
+                } else {
+                  //SOUND STOP
+                  if(this.stopsound<=0){
+                    zzfx(...[1.99,,1163,.01,.03,.01,4,.49,,,,,,.1,-219,.1,.19,,,.26]);
+                    this.stopsound=.25;
+                  }
                 }
                 cart.shakeTime=.15;
 
@@ -230,6 +237,12 @@ function hero(w, h, x, y, angle, type, scale) {
                   zzfx(...[2.04,,265,,,.13,4,.74,,-9.2,,,.15,1.9,,.2,.16,.71,.08]);
                   i.hp-=this.axePower;
                   this.attackOver=true;
+                } else {
+                  //SOUND STOP
+                  if(this.stopsound<=0){
+                    zzfx(...[1.99,,1163,.01,.03,.01,4,.49,,,,,,.1,-219,.1,.19,,,.26]);
+                    this.stopsound=.25;
+                  }
                 }
                 cart.shakeTime=.1;
 
@@ -277,6 +290,8 @@ function hero(w, h, x, y, angle, type, scale) {
       this.shield.x=this.hands[0].x;
       this.shield.y=this.hands[0].y-3;
     }
+
+    if(this.stopsound>0) this.stopsound-=delta/1000;
   } // End of Update
 
   this.hit = function(damage, e){
