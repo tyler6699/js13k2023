@@ -33,8 +33,8 @@ function level(num, canvasW, canvasH, scale) {
     case 1: // Learn Axe
       this.tip="Use the Axe (3) to cut (space) down the trees.";
       this.tip2="Good job! Cross the bridge!!";
-      //this.maxMobs=0;
-      //this.respawnDelay=6;
+      this.maxMobs=2;
+      this.respawnDelay=3;
       this.maxTrees=4;
       this.maxRocks=3;
       this.allowGobs=false;
@@ -81,6 +81,7 @@ function level(num, canvasW, canvasH, scale) {
     } else {
       // sort
       this.objs.sort((a, b) => a.y - b.y);
+      this.decor.sort((a, b) => a.y - b.y);
       this.rocks=0;
       this.trees=0;
 

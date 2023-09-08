@@ -127,6 +127,10 @@ function Cart() {
       return i.hp > 0;
     });
 
+    this.level.decor = this.level.decor.filter(function (i) {
+      return i.hp > 0;
+    });
+
     this.level.dead = this.level.dead.filter(function (i) {
       return i.e.alpha >= 0;
     });

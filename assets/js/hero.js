@@ -208,6 +208,19 @@ function hero(w, h, x, y, angle, type, scale) {
         hb=new rectanlge(this.e.x-15-xtra, this.e.y-10,33+xtra, 35);
       }
 
+      // Break decor
+      cart.level.decor.forEach((i) => {
+        if(i.type!=types.HERO && !this.attackOver){
+          if(rectColiding(hb, i.hb)){
+            if(this.stopsound<=0){
+              zzfx(...[2.04,,265,,,.13,4,.74,,-9.2,,,.15,1.9,,.2,.16,.71,.08]);
+              this.stopsound=.25;
+            }
+            i.hp=0;
+          }
+        }
+      });
+
       cart.level.objs.forEach((i) => {
         if(i.type!=types.HERO && !this.attackOver){
           if(rectColiding(hb, i.hb)){
@@ -255,6 +268,7 @@ function hero(w, h, x, y, angle, type, scale) {
                 cart.shakeTime=.2;
                 this.attackOver=true;
                 if(i.parent.e.hp<=0){
+                  if(rndNo(1,10)>5)cart.level.decor.push(new entity(11, 10, i.x+18, i.y+10, rndNo(-45,45), types.SKELLY, "", scale, false, 1));
                   cart.level.dead.push(i.parent);
                 }
                  applyKnockback(this, i.parent.e, this.wepPower+this.powPlus);
