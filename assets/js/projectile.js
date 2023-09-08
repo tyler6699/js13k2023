@@ -35,9 +35,11 @@ function Projectile(x, y, targetX, targetY, speed) {
               cart.shakeTime=.2;
               zzfx(...[1.12,,205,,.02,,1,2.25,,-5.5,,,,.2,,.2,,.45,.1,.09]); // Hit 244
               this.dud=true;
+              this.dx=+ (Math.random() - .5) * 4;
+              this.dy=+ (Math.random() - .5) * 4
               this.dx *= -0.8;
               this.dy *= -0.8;
-              this.angle = Math.atan2(this.dy, this.dx);              
+              this.angle = Math.atan2(this.dy, this.dx);
             }
           }
         }

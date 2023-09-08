@@ -86,15 +86,15 @@ function level(num, canvasW, canvasH, scale) {
 
       // Graves and other decorations
       this.decor.forEach((e) => {
-        e.update(delta);
         e.update(delta,true);
+        e.update(delta);
       });
 
       this.objs.forEach((e) => {
-          e.update(delta);
-          e.update(delta,true);
-          if(e.type==types.ROCK && e.hp >= 0)this.rocks++;
-          if(e.type==types.TREE && e.hp >= 0)this.trees++;
+        e.update(delta,true);
+        e.update(delta);
+        if(e.type==types.ROCK && e.hp >= 0)this.rocks++;
+        if(e.type==types.TREE && e.hp >= 0)this.trees++;
       });
 
       // make castle transparent to check insaide for mobs

@@ -185,9 +185,8 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
               ctx.scale(1,-1);
               ctx.shadowColor = "#000";  // Shadow color
               ctx.shadowBlur = 8;        // Shadow blur level
-              ctx.globalAlpha = this.isHero()&&this.wet?0.3:0.08;
-              let yoff=this.isHero()?4:3.8;
-
+              ctx.globalAlpha = 0.1;
+              let yoff=this.isHero()?3.2:3.6;
               ctx.drawImage(shadowImage, this.sx, this.sy, w, h, hw+z, -yoff*h, w * s, h * s);
             } else {
               if((this.type==types.ROCK || this.type==types.TREE) && STAGE < 5){
