@@ -167,16 +167,22 @@ function updateGameArea() {
     writeTxt(ctx, 1, font,"WHITE","WASD or Arrows to move", 30, 200);
     writeTxt(ctx, 1, font,"WHITE","Space to attack (Hold for charge)", 30, 250);
     writeTxt(ctx, 1, font,"WHITE","1,2,3,4 or click icons to change weapon", 30, 300);
+    writeTxt(ctx, 1, font,"WHITE","Shift to use Shield", 30, 350);
     writeTxt(ctx, 1, font,"WHITE","A game by @CarelessLabs and @AdamTheWilliams for JS13k", 30, canvasH-50);
     ctx.restore();
   } else {
     mg.clear();
     cart.update(delta, TIME, false);
     let font = "30px Papyrus";
-    writeTxt(ctx, 1, font,"WHITE","Stage: " + (cart.hero.e.curLevel+1), 270, 40);
+    writeTxt(ctx, 1, font,"WHITE","Stage: " + (cart.hero.e.curLevel+1), canvasW/2, 40);
     writeTxt(ctx, 1, font,"WHITE","HP: " + cart.hero.e.hp, 20, 40);
     font = "20px Papyrus";
-    writeTxt(ctx, 1, font,"WHITE","Castle Resources:", canvasW-260, 20);
+    writeTxt(ctx, 1, font,"WHITE","Attack+    : " + cart.hero.wepPowerPlus, 270, 20);
+    writeTxt(ctx, 1, font,"WHITE","Defence+ : " + cart.hero.defence, 270, 40);
+    writeTxt(ctx, 1, font,"WHITE","Speed+     : " + cart.hero.speed, 270, 60);
+
+    font = "20px Papyrus";
+    writeTxt(ctx, 1, font,"WHITE","Castle Resources:", canvasW-260, 18);
 
     let lvl=cart.hero.e.curLevel;
 

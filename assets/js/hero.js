@@ -19,6 +19,10 @@ function hero(w, h, x, y, angle, type, scale) {
   this.shield=new entity(6, 8, x, y, 0, types.SHIELD, "", scale);
   this.tool.setType();
   this.wepPower=0;
+  // PowerUps
+  this.wepPowerPlus=0;
+  this.defence=0;
+  this.speed=0;
   this.attackTime=0;
   this.renderPower=false;
   this.facing=lastDir;
