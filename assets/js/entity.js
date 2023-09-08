@@ -191,7 +191,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
               ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
 
               // MOB
-              if(this.type==types.SKELLY){
+              if(this.type==types.SKELLY || this.type==types.GOB){
                 this.hands.forEach((i) => {
                     ctx.drawImage(img, i.sx, i.sy, i.width, i.height, i.x, i.y, i.width*i.scale, i.height*i.scale);
                 });

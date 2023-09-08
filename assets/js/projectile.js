@@ -31,9 +31,10 @@ function Projectile(x, y, targetX, targetY, speed) {
         // Handle collisions and other logic
     };
 
-    this.draw = function(ctx) {
+    this.draw = function(ctx,held) {
       ctx.save();
       ctx.translate(cart.cam.x + this.x, cart.cam.y + this.y);
+      // if held point at hero and hide when thrown
       ctx.rotate(this.angle);
       ctx.fillStyle = "#7B3F00";
       ctx.fillRect(0, -1.5, 16, 3);

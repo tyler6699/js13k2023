@@ -12,14 +12,14 @@ https://www.imagerecycle.com/?atid=79
 https://tinypng.com/
 https://compressor.io/
 
+Add friendly slimes?
+
 UI
   - Player UI (stats)
     - Weapon power
     - Speed
-    - HP
 
-HERO
-  - Add HP
+HER\o
   - Add upgrades
     - this.axePower=1;
     - this.hammerPower=1;
@@ -33,19 +33,14 @@ Sounds
   - Walk
   - Attack
   - Hit
-  - Break tree
-  - Break rock
 
 Particles
-  - Blood spray on hits
   - Add Foot prints when running
 
 Enemies
-  - Slimes
+  - Skelly needs to do damage
   - Boss?
-  - Add LERP to applyKnockback
-  - remove arrows when they are off the map
-  - reload time for gobs
+  - sometimes skulls are left on the floor
 
 Weapons
- - Axe only hurt trees and do not count as a hit if they hit an enemy?
+ - Add dud sound for had hits

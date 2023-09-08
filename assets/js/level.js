@@ -33,10 +33,10 @@ function level(num, canvasW, canvasH, scale) {
     case 1: // Learn Axe
       this.tip="Use the Axe (3) to cut (space) down the trees.";
       this.tip2="Good job! Cross the bridge!!";
-      this.maxMobs=2;
+      this.maxMobs=6;
       this.respawnDelay=1;
-      this.maxTrees=2;
-      this.maxRocks=0;
+      this.maxTrees=4;
+      this.maxRocks=3;
       this.allowGobs=true;
       break;
     case 2: // Learn Hammer

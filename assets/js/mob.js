@@ -10,6 +10,15 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
   this.facing=RIGHT;
   this.e.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
   this.e.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
+  this.spear=null;
+
+  if(type==types.GOB){
+    this.e.hands[0].sx = 78;
+    this.e.hands[1].sx = 78;
+    this.e.hands[0].sy = 42;
+    this.e.hands[1].sy = 42;
+    this.spear=new Projectile(this.e.hands[0].x, this.e.hands[0].y, 0, 0, 0);
+  }
   this.shotDelay=3+rndNo(0,5);
   this.dead=false;
 
@@ -34,10 +43,18 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
       e.alpha=e.alpha-0.03>0?e.alpha-=0.03:0;
     } else {
       let sin = Math.sin(this.time*500 * 0.008) * 1.7;
-      e.hands[0].y = 25+sin;
-      e.hands[1].y = 25-sin;
-      e.hands[0].x = 25;
-      e.hands[1].x = 15;
+      if(this.e.type==types.SKELLY){
+        e.hands[0].y = 25+sin;
+        e.hands[1].y = 25-sin;
+        e.hands[0].x = 25;
+        e.hands[1].x = 15;
+      } else {
+        e.hands[0].y = 20-sin;
+        e.hands[1].y = 20+sin;
+        e.hands[0].x = 35;
+        e.hands[1].x = 10;
+
+      }
 
       let steerPow = this.steerFromNearbyMobs(cart.level.mobs, 26);
       if(this.mtype==mobtype.FOLLOW){
@@ -90,7 +107,19 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
       // Update and draw all spears
       for(let i = 0; i < this.spears.length; i++) {
           this.spears[i].update(delta);
-          this.spears[i].draw(ctx);
+          this.spears[i].draw(ctx,false);
+      }
+      if(this.spear){
+        this.spear.x=this.e.x+8+this.e.hands[1].x;
+        this.spear.y=this.e.y+this.e.hands[1].y;
+
+        let dx = cart.hero.e.x - this.spear.x;
+        let dy = cart.hero.e.y - this.spear.y;
+
+        this.spear.angle = Math.atan2(dy, dx);
+        if(this.time - this.lastShotTime >= this.shotDelay-2){
+          this.spear.draw(ctx,true);
+        }
       }
     }
 
