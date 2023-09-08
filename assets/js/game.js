@@ -177,8 +177,8 @@ function updateGameArea() {
     writeTxt(ctx, 1, font,"WHITE","Stage: " + (cart.hero.e.curLevel+1), canvasW/2, 40);
     writeTxt(ctx, 1, font,"WHITE","HP: " + cart.hero.e.hp, 20, 40);
     font = "20px Papyrus";
-    writeTxt(ctx, 1, font,"WHITE","Attack+    : " + cart.hero.wepPowerPlus, 270, 20);
-    writeTxt(ctx, 1, font,"WHITE","Defence+ : " + cart.hero.defence, 270, 40);
+    writeTxt(ctx, 1, font,"WHITE","Attack+    : " + cart.hero.powPlus, 270, 20);
+    writeTxt(ctx, 1, font,"WHITE","Defence+ : " + (cart.hero.defence-1), 270, 40);
     writeTxt(ctx, 1, font,"WHITE","Speed+     : " + cart.hero.speed, 270, 60);
 
     font = "20px Papyrus";

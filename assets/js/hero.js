@@ -20,8 +20,8 @@ function hero(w, h, x, y, angle, type, scale) {
   this.tool.setType();
   this.wepPower=0;
   // PowerUps
-  this.wepPowerPlus=0;
-  this.defence=0;
+  this.powPlus=0;
+  this.defence=1;
   this.speed=0;
   this.attackTime=0;
   this.renderPower=false;
@@ -215,7 +215,7 @@ function hero(w, h, x, y, angle, type, scale) {
                 if(this.tool.type==types.AX){
                   // SOUND
                   zzfx(...[2.15,,312,.02,.08,.13,4,.08,,1.7,,,.1,.9,,.1,.08,.7,,.25]);
-                  i.hp-=this.axePower;
+                  i.hp-=this.axePower+this.powPlus;
                   if(i.hp==0) zzfx(...[2.03,,585,.05,.18,.35,2,3.08,,.4,,,.06,1.7,,.1,.42,.33,.14]);
                   // SOUND
                   this.attackOver=true;
@@ -225,7 +225,7 @@ function hero(w, h, x, y, angle, type, scale) {
                 break;
               case types.ROCK:
                 if(this.tool.type==types.HAM){
-                  i.hp-=this.hammerPower;
+                  i.hp-=this.hammerPower+this.powPlus;
                   // SOUND
                   zzfx(...[2.04,,265,,,.13,4,.74,,-9.2,,,.15,1.9,,.2,.16,.71,.08]);
                   i.hp-=this.axePower;
@@ -241,10 +241,10 @@ function hero(w, h, x, y, angle, type, scale) {
                 if(i.parent.e.hp<=0){
                   cart.level.dead.push(i.parent);
                 }
-                 applyKnockback(this, i.parent.e, this.wepPower);
+                 applyKnockback(this, i.parent.e, this.wepPower+this.powPlus);
                 break;
               case types.GOB:
-                i.parent.hit(delta, this.tool.type, this.wepPower);
+                i.parent.hit(delta, this.tool.type, this.wepPower+this.powPlus);
                 // SOUND
                 zzfx(...[,,354,.01,.08,.13,2,.3,-1.5,.1,,.01,,1.7,,.4,,.75,.02,.22]);
                 cart.shakeTime=.2;
@@ -282,7 +282,7 @@ function hero(w, h, x, y, angle, type, scale) {
   this.hit = function(damage, e){
     if(!this.isGad){
         zzfx(...[.9,-0.05,105,.04,.06,.03,3,1.1,-2.6,-1.1,,,,.4,,.4,,.7,.01,.21]); // Shoot 230
-        this.e.hp -= damage;
+        this.e.hp -= damage/this.defence;
         this.isGad = true;
         this.dmgTime = Date.now();
         knockback(this, e, 5);
@@ -326,7 +326,7 @@ function hero(w, h, x, y, angle, type, scale) {
         speed=.3;
         this.e.wet=true;
       } else {
-        speed=maxSpeed;
+        speed=maxSpeed+this.speed;
         this.e.wet=false;
       }
     }
