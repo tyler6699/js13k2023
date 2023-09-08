@@ -282,7 +282,7 @@ function hero(w, h, x, y, angle, type, scale) {
                 if(i.parent.e.hp<=0){
                   cart.level.dead.push(i.parent);
                   // GRAVE
-                  cart.level.decor.push(new entity(7, 9, i.parent.e.x, i.parent.e.y, 0, types.GRAVE, "", scale))
+                  cart.level.decor.push(new entity(7, 9, i.parent.e.x, i.parent.e.y, 0, types.GRAVE, "", scale, false, 1))
                 }
                 break;
             }
