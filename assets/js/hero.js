@@ -217,7 +217,10 @@ function hero(w, h, x, y, angle, type, scale) {
                   // SOUND
                   zzfx(...[2.15,,312,.02,.08,.13,4,.08,,1.7,,,.1,.9,,.1,.08,.7,,.25]);
                   i.hp-=this.axePower+this.powPlus;
-                  if(i.hp==0) zzfx(...[2.03,,585,.05,.18,.35,2,3.08,,.4,,,.06,1.7,,.1,.42,.33,.14]);
+                  if(i.hp==0){
+                    cart.level.decor.push(new entity(4, 6, i.x+18, i.y+41, 0, types.STUMP, "", scale));
+                    zzfx(...[2.03,,585,.05,.18,.35,2,3.08,,.4,,,.06,1.7,,.1,.42,.33,.14]);
+                  }
                   // SOUND
                   this.attackOver=true;
                 } else {

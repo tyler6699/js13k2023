@@ -14,11 +14,11 @@ function menu() {
   this.ui[7].sx=96;
   this.ui[7].sy=0;
 
-  for(i=0;i<5;i++){
+  for(i=0;i<3;i++){
     this.ui.push(new entity(16, 16, 20+(i*32), 0, 0, types.HP, "", 4, true));
   }
 
-  this.ui.push(new entity(6, 16, 212, 0, 0, types.HPE, "", 4, true));
+  this.ui.push(new entity(6, 16, 148, 0, 0, types.HPE, "", 4, true));
   m=new entity(6, 16, 0, 0, 0, types.HPE, "", 4, true);
   m.flip=true;
   this.ui.push(m);

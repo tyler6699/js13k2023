@@ -324,6 +324,10 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
         this.sx=77;
         this.sy=32;
         break;
+      case types.STUMP:
+        this.sx=81;
+        this.sy=23;
+        break;
     }
   }
 
