@@ -186,6 +186,7 @@ function updateGameArea() {
     writeTxt(ctx, 1, font,"WHITE","Attack: Space/LMB (Hold to charge)", 30, 250);
     writeTxt(ctx, 1, font,"WHITE","Weapon: 1-4 keys/RMB on icons", 30, 300);
     writeTxt(ctx, 1, font,"WHITE","Block: Shift/RMB", 30, 350);
+    writeTxt(ctx, 1, font,"WHITE","Upgrade chance: Destroy drops", 30, 400);
     writeTxt(ctx, 1, font,"WHITE","A game by @CarelessLabs and @AdamTheWilliams for JS13k", 30, canvasH-50);
     ctx.restore();
   } else {

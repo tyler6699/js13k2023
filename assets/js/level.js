@@ -33,11 +33,11 @@ function level(num, canvasW, canvasH, scale) {
     case 1: // Learn Axe
       this.tip="degug";
       this.tip2="Good job! Cross the bridge!!";
-      this.maxMobs=3;
-      this.maxTrees=10;
-      this.maxRocks=1;
+      this.maxMobs=1;
+      this.maxTrees=1;
+      this.maxRocks=0;
       this.allowGobs=false;
-      this.respawnDelay=3;
+      this.respawnDelay=1;
       // this.tip="Use the Axe (3) to cut (space) down the trees.";
       // this.tip2="Good job! Cross the bridge!!";
       // this.maxMobs=0;

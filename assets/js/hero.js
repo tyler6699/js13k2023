@@ -37,7 +37,6 @@ function hero(w, h, x, y, angle, type, scale) {
   this.stopsound=0;
   this.walkSound=0;
   this.step1=true;
-  this.updates=false;
 
   // Hands
   let theta = 0;  // This is the angle that will increase over time
@@ -58,9 +57,9 @@ function hero(w, h, x, y, angle, type, scale) {
     if(this.active){
       // Progress level
       if(this.curTile && this.curTile.progress){
+        this.e.hp+=20;
+        if(this.e.hp>100)this.e.hp=100;
         cart.nextLevel();
-        cart.hero.e.z;
-        this.updates=true;
       }
 
       if(!left() && !right() && !up() && !down()){
@@ -237,17 +236,17 @@ function hero(w, h, x, y, angle, type, scale) {
             }
             i.hp=0;
             // Upgrade Defence
-            if(i.isSkelly() && rndNo(1,100)>90 && this.defence<=5){
+            if(i.isSkelly() && rndNo(1,100)>80 && this.defence<=5){
               zzfx(...[,,679,.06,.19,.35,,1.67,,,-172,.13,.2,,,,,.59,.25,.06]);
               this.defence++;
             }
             // Upgrade Attack
-            if(i.isGob() && rndNo(1,100)>90 && this.powPlus<=5){
+            if(i.isGob() && rndNo(1,100)>85 && this.powPlus<=5){
               zzfx(...[,,679,.06,.19,.35,,1.67,,,-172,.13,.2,,,,,.59,.25,.06]);
               this.powPlus++;
             }
             // Upgrade Speed
-            if(i.type==types.STUMP && rndNo(1,100)>90 && this.speed<=1){
+            if(i.type==types.STUMP && rndNo(1,100)>80 && this.speed<=1){
               zzfx(...[,,679,.06,.19,.35,,1.67,,,-172,.13,.2,,,,,.59,.25,.06]);
               this.speed+=.25;
             }
