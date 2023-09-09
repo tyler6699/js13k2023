@@ -146,7 +146,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
             // Render HERO
             ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
 
-            if(shift()){
+            if(cart.hero.isShielded()){
               let sh = cart.hero.shield;
               ctx.drawImage(img, sh.sx, sh.sy, sh.width, sh.height, sh.x, sh.y, sh.width*sh.scale, sh.height*sh.scale);
             }

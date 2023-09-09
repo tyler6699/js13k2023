@@ -28,14 +28,15 @@ function Projectile(x, y, targetX, targetY, speed) {
           if(this.dud){
             // Nothing?
           } else {
-            if(!shift()){
+            if(!cart.hero.isShielded()){
               cart.shakeTime=.2;
               cart.hero.hit(3, this);
               this.remove=true;
-            } else {
+            } else if(cart.hero.isShielded()) {
               cart.shakeTime=.2;
               zzfx(...[1.12,,205,,.02,,1,2.25,,-5.5,,,,.2,,.2,,.45,.1,.09]); // Hit 244
               this.dud=true;
+              this.dx=+ (Math.random() - .5) * 4;
               this.dx=+ (Math.random() - .5) * 4;
               this.dy=+ (Math.random() - .5) * 4
               this.dx *= -0.8;
@@ -52,7 +53,7 @@ function Projectile(x, y, targetX, targetY, speed) {
               m.hit(delta, types.SPEAR, 2);
               zzfx(...[1.03,,334,,.07,.06,2,.15,,2.3,,.01,,1.7,-2.4,.1,,.42,.04]);
               this.dead=true;
-              break;
+              return;
             }
           });
         }

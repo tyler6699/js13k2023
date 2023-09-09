@@ -478,6 +478,10 @@ function hero(w, h, x, y, angle, type, scale) {
     }
   }
 
+  this.isShielded = function(){
+    return shift() && (this.tool.type==types.SWD||cart.hero.tool.type==types.HAND);
+  }
+
   // todo add the isSword etc
   this.gMove = function(xx,yy, grav=false, jump=false){
     this.e.idle=0;
