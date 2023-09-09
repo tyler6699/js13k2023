@@ -167,7 +167,7 @@ function updateGameArea() {
     writeTxt(ctx, 1, font,"WHITE","WASD or Arrows to move", 30, 200);
     writeTxt(ctx, 1, font,"WHITE","Space to attack (Hold for charge)", 30, 250);
     writeTxt(ctx, 1, font,"WHITE","1,2,3,4 or click icons to change weapon", 30, 300);
-    writeTxt(ctx, 1, font,"WHITE","Shift to use Shield", 30, 350);
+    writeTxt(ctx, 1, font,"WHITE","Shift - block spears (Sword & Hands only)", 30, 350);
     writeTxt(ctx, 1, font,"WHITE","A game by @CarelessLabs and @AdamTheWilliams for JS13k", 30, canvasH-50);
     ctx.restore();
   } else {

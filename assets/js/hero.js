@@ -59,6 +59,7 @@ function hero(w, h, x, y, angle, type, scale) {
       // Progress level
       if(this.curTile && this.curTile.progress){
         cart.nextLevel();
+        cart.hero.e.z;
         this.updates=true;
       }
 

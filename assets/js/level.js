@@ -201,12 +201,11 @@ function level(num, canvasW, canvasH, scale) {
         xx = (c - r) * tileWidth;
         yy = (c + r) * tileHeight;
 
-        // Bridge
         // Add Bridge at top
         let m=colz/2;
         if((r==m || r-1==m || r+1==m) && c<6){
             t=types.BRDE;
-            if(r==m&&c==2){
+            if(r==m&&c==4){
               this.startPos=[xx, yy];
             }
         }
