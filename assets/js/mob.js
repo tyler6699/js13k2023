@@ -128,7 +128,7 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
     });
 
     // check if hero is touching
-    if(this.e.isSkelly){
+    if(this.e.isSkelly() && this.e.hp>0){
       if(rectColiding(this.e.hb, cart.hero.e.hb)){
         cart.hero.hit(1,e);
       }

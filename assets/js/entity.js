@@ -126,19 +126,20 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
           if(this.wet) h-=2;
           // HERO
           if(this.isHero()&&!shadow){
+            let x=cart.hero;
             // Draw the hands, hair etc, weapon
-            cart.hero.hands.forEach((i) => {
+            x.hands.forEach((i) => {
                 ctx.drawImage(img, i.sx, i.sy, i.width, i.height, i.x, i.y, i.width*i.scale, i.height*i.scale);
             });
 
             // Hero
-            if(cart.hero.dance){
+            if(x.dance){
               ctx.shadowColor = "gold";  // Shadow color
               ctx.shadowBlur = 10;        // Shadow blur level
             }
 
             // Show some blood
-            if(cart.hero.isGad){
+            if(x.isGad){
               ctx.shadowColor = "red";
               ctx.shadowBlur = 20;
             }
@@ -146,21 +147,21 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
             // Render HERO
             ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
 
-            if(cart.hero.isShielded()){
-              let sh = cart.hero.shield;
+            if(x.isShielded()){
+              let sh = x.shield;
               ctx.drawImage(img, sh.sx, sh.sy, sh.width, sh.height, sh.x, sh.y, sh.width*sh.scale, sh.height*sh.scale);
             }
 
-            if(cart.hero.renderPower){
-              ctx.globalAlpha = cart.hero.wepPower>2?cart.hero.wepPower/10:0;
+            if(x.renderPower){
+              ctx.globalAlpha = x.wepPower>2?x.wepPower/10:0;
               // Draw power up
-              let f=cart.hero.wepPower<10;
+              let f=x.wepPower<10;
               // Patch the issue rather than fixing :D
-              let arcX=cart.hero.facing==RIGHT?w*s-10:w*s-20;
+              let arcX=x.facing==RIGHT?w*s-10:w*s-20;
               let arcY= -h+10;
 
               // Draw the arc
-              if(cart.hero.facing!=RIGHT){
+              if(x.facing!=RIGHT){
                 ctx.scale(-1, 1);
                 ctx.translate(-(w*s),0);
               }
@@ -171,8 +172,8 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
               // Fill based on power
               let gradient = ctx.createLinearGradient(arcX - 20, arcY, arcX + 20, arcY);
               gradient.addColorStop(0, f?'#0a910f':'#fff'); // Start color (you can change it)
-              gradient.addColorStop(cart.hero.wepPower / 10, '#db6532'); // Color at the end of the power level
-              let val = cart.hero.wepPower / 10 + 0.01 > 1 ? 1 : cart.hero.wepPower / 10 + 0.01;
+              gradient.addColorStop(x.wepPower / 10, '#db6532'); // Color at the end of the power level
+              let val = x.wepPower / 10 + 0.01 > 1 ? 1 : x.wepPower / 10 + 0.01;
               gradient.addColorStop(val, f?'#06062e':'#db6532'); // Rest of the arc
 
               ctx.strokeStyle = gradient;

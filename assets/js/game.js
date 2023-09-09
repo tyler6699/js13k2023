@@ -180,10 +180,10 @@ function updateGameArea() {
     writeTxt(ctx, 1, font,"WHITE","Press any key to start", 30, canvasH-120);
     font="30px Papyrus";
     writeTxt(ctx, 1, font,"RED","Controls", 30, 160);
-    writeTxt(ctx, 1, font,"WHITE","WASD or Arrows to move", 30, 200);
-    writeTxt(ctx, 1, font,"WHITE","Space to attack (Hold for charge)", 30, 250);
-    writeTxt(ctx, 1, font,"WHITE","1,2,3,4 or click icons to change weapon", 30, 300);
-    writeTxt(ctx, 1, font,"WHITE","Shift - block spears (Sword & Hands only)", 30, 350);
+    writeTxt(ctx, 1, font,"WHITE","Move: WASD/Arrows", 30, 200);
+    writeTxt(ctx, 1, font,"WHITE","Attack: Space/LMB (Hold to charge)", 30, 250);
+    writeTxt(ctx, 1, font,"WHITE","Weapon: 1-4 keys/RMB on icons", 30, 300);
+    writeTxt(ctx, 1, font,"WHITE","Block: Shift/RMB", 30, 350);
     writeTxt(ctx, 1, font,"WHITE","A game by @CarelessLabs and @AdamTheWilliams for JS13k", 30, canvasH-50);
     ctx.restore();
   } else {
@@ -191,13 +191,11 @@ function updateGameArea() {
     cart.update(delta, TIME, false);
     let font = "30px Papyrus";
     writeTxt(ctx, 1, font,"WHITE","Stage: " + (cart.hero.e.curLevel+1), canvasW/2, 40);
-    writeTxt(ctx, 1, font,"WHITE","HP: " + cart.hero.e.hp, 20, 40);
+    writeTxt(ctx, 1, font,"WHITE","HP: " + Math.floor(cart.hero.e.hp), 20, 40);
     font = "20px Papyrus";
     writeTxt(ctx, 1, font,"WHITE","Attack+    : " + cart.hero.powPlus, 200, 20);
     writeTxt(ctx, 1, font,"WHITE","Defence+ : " + (cart.hero.defence-1), 200, 40);
     writeTxt(ctx, 1, font,"WHITE","Speed+     : " + cart.hero.speed, 200, 60);
-
-    font = "20px Papyrus";
     writeTxt(ctx, 1, font,"WHITE","Castle Resources:", canvasW-260, 18);
 
     let lvl=cart.hero.e.curLevel;

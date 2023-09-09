@@ -1,6 +1,6 @@
 function hero(w, h, x, y, angle, type, scale) {
   this.e = new entity(w, h, x, y, angle, type, "", scale, false, 100);
-  this.e.z = 12; // Hero always starts on raised ground. Calculate this if island layout changes
+  this.e.z = 0; // Hero always starts on raised ground. Calculate this if island layout changes
   this.active=true;
   this.particles=[];
   let curTile=null;
@@ -236,6 +236,21 @@ function hero(w, h, x, y, angle, type, scale) {
               this.stopsound=.25;
             }
             i.hp=0;
+            // Upgrade Defence
+            if(i.isSkelly() && rndNo(1,100)>98 && this.defence<=5){
+              zzfx(...[,,679,.06,.19,.35,,1.67,,,-172,.13,.2,,,,,.59,.25,.06]);
+              this.defence++;
+            }
+            // Upgrade Attack
+            if(i.isGob() && rndNo(1,100)>98 && this.powPlus<=5){
+              zzfx(...[,,679,.06,.19,.35,,1.67,,,-172,.13,.2,,,,,.59,.25,.06]);
+              this.powPlus++;
+            }
+            // Upgrade Speed
+            if(i.type==types.STUMP && rndNo(1,100)>98 && this.speed<=1){
+              zzfx(...[,,679,.06,.19,.35,,1.67,,,-172,.13,.2,,,,,.59,.25,.06]);
+              this.speed+=.25;
+            }
           }
         }
       });

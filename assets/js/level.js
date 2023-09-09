@@ -3,7 +3,6 @@ function level(num, canvasW, canvasH, scale) {
   this.objs=[];
   this.mobs=[];
   this.castle=[];
-  //this.duds=[];
   this.active=false;
   this.startPos=[-120, 280];
   this.cols=colz;
@@ -32,18 +31,25 @@ function level(num, canvasW, canvasH, scale) {
   // Setup levels
   switch(num){
     case 1: // Learn Axe
-      this.tip="Use the Axe (3) to cut (space) down the trees.";
+      this.tip="degug";
       this.tip2="Good job! Cross the bridge!!";
       this.maxMobs=0;
-      this.maxTrees=2;
-      this.maxRocks=0;
+      this.maxTrees=10;
+      this.maxRocks=1;
       this.allowGobs=false;
+      this.respawnDelay=1;
+      // this.tip="Use the Axe (3) to cut (space) down the trees.";
+      // this.tip2="Good job! Cross the bridge!!";
+      // this.maxMobs=0;
+      // this.maxTrees=2;
+      // this.maxRocks=0;
+      // this.allowGobs=false;
       break;
     case 2: // Learn Hammer
       this.tip="Use the Hammer (2) to break (Space) the rock.";
       this.tip2="Clearing resources stops a castle spawning mobs!";
       this.maxMobs=0;
-      this.maxTrees=0;
+      this.maxTrees=10;
       this.maxRocks=1;
       this.allowGobs=false;
       break;
@@ -58,6 +64,7 @@ function level(num, canvasW, canvasH, scale) {
       skelly = new mob(16, 16, this.cen.x, this.cen.y, 0, types.SKELLY, mobtype.FOLLOW, scale, 10);
       this.mobs.push(skelly);
       this.objs.push(skelly.e);
+
       break;
     case 4:
       this.tip="Looks like you are ready to battle!";
@@ -205,7 +212,7 @@ function level(num, canvasW, canvasH, scale) {
         let m=colz/2;
         if((r==m || r-1==m || r+1==m) && c<6){
             t=types.BRDE;
-            if(r==m&&c==4){
+            if(r==m-1&&c==2){
               this.startPos=[xx, yy];
             }
         }
@@ -258,16 +265,6 @@ function level(num, canvasW, canvasH, scale) {
         }
       }
     });
-
-    // Add Bridge at top
-    let m=colz/2;
-    for(r=0;r<3;r++){
-      for(c=1;c<7;c++){
-        //let tile = getTileRC(m+r,colz-c);
-        //tile.e.type=types.BRDE;
-        //tile.e.setType();
-      }
-    }
 
     // Add a simple castle
     // Castle looks great! Very, uh, can't find the right word, but, like,
