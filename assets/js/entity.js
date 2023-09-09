@@ -129,7 +129,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
             let x=cart.hero;
             // Draw the hands, hair etc, weapon
             x.hands.forEach((i) => {
-                ctx.drawImage(img, i.sx, i.sy, i.width, i.height, i.x, i.y, i.width*i.scale, i.height*i.scale);
+              ctx.drawImage(img, i.sx, i.sy, i.width, i.height, i.x, i.y, i.width*i.scale, i.height*i.scale);
             });
 
             // Hero
@@ -146,6 +146,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
 
             // Render HERO
             ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
+            if(x.defence>=2)ctx.drawImage(img, 96, 16, 11, 10, 12, 12, 11*s, 10*s);
 
             if(x.isShielded()){
               let sh = x.shield;

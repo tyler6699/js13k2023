@@ -237,17 +237,17 @@ function hero(w, h, x, y, angle, type, scale) {
             }
             i.hp=0;
             // Upgrade Defence
-            if(i.isSkelly() && rndNo(1,100)>98 && this.defence<=5){
+            if(i.isSkelly() && rndNo(1,100)>90 && this.defence<=5){
               zzfx(...[,,679,.06,.19,.35,,1.67,,,-172,.13,.2,,,,,.59,.25,.06]);
               this.defence++;
             }
             // Upgrade Attack
-            if(i.isGob() && rndNo(1,100)>98 && this.powPlus<=5){
+            if(i.isGob() && rndNo(1,100)>90 && this.powPlus<=5){
               zzfx(...[,,679,.06,.19,.35,,1.67,,,-172,.13,.2,,,,,.59,.25,.06]);
               this.powPlus++;
             }
             // Upgrade Speed
-            if(i.type==types.STUMP && rndNo(1,100)>98 && this.speed<=1){
+            if(i.type==types.STUMP && rndNo(1,100)>90 && this.speed<=1){
               zzfx(...[,,679,.06,.19,.35,,1.67,,,-172,.13,.2,,,,,.59,.25,.06]);
               this.speed+=.25;
             }
@@ -262,7 +262,6 @@ function hero(w, h, x, y, angle, type, scale) {
               case types.TREE:
                 if(this.tool.type==types.AX){
                   // SOUND
-                  console.log(i.hp);
                   zzfx(...[2.15,,312,.02,.08,.13,4,.08,,1.7,,,.1,.9,,.1,.08,.7,,.25]);
                   i.hp-=this.axePower+this.powPlus;
                   if(i.hp==0){

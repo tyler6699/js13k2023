@@ -31,6 +31,7 @@ let music=true;
 let pause=false;
 let leftMB=false;
 let rightMB=false;
+let startDelay=3;
 
 // Load the music player
 genAudio();
@@ -65,12 +66,10 @@ let mg = {
     shadowImage.onload = function() {
       shadowImage = mkShadows(shadowImage);
     }
-    // Generate intro screen
-    // cart.genLevel(0);
 
     // Keyboard
     window.addEventListener('keydown', function(e) {
-      start=true;
+      if(startDelay<=0)start=true;
       e.preventDefault();
       mg.keys = (mg.keys || []);
       mg.keys[e.keyCode] = (e.type == "keydown");
@@ -153,7 +152,10 @@ function updateGameArea() {
     STAGE=0;
     start=false;
     gameStarted=false;
-    cart.genLevel(STAGE);
+    cart.hero.e.hp=100;
+    cart.genLevel();
+    cart.setLevel(0);
+    startDelay=3;
   }
 
   if(start){
@@ -166,7 +168,7 @@ function updateGameArea() {
   currentDelta = Date.now();
   delta = currentDelta - prevDelta;
   TIME += delta;
-
+  if(startDelay>0)startDelay-=delta/1000;
   if (!gameStarted) {
     // intro Screen
     mg.clear();
@@ -177,7 +179,7 @@ function updateGameArea() {
     let font="70px Papyrus";
     writeTxt(ctx, 1, font,"WHITE","Fort Knight", 30, 90);
     font="50px Papyrus";
-    writeTxt(ctx, 1, font,"WHITE","Press any key to start", 30, canvasH-120);
+    writeTxt(ctx, 1, font,"WHITE",startDelay>0?"Generating World ..":"Press any key to start", 30, canvasH-120);
     font="30px Papyrus";
     writeTxt(ctx, 1, font,"RED","Controls", 30, 160);
     writeTxt(ctx, 1, font,"WHITE","Move: WASD/Arrows", 30, 200);

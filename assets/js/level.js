@@ -33,11 +33,11 @@ function level(num, canvasW, canvasH, scale) {
     case 1: // Learn Axe
       this.tip="degug";
       this.tip2="Good job! Cross the bridge!!";
-      this.maxMobs=0;
+      this.maxMobs=3;
       this.maxTrees=10;
       this.maxRocks=1;
       this.allowGobs=false;
-      this.respawnDelay=1;
+      this.respawnDelay=3;
       // this.tip="Use the Axe (3) to cut (space) down the trees.";
       // this.tip2="Good job! Cross the bridge!!";
       // this.maxMobs=0;
@@ -77,6 +77,8 @@ function level(num, canvasW, canvasH, scale) {
 
   this.draw = function(hero, delta, intro) {
     this.tiles.forEach(e => e.update(delta, intro));
+
+    if(hero.e.hp<=0) GAMEOVER=true;
 
     if(intro){
       this.castle.forEach(e => e.update(delta));
