@@ -29,6 +29,8 @@ let cart = new Cart();
 start=false;
 let music=true;
 let pause=false;
+let leftMB=false;
+let rightMB=false;
 
 // Load the music player
 genAudio();
@@ -83,6 +85,20 @@ let mg = {
       e.preventDefault();
       setclicks();
       processClick=true;
+
+      if (e.button === 0) {
+        leftMB=false;
+      } else if (e.button === 2) {
+        rightMB=false;
+      }
+    })
+    window.addEventListener('mousedown', function(e) {
+      e.preventDefault();
+      if (e.button === 0) {
+        leftMB=true;
+      } else if (e.button === 2) {
+        rightMB=true;
+      }
     })
     window.addEventListener('mousemove', function(e) {
       e.preventDefault();
@@ -245,11 +261,11 @@ function down() {
 }
 
 function space() {
-  return mg.keys && mg.keys[SPACE];
+  return (mg.keys && mg.keys[SPACE]) || leftMB;
 }
 
 function shift() {
-  return mg.keys && mg.keys[SHIFT];
+  return (mg.keys && mg.keys[SHIFT]) || rightMB;
 }
 
 function map() {
