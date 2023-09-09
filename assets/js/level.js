@@ -3,6 +3,7 @@ function level(num, canvasW, canvasH, scale) {
   this.objs=[];
   this.mobs=[];
   this.castle=[];
+  this.duds=[];
   this.active=false;
   this.startPos=[-120, 280];
   this.cols=colz;
@@ -33,11 +34,11 @@ function level(num, canvasW, canvasH, scale) {
     case 1: // Learn Axe
       this.tip="Use the Axe (3) to cut (space) down the trees.";
       this.tip2="Good job! Cross the bridge!!";
-      this.maxMobs=0;
-      this.respawnDelay=6;
+      this.maxMobs=2;
+      this.respawnDelay=3;
       this.maxTrees=2;
       this.maxRocks=0;
-      this.allowGobs=false;
+      this.allowGobs=true;
       break;
     case 2: // Learn Hammer
       this.tip="Use the Hammer (2) to break (Space) the rock.";

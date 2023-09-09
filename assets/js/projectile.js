@@ -24,8 +24,8 @@ function Projectile(x, y, targetX, targetY, speed) {
         this.hb.h = (5 * 2) - 2;
 
         if(rectColiding(this.hb, cart.hero.e.hb)){
-          //console.log("Direct Hit!");
           if(this.dud){
+            cart.level.duds.push(this);
           } else {
             if(!shift()){
               cart.shakeTime=.2;
@@ -65,4 +65,9 @@ function Projectile(x, y, targetX, targetY, speed) {
       ctx.stroke();
       ctx.restore();
     };
+
+    this.isSkelly = function(){
+      return false;
+    }
+
 }
