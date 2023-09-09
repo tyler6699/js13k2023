@@ -3,7 +3,7 @@ function level(num, canvasW, canvasH, scale) {
   this.objs=[];
   this.mobs=[];
   this.castle=[];
-  this.duds=[];
+  //this.duds=[];
   this.active=false;
   this.startPos=[-120, 280];
   this.cols=colz;

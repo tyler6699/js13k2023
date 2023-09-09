@@ -119,10 +119,7 @@ function Cart() {
     this.cam.x = lerp(-this.hero.e.x + (totalWidth/2)-20,this.cam.x ,.8);
     this.cam.y = lerp(-this.hero.e.y + (totalHeight/2)-80,this.cam.y ,.8);
 
-    // TODO - Cannot trust the filter!
-    // Loop and do a count
-
-    // remove objects
+    // Remove objects
     this.level.objs = this.level.objs.filter(function (i) {
       return i.hp > 0;
     });
@@ -138,5 +135,9 @@ function Cart() {
     this.level.mobs = this.level.mobs.filter(function (i) {
       return i.e.hp > 0;
     });
+
+    // this.level.duds = this.level.duds.filter(function (i) {
+    //   return (!i.remove && i.dst<400);
+    // });
   }
 }

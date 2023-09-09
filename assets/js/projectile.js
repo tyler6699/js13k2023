@@ -4,6 +4,7 @@ function Projectile(x, y, targetX, targetY, speed) {
     this.dst = 0;  // initialize it to 0
     this.remove=false;
     this.dud=false;
+    this.dead=false;
     // Calculate the direction to the target
     let dx = targetX - x;
     let dy = targetY - y;
@@ -25,7 +26,7 @@ function Projectile(x, y, targetX, targetY, speed) {
 
         if(rectColiding(this.hb, cart.hero.e.hb)){
           if(this.dud){
-            cart.level.duds.push(this);
+            // Nothing?
           } else {
             if(!shift()){
               cart.shakeTime=.2;
@@ -42,6 +43,18 @@ function Projectile(x, y, targetX, targetY, speed) {
               this.angle = Math.atan2(this.dy, this.dx);
             }
           }
+        }
+
+        // Duds can hurt enemies
+        if(this.dud && !this.dead){
+          cart.level.mobs.forEach((m) => {
+            if(rectColiding(this.hb, m.e.hb)){
+              m.hit(delta, types.SPEAR, 2);
+              zzfx(...[1.03,,334,,.07,.06,2,.15,,2.3,,.01,,1.7,-2.4,.1,,.42,.04]);
+              this.dead=true;
+              break;
+            }
+          });
         }
     };
 
