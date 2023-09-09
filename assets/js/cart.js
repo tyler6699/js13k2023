@@ -135,9 +135,5 @@ function Cart() {
     this.level.mobs = this.level.mobs.filter(function (i) {
       return i.e.hp > 0;
     });
-
-    // this.level.duds = this.level.duds.filter(function (i) {
-    //   return (!i.remove && i.dst<400);
-    // });
   }
 }

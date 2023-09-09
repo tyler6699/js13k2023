@@ -3,7 +3,7 @@ function Tile(id, size, x, y, angle, type, solid, column, row, scale) {
   // Used to pair up a tile and an object sitting on it.
   this.obj=null;
   // Add some height to the map
-  this.up=getElevationOffset(column, row, colz, colz);
+  this.up=elevOff(column, row, colz, colz);
   y += this.up;
 
   // Drop height for intro (Tiles fall from the sky)
@@ -65,7 +65,7 @@ function getCurveOffset(c, r, maxCols, maxRows) {
     return -elevation;
 }
 
-function getElevationOffset(c, r, maxCols, maxRows) {
+function elevOff(c, r, maxCols, maxRows) {
     const centerX = maxCols / 2;
     const centerY = maxRows / 2;
 

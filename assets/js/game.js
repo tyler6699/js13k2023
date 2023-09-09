@@ -183,11 +183,11 @@ function updateGameArea() {
     font="30px Papyrus";
     writeTxt(ctx, 1, font,"RED","Controls", 30, 160);
     writeTxt(ctx, 1, font,"WHITE","Move: WASD/Arrows", 30, 200);
-    writeTxt(ctx, 1, font,"WHITE","Attack: Space/LMB (Hold to charge)", 30, 250);
-    writeTxt(ctx, 1, font,"WHITE","Weapon: 1-4 keys/RMB on icons", 30, 300);
+    writeTxt(ctx, 1, font,"WHITE","Attack: Space/LMB (Hold)", 30, 250);
+    writeTxt(ctx, 1, font,"WHITE","Weapon: 1-4/RMB on icons", 30, 300);
     writeTxt(ctx, 1, font,"WHITE","Block: Shift/RMB", 30, 350);
     writeTxt(ctx, 1, font,"WHITE","Upgrade chance: Destroy drops", 30, 400);
-    writeTxt(ctx, 1, font,"WHITE","A game by @CarelessLabs and @AdamTheWilliams for JS13k", 30, canvasH-50);
+    writeTxt(ctx, 1, font,"WHITE","@CarelessLabs & @AdamTheWilliams for JS13k", 30, canvasH-50);
     ctx.restore();
   } else {
     mg.clear();
@@ -225,14 +225,6 @@ function drawBox(ctx,a,colour,x,y,w,h) {
   ctx.fillStyle = colour;
   ctx.fillRect(x, y, w, h);
   ctx.restore();
-}
-
-function writeSum(ctx,a,font,colour,num,x,y){
-  var hex = eval('"\\u' + num+'"');
-  ctx.globalAlpha = a;
-  ctx.font = font;
-  ctx.fillStyle = colour;
-  ctx.fillText(hex, x, y);
 }
 
 function writeTxt(ctx,a,font,colour,txt,x,y) {

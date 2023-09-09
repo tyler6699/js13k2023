@@ -12,7 +12,7 @@ function level(num, canvasW, canvasH, scale) {
   this.complete=false;
   this.bridge=false;
   this.mobTime=0;
-  this.cen=findIsometricCenter(colz-1,colz-1);
+  this.cen=isoCen(colz-1,colz-1);
   this.respawnDelay=10;
   this.maxMobs=10;
   this.dead=[];
@@ -31,31 +31,23 @@ function level(num, canvasW, canvasH, scale) {
   // Setup levels
   switch(num){
     case 1: // Learn Axe
-      this.tip="degug";
-      this.tip2="Good job! Cross the bridge!!";
-      this.maxMobs=1;
-      this.maxTrees=1;
+      this.tip="Use the Axe (3) to cut (space) down the trees";
+      this.tip2="Cross the bridge!!";
+      this.maxMobs=0;
+      this.maxTrees=2;
       this.maxRocks=0;
       this.allowGobs=false;
-      this.respawnDelay=1;
-      // this.tip="Use the Axe (3) to cut (space) down the trees.";
-      // this.tip2="Good job! Cross the bridge!!";
-      // this.maxMobs=0;
-      // this.maxTrees=2;
-      // this.maxRocks=0;
-      // this.allowGobs=false;
       break;
     case 2: // Learn Hammer
-      this.tip="Use the Hammer (2) to break (Space) the rock.";
-      this.tip2="Clearing resources stops a castle spawning mobs!";
+      this.tip="Use Hammer (2) to break the rocks";
+      this.tip2="Clearing resources stops spawns!";
       this.maxMobs=0;
-      this.maxTrees=10;
+      this.maxTrees=0;
       this.maxRocks=1;
       this.allowGobs=false;
       break;
     case 3: // Learn Fight
-      this.tip="Attack with Sword (1) or fist (4) - (press / hold space)";
-      this.tip2="Hold space to charging up attacks!";
+      this.tip="Attack Sword (1) or fist (4)";
       this.maxMobs=1;
       this.maxTrees=1;
       this.maxRocks=0;
@@ -67,12 +59,12 @@ function level(num, canvasW, canvasH, scale) {
 
       break;
     case 4:
-      this.tip="Looks like you are ready to battle!";
-      this.tip2="Keep an eye out for upgrades after each level!";
+      this.tip="Lets Battle!";
       this.maxMobs=4;
       this.maxTrees=2;
       this.maxRocks=2;
       break;
+    
   }
 
   this.draw = function(hero, delta, intro) {
@@ -114,20 +106,15 @@ function level(num, canvasW, canvasH, scale) {
         this.castle.forEach(e => e.alpha=1);
       }
       this.castle.forEach(e => e.update(delta));
-      // TODO castle shadows
-      // this.castle.forEach(e => e.update(delta, true));
 
       // Draw Weapon
-      if(hero.tool.type!=types.HAND){
-        hero.tool.update(delta);
-      }
+      if(hero.tool.type!=types.HAND) hero.tool.update(delta);
+
 
       // Draw hero in front of castle, it is what it is! #wontfix
       if(hero.e.y>290&&nearCastle(hero.e.x, hero.e.y,this.cen)) hero.e.update(delta);
 
-      if(this.mobs.length==0 && this.rocks==0 && this.trees==0){
-        this.complete=true;
-      }
+      if(this.mobs.length==0 && this.rocks==0 && this.trees==0) this.complete=true;
 
       for (let i = 0; i < this.mobs.length; i++) {
         this.mobs[i].update(delta, this.mobs);

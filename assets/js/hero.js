@@ -303,7 +303,7 @@ function hero(w, h, x, y, angle, type, scale) {
                   if(rndNo(1,10)>5)cart.level.decor.push(new entity(11, 10, i.x+18, i.y+10, rndNo(-45,45), types.SKELLY, "", scale, false, 1));
                   cart.level.dead.push(i.parent);
                 }
-                 applyKnockback(this, i.parent.e, this.wepPower+this.powPlus);
+                 kBack(this, i.parent.e, this.wepPower+this.powPlus);
                 break;
               case types.GOB:
                 i.parent.hit(delta, this.tool.type, this.wepPower+this.powPlus);

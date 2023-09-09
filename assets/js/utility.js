@@ -14,13 +14,6 @@ function cloneRectanlge(rec) {
   return new rectanlge(rec.x, rec.y, rec.w, rec.h);
 }
 
-function collision(rx, ry, rw, rh, r2x, r2y, r2w, r2h) {
-  return (rx < r2x + r2w &&
-    rx + rw > r2x &&
-    ry < r2y + r2h &&
-    ry + rh > r2y);
-}
-
 function rectColiding(rec1, rec2) {
   return (rec1.x < rec2.x + rec2.w &&
     rec1.x + rec1.w > rec2.x &&
@@ -51,12 +44,12 @@ function lerp (start, end, amt){
   return (1-amt)*start+amt*end
 }
 
-function findIsometricCenter(numColumns, numRows) {
+function isoCen(nc, nr) {
     const size = 16;
 
     // Finding the center tile
-    const cenX = Math.floor(numColumns / 2);
-    const cenY = Math.floor(numRows / 2);
+    cenX = Math.floor(nc / 2);
+    cenY = Math.floor(nr / 2);
 
     // Calculating the pixel coordinates of the center tile
     return { x: (cenX - cenY) * size / 2, y: (cenX + cenY) * size / 2 };
@@ -87,29 +80,29 @@ function nearCastle(x, y, cen) {
   return x >= tl[0] && x <= br[0] && y >= tl[1] && y <= br[1];
 }
 
-function applyKnockback(hero, entity, wepPower) {
+function kBack(h, e, pow) {
     // SOUND
     zzfx(...[,,102,,.03,.15,3,1.95,-1.5,,,,,1,,.1,,.55,.07,.28]);
-    let push = 25 + wepPower;
-    let dx = entity.x - hero.e.x;
-    let dy = entity.y - hero.e.y;
-    let length = Math.sqrt(dx * dx + dy * dy);
+    let push = 25 + pow;
+    let dx = e.x - h.e.x;
+    let dy = e.y - h.e.y;
+    let len = Math.sqrt(dx * dx + dy * dy);
 
     if (length !== 0) { // To prevent division by zero
-        dx /= length;
-        dy /= length;
+        dx /= len;
+        dy /= len;
     }
 
     entity.x += dx * push;
     entity.y += dy * push;
 }
 
-function knockback(hero, damageSource, knockbackAmount) {
+function knockback(hero, src, amt) {
     // calculate direction based on position of damage source and hero's position
-    let directionX = hero.e.x > damageSource.x ? 1 : -1;
-    let directionY = hero.e.y > damageSource.y ? 1 : -1;
+    let dx = hero.e.x > src.x ? 1 : -1;
+    let dy = hero.e.y > src.y ? 1 : -1;
 
     // apply knockback
-    hero.e.x += directionX * knockbackAmount;
-    hero.e.y += directionY * knockbackAmount;
+    hero.e.x += dx * amt;
+    hero.e.y += dy * amt;
 }
