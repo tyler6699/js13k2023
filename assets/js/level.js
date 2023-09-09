@@ -34,11 +34,10 @@ function level(num, canvasW, canvasH, scale) {
     case 1: // Learn Axe
       this.tip="Use the Axe (3) to cut (space) down the trees.";
       this.tip2="Good job! Cross the bridge!!";
-      this.maxMobs=2;
-      this.respawnDelay=3;
+      this.maxMobs=0;
       this.maxTrees=2;
       this.maxRocks=0;
-      this.allowGobs=true;
+      this.allowGobs=false;
       break;
     case 2: // Learn Hammer
       this.tip="Use the Hammer (2) to break (Space) the rock.";
@@ -202,6 +201,16 @@ function level(num, canvasW, canvasH, scale) {
         xx = (c - r) * tileWidth;
         yy = (c + r) * tileHeight;
 
+        // Bridge
+        // Add Bridge at top
+        let m=colz/2;
+        if((r==m || r-1==m || r+1==m) && c<6){
+            t=types.BRDE;
+            if(r==m&&c==2){
+              this.startPos=[xx, yy];
+            }
+        }
+
         var angle = 0;
         var tile = new Tile(tileID,tileWidth, xx, yy, angle, t, false, c, r, scale);
         this.tiles.push(tile);
@@ -250,6 +259,16 @@ function level(num, canvasW, canvasH, scale) {
         }
       }
     });
+
+    // Add Bridge at top
+    let m=colz/2;
+    for(r=0;r<3;r++){
+      for(c=1;c<7;c++){
+        //let tile = getTileRC(m+r,colz-c);
+        //tile.e.type=types.BRDE;
+        //tile.e.setType();
+      }
+    }
 
     // Add a simple castle
     // Castle looks great! Very, uh, can't find the right word, but, like,

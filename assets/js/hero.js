@@ -37,6 +37,7 @@ function hero(w, h, x, y, angle, type, scale) {
   this.stopsound=0;
   this.walkSound=0;
   this.step1=true;
+  this.updates=false;
 
   // Hands
   let theta = 0;  // This is the angle that will increase over time
@@ -58,6 +59,7 @@ function hero(w, h, x, y, angle, type, scale) {
       // Progress level
       if(this.curTile && this.curTile.progress){
         cart.nextLevel();
+        this.updates=true;
       }
 
       if(!left() && !right() && !up() && !down()){
