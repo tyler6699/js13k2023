@@ -187,29 +187,29 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
               ctx.shadowBlur = 8;        // Shadow blur level
               ctx.globalAlpha = 0.1;
               let yoff=this.isHero()?3.2:3.6;
-              if(this.type==types.SKELLY)yoff=3;
+              if(this.isSkelly())yoff=3;
               ctx.drawImage(shadowImage, this.sx, this.sy, w, h, hw+z, -yoff*h, w * s, h * s);
             } else {
-              if((this.type==types.ROCK || this.type==types.TREE) && STAGE < 5){
+              if((this.isRock() || this.isTree()) && STAGE < 5){
                 ctx.shadowColor = "gold";  // Shadow color
                 ctx.shadowBlur = 10;        // Shadow blur level
               }
               ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
 
               // MOB
-              if(this.type==types.SKELLY || this.type==types.GOB){
+              if(this.isSkelly() || this.isGob()){
                 this.hands.forEach((i) => {
                     ctx.drawImage(img, i.sx, i.sy, i.width, i.height, i.x, i.y, i.width*i.scale, i.height*i.scale);
                 });
               }
 
-              if(this.type==types.SKELLY || this.type==types.GOB || this.type==types.ROCK || this.type==types.TREE){
+              if(this.isSkelly() || this.isGob() || this.isRock() || this.isTree()){
                 //Draw HP
                 if(this.hp < this.maxHP && this.alpha==1){
                   ctx.globalAlpha = .7;
                   ctx.fillRect(8, -15, 26, 10);
-                  ctx.fillStyle = this.type==types.ROCK? "#ededed" : "#E15353";
-                  ctx.fillStyle = this.type==types.TREE? "green" : ctx.fillStyle;
+                  ctx.fillStyle = this.isRock()? "#ededed" : "#E15353";
+                  ctx.fillStyle = this.isTree()? "green" : ctx.fillStyle;
                   ctx.fillRect(10, -13, (22/this.maxHP)*this.hp, 6);
                 }
               }
@@ -226,6 +226,22 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
 
   this.isHero = function(){
     return this.type == types.HERO;
+  }
+
+  this.isSkelly = function(){
+    return this.type == types.SKELLY;
+  }
+
+  this.isGob = function(){
+    return this.type == types.GOB;
+  }
+
+  this.isRock= function(){
+    return this.type == types.ROCK;
+  }
+
+  this.isTree = function(){
+    return this.type == types.TREE;
   }
 
   this.setType = function(){

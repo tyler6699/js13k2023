@@ -43,7 +43,7 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
       e.alpha=e.alpha-0.03>0?e.alpha-=0.03:0;
     } else {
       let sin = Math.sin(this.time*500 * 0.008) * 1.7;
-      if(this.e.type==types.SKELLY){
+      if(this.e.isSkelly()){
         e.hands[0].y = 25+sin;
         e.hands[1].y = 25-sin;
         e.hands[0].x = 25;
@@ -53,7 +53,6 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
         e.hands[1].y = 20+sin;
         e.hands[0].x = 35;
         e.hands[1].x = 10;
-
       }
 
       let steerPow = this.steerFromNearbyMobs(cart.level.mobs, 26);
@@ -127,6 +126,13 @@ function mob(w, h, x, y, angle, type, mtype, scale, maxHP) {
     this.spears = this.spears.filter(function (s) {
       return (!s.remove && s.dst<400);
     });
+
+    // check if hero is touching
+    if(this.e.isSkelly){
+      if(rectColiding(this.e.hb, cart.hero.e.hb)){
+        cart.hero.hit(1,e);
+      }
+    }
   }
 
   this.steerFromNearbyMobs = function(allMobs, maxDist) {

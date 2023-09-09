@@ -35,6 +35,8 @@ function hero(w, h, x, y, angle, type, scale) {
   this.gadDur = 1000;
   this.dmgTime = 0;
   this.stopsound=0;
+  this.walkSound=0;
+  this.step1=true;
 
   // Hands
   let theta = 0;  // This is the angle that will increase over time
@@ -64,6 +66,20 @@ function hero(w, h, x, y, angle, type, scale) {
       } else {
         runtime += delta;
         this.moved=true;
+
+        if(this.walkSound<=0){
+          this.walkSound=.3;
+          zzfxV=.17;
+          if(this.step1){
+            zzfx(...[,,2,.01,.02,.03,3,.2,-85,-75,-673,.03,.01,-0.1,1,.3,,.3,,.04]);
+          } else {
+            zzfx(...[,,2,.01,.02,.03,3,.2,-85,-75,-673,.03,.01,-0.1,1,.3,,.42,,.03]);
+          }
+          zzfxV=.3
+          this.step1=!this.step1;
+        } else {
+          this.walkSound-=delta/1000;
+        }
       }
 
       if (up())this.e.y -= this.gMove(0,-1);
@@ -228,10 +244,11 @@ function hero(w, h, x, y, angle, type, scale) {
               case types.TREE:
                 if(this.tool.type==types.AX){
                   // SOUND
+                  console.log(i.hp);
                   zzfx(...[2.15,,312,.02,.08,.13,4,.08,,1.7,,,.1,.9,,.1,.08,.7,,.25]);
                   i.hp-=this.axePower+this.powPlus;
                   if(i.hp==0){
-                    cart.level.decor.push(new entity(4, 6, i.x+18, i.y+41, 0, types.STUMP, "", scale));
+                    cart.level.decor.push(new entity(4, 6, i.x+18, i.y+41, 0, types.STUMP, "", scale, false, 3));
                     zzfx(...[2.03,,585,.05,.18,.35,2,3.08,,.4,,,.06,1.7,,.1,.42,.33,.14]);
                   }
                   // SOUND
@@ -261,7 +278,6 @@ function hero(w, h, x, y, angle, type, scale) {
                   }
                 }
                 cart.shakeTime=.1;
-
                 break;
               case types.SKELLY:
                 i.parent.hit(delta, this.tool.type, this.wepPower);
@@ -312,8 +328,8 @@ function hero(w, h, x, y, angle, type, scale) {
   } // End of Update
 
   this.hit = function(damage, e){
-    if(!this.isGad){
-        zzfx(...[.9,-0.05,105,.04,.06,.03,3,1.1,-2.6,-1.1,,,,.4,,.4,,.7,.01,.21]); // Shoot 230
+    if(!this.isGad || e.isSkelly()){
+        zzfx(...[.9,-0.05,105,.04,.06,.03,3,1.1,-2.6,-1.1,,,,.4,,.4,,.7,.01,.21]);
         this.e.hp -= damage/this.defence;
         this.isGad = true;
         this.dmgTime = Date.now();

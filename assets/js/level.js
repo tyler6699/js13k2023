@@ -33,11 +33,11 @@ function level(num, canvasW, canvasH, scale) {
     case 1: // Learn Axe
       this.tip="Use the Axe (3) to cut (space) down the trees.";
       this.tip2="Good job! Cross the bridge!!";
-      this.maxMobs=3;
+      this.maxMobs=0;
       this.respawnDelay=6;
-      this.maxTrees=4;
-      this.maxRocks=3;
-      this.allowGobs=true;
+      this.maxTrees=2;
+      this.maxRocks=0;
+      this.allowGobs=false;
       break;
     case 2: // Learn Hammer
       this.tip="Use the Hammer (2) to break (Space) the rock.";
@@ -94,8 +94,8 @@ function level(num, canvasW, canvasH, scale) {
       this.objs.forEach((e) => {
         e.update(delta,true);
         e.update(delta);
-        if(e.type==types.ROCK && e.hp >= 0)this.rocks++;
-        if(e.type==types.TREE && e.hp >= 0)this.trees++;
+        if(e.isRock() && e.hp >= 0)this.rocks++;
+        if(e.isTree() && e.hp >= 0)this.trees++;
       });
 
       // make castle transparent to check insaide for mobs

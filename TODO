@@ -21,15 +21,12 @@ HERO
   - Add Helmet (Goblin Head)
   - Add AOE attack (Drains mana, spins sword around body 360)
 
-Sounds
-  - Walk
-  - Attack
-
 Particles
   - Add Foot prints when running
 
 Enemies
-  - Skelly needs to do damage
   - Boss?
 
 Duds need to hurt enemies
+
+only shield when sword or hands!
