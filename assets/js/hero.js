@@ -54,7 +54,7 @@ function hero(w, h, x, y, angle, type, scale) {
     this.moved=false;
 
     // Controls
-    if(this.active){
+    if(this.active && zzfx!=null){
       // Progress level
       if(this.curTile && this.curTile.progress){
         this.e.hp+=20;
