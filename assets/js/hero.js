@@ -241,7 +241,7 @@ function hero(w, h, x, y, angle, type, scale) {
               this.defence++;
             }
             // Upgrade Attack
-            if(i.isGob() && rndNo(1,100)>70 && this.powPlus<=5){
+            if(i.type==types.GRAVE && rndNo(1,100)>70 && this.powPlus<=5){
               zzfx(...[,,679,.06,.19,.35,,1.67,,,-172,.13,.2,,,,,.59,.25,.06]);
               this.powPlus++;
             }
