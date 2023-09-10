@@ -49,6 +49,7 @@ function level(num, canvasW, canvasH, scale) {
       break;
     case 3: // Learn Fight
       this.tip="Attack Sword (1) or fist (4)";
+      this.top2="Rocks may give HP."
       this.maxMobs=1;
       this.maxTrees=1;
       this.maxRocks=0;
@@ -65,7 +66,6 @@ function level(num, canvasW, canvasH, scale) {
       this.maxRocks=2;
       break;
     case 11:
-      this.tip="The land is safe";
       this.maxMobs=0;
       this.maxTrees=10;
       this.maxRocks=10;
@@ -75,7 +75,7 @@ function level(num, canvasW, canvasH, scale) {
       this.maxTrees=num/2+1;
       this.maxRocks=num/2+2;
       this.gobz=true;
-      this.delay=6;
+      this.delay=5;
   }
 
   this.draw = function(hero, delta, intro) {

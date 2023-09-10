@@ -193,7 +193,12 @@ function updateGameArea() {
     mg.clear();
     cart.update(delta, TIME, false);
     let font = "30px Papyrus";
-    writeTxt(ctx, 1, font,"WHITE","Stage: " + (cart.hero.e.curLevel+1), canvasW/2, 40);
+    if(cart.level.id==11){
+      writeTxt(ctx, 1, font,"WHITE","You have saved the land!", canvasW/2-100, 40);
+    } else {
+      writeTxt(ctx, 1, font,"WHITE","Stage: " + (cart.hero.e.curLevel+1), canvasW/2, 40);
+    }
+
     writeTxt(ctx, 1, font,"WHITE","HP: " + Math.floor(cart.hero.e.hp), 20, 40);
     font = "20px Papyrus";
     writeTxt(ctx, 1, font,"WHITE","Attack+    : " + cart.hero.powPlus, 200, 20);

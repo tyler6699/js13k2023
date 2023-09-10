@@ -263,7 +263,7 @@ function hero(w, h, x, y, angle, type, scale) {
                   // SOUND
                   zzfx(...[2.15,,312,.02,.08,.13,4,.08,,1.7,,,.1,.9,,.1,.08,.7,,.25]);
                   i.hp-=this.axePower+this.powPlus;
-                  if(i.hp==0){
+                  if(i.hp<=0){
                     cart.level.decor.push(new entity(4, 6, i.x+18, i.y+41, 0, types.STUMP, "", scale, false, 3));
                     zzfx(...[2.03,,585,.05,.18,.35,2,3.08,,.4,,,.06,1.7,,.1,.42,.33,.14]);
                   }
@@ -286,6 +286,7 @@ function hero(w, h, x, y, angle, type, scale) {
                   zzfx(...[2.04,,265,,,.13,4,.74,,-9.2,,,.15,1.9,,.2,.16,.71,.08]);
                   i.hp-=this.axePower;
                   this.attackOver=true;
+                  if(i.hp==0 && rndNo(1,100)>50) this.e.hp +=5;
                 } else {
                   //SOUND STOP
                   if(this.stopsound<=0){
