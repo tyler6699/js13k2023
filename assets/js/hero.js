@@ -50,6 +50,7 @@ function hero(w, h, x, y, angle, type, scale) {
   this.hands.push(new entity(4, 4, x, y, 0, types.HAND, "", scale, false));
 
   this.update = function(ctx, delta){
+    if(start)zzfxX=new AudioContext;
     this.time+=delta/1000;
     this.moved=false;
 
