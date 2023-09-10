@@ -236,17 +236,17 @@ function hero(w, h, x, y, angle, type, scale) {
             }
             i.hp=0;
             // Upgrade Defence
-            if(i.isSkelly() && rndNo(1,100)>80 && this.defence<=5){
+            if(i.isSkelly() && rndNo(1,100)>70 && this.defence<=5){
               zzfx(...[,,679,.06,.19,.35,,1.67,,,-172,.13,.2,,,,,.59,.25,.06]);
               this.defence++;
             }
             // Upgrade Attack
-            if(i.isGob() && rndNo(1,100)>85 && this.powPlus<=5){
+            if(i.isGob() && rndNo(1,100)>70 && this.powPlus<=5){
               zzfx(...[,,679,.06,.19,.35,,1.67,,,-172,.13,.2,,,,,.59,.25,.06]);
               this.powPlus++;
             }
             // Upgrade Speed
-            if(i.type==types.STUMP && rndNo(1,100)>80 && this.speed<=1){
+            if(i.type==types.STUMP && rndNo(1,100)>70 && this.speed<=1){
               zzfx(...[,,679,.06,.19,.35,,1.67,,,-172,.13,.2,,,,,.59,.25,.06]);
               this.speed+=.25;
             }

@@ -13,14 +13,15 @@ function level(num, canvasW, canvasH, scale) {
   this.bridge=false;
   this.mobTime=0;
   this.cen=isoCen(colz-1,colz-1);
-  this.respawnDelay=10;
+  this.delay=10;
   this.maxMobs=10;
   this.dead=[];
   this.decor=[];
   this.maxTrees=num-1;
   this.maxRocks=num-2;
-  this.allowGobs=true;
+  this.gobz=true;
   this.tip=null;
+  this.id=num;
 
   // Isometric tileSize - Width remains the same, but height is half
   let tileWidth = 16;
@@ -36,35 +37,45 @@ function level(num, canvasW, canvasH, scale) {
       this.maxMobs=0;
       this.maxTrees=2;
       this.maxRocks=0;
-      this.allowGobs=false;
+      this.gobz=false;
       break;
     case 2: // Learn Hammer
-      this.tip="Use Hammer (2) to break the rocks";
-      this.tip2="Clearing resources stops spawns!";
+      this.tip="Hammer (2) break the rocks";
+      this.tip2="Clearing resources, stop spawns";
       this.maxMobs=0;
       this.maxTrees=0;
       this.maxRocks=1;
-      this.allowGobs=false;
+      this.gobz=false;
       break;
     case 3: // Learn Fight
       this.tip="Attack Sword (1) or fist (4)";
       this.maxMobs=1;
       this.maxTrees=1;
       this.maxRocks=0;
-      this.allowGobs=false;
-      this.respawnDelay=20;
+      this.gobz=false;
+      this.delay=20;
       skelly = new mob(16, 16, this.cen.x, this.cen.y, 0, types.SKELLY, mobtype.FOLLOW, scale, 10);
       this.mobs.push(skelly);
       this.objs.push(skelly.e);
-
       break;
     case 4:
-      this.tip="Lets Battle!";
+      this.tip="Use shield on spears!";
       this.maxMobs=4;
       this.maxTrees=2;
       this.maxRocks=2;
       break;
-    
+    case 11:
+      this.tip="The land is safe";
+      this.maxMobs=0;
+      this.maxTrees=10;
+      this.maxRocks=10;
+      break;
+    default:
+      this.maxMobs=num;
+      this.maxTrees=num/2+1;
+      this.maxRocks=num/2+2;
+      this.gobz=true;
+      this.delay=6;
   }
 
   this.draw = function(hero, delta, intro) {
@@ -114,7 +125,7 @@ function level(num, canvasW, canvasH, scale) {
       // Draw hero in front of castle, it is what it is! #wontfix
       if(hero.e.y>290&&nearCastle(hero.e.x, hero.e.y,this.cen)) hero.e.update(delta);
 
-      if(this.mobs.length==0 && this.rocks==0 && this.trees==0) this.complete=true;
+      if(this.mobs.length==0 && this.rocks==0 && this.trees==0 && this.id < 11) this.complete=true;
 
       for (let i = 0; i < this.mobs.length; i++) {
         this.mobs[i].update(delta, this.mobs);
@@ -140,14 +151,14 @@ function level(num, canvasW, canvasH, scale) {
 
       // SPAWNER
       this.mobTime+=delta/1000;
-      if(this.mobTime>this.respawnDelay && (this.trees>0 || this.rocks>0) && this.mobs.length < this.maxMobs){
+      if(this.mobTime>this.delay && (this.trees>0 || this.rocks>0) && this.mobs.length < this.maxMobs){
         // Add some mobs
         this.mobTime=0;
         skelly = new mob(16, 16, this.cen.x, this.cen.y, 0, types.SKELLY, mobtype.FOLLOW, scale, 10);
         this.mobs.push(skelly);
         this.objs.push(skelly.e);
 
-        if(this.allowGobs){
+        if(this.gobz){
           gob = new mob(18, 15, this.cen.x, this.cen.y, 0, types.GOB, mobtype.RANGED, scale, 20);
           this.mobs.push(gob);
           this.objs.push(gob.e);
@@ -256,8 +267,6 @@ function level(num, canvasW, canvasH, scale) {
     });
 
     // Add a simple castle
-    // Castle looks great! Very, uh, can't find the right word, but, like,
-    // it means business, you know? No nonsense castle vibe, fortification lvl 99
     let cx =  this.cen.x;
     let cy =  this.cen.y;
     buildTower(this.castle, cx+5, cy-86, 4, 0, 16, true, types.CST, true); // Back Right Tower
@@ -274,10 +283,10 @@ function level(num, canvasW, canvasH, scale) {
     buildTower(this.castle, cx+6, cy-40, 4, 0, 16, true, types.CST, true); // Front Left Tower
   }
 
-  const buildTower = (tiles, x, y, count, dx = 0, dy = 8, decrement = true, type=types.CST, tower=false) => {
-    const loopInit = decrement ? count - 1 : 0;
-    const loopCond = decrement ? (i) => i >= 0 : (i) => i < count;
-    const loopChange = decrement ? (i) => --i : (i) => ++i;
+  const buildTower = (tiles, x, y, count, dx = 0, dy = 8, dec = true, type=types.CST, tower=false) => {
+    const loopInit = dec ? count - 1 : 0;
+    const loopCond = dec ? (i) => i >= 0 : (i) => i < count;
+    const loopChange = dec ? (i) => --i : (i) => ++i;
 
     for (let i = loopInit; loopCond(i); i = loopChange(i)) {
       tiles.push(new entity(16, 16, x + dx * i, y + dy * i, 0, type, "", scale, false, 0));

@@ -192,7 +192,7 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
               if(this.isSkelly())yoff=3;
               ctx.drawImage(shadowImage, this.sx, this.sy, w, h, hw+z, -yoff*h, w * s, h * s);
             } else {
-              if((this.isRock() || this.isTree()) && STAGE < 5){
+              if((this.isRock() || this.isTree()) && cart.level.id < 6){
                 ctx.shadowColor = "gold";  // Shadow color
                 ctx.shadowBlur = 10;        // Shadow blur level
               }

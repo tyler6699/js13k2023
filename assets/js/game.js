@@ -31,7 +31,7 @@ let music=true;
 let pause=false;
 let leftMB=false;
 let rightMB=false;
-let startDelay=3;
+let startDelay=2;
 
 // Load the music player
 genAudio();
