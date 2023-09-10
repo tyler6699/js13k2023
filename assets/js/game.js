@@ -74,11 +74,13 @@ let mg = {
       mg.keys = (mg.keys || []);
       mg.keys[e.keyCode] = (e.type == "keydown");
     })
+    dd=true;
     window.addEventListener('keyup', function(e) {
       mg.keys[e.keyCode] = (e.type == "keydown");
       if(e.keyCode==R) RELOAD=true;
       if(e.keyCode==M) pause=!pause;
       if(e.keyCode==T) cart.tips=!cart.tips;
+      if(dd){zzfxX=new AudioContext();dd=false;};
     })
     window.addEventListener('mouseup', function(e) {
       e.preventDefault();
