@@ -1,6 +1,4 @@
-function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP = 0,weapon=0) {
-  this.weapon = weapon;
-  this.scale = scale;
+function entity(w, h, x, y, angle, type, colour, isButton = false) {
   this.type = type;
   this.width = w;
   this.height = h;
@@ -17,23 +15,15 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
   this.y = y;
   this.z = 0;
   this.active = true;
-  this.colour = colour;
   this.image = atlas;
   this.alpha = 1;
-  this.currentTile=0;
   this.isSolid = false;
   this.isButton = isButton;
   this.time=0;
   this.maxHP=maxHP;
-  this.hp=this.maxHP;
   this.flip=false;
-  this.idle=0;
   this.offsetY=0;
   this.parent=null;
-  this.wet=false;
-  this.ui=false;
-  this.hands = [];
-  this.dead=false;
 
   // ATLAS Positions
   this.sx=0;
@@ -70,7 +60,6 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
 
   // Render
   this.update = function(delta, shadow=false) {
-    this.idle+=delta/1000;
     this.updateHitbox();
 
     if(this.active) {
@@ -88,135 +77,46 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
       w   = this.width;
       h   = this.height;
 
+      // Screen shake
       if(cart.shakeTime>0){ctx.translate(cart.shake,cart.shake);}
 
-      if(this.ui){
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-        if (this.flip){
-          ctx.scale(-1, 1);
-          ctx.translate(-w*s,0);
-        }
+      // Camera Tracking
+      ctx.translate(cart.cam.x,cart.cam.y);
 
-        ctx.drawImage(img, this.sx, this.sy, w, h, this.x, this.y, w*s, h*s);
+      if (this.flip){
+        ctx.scale(-1, 1);
+        ctx.translate(-(w*s)-w,0);
       } else {
-        // Camera Tracking
-        ctx.translate(cart.cam.x,cart.cam.y);
+        ctx.scale(1, 1);
+      }
 
-        // Animate Image
-        if (this.image == null) {
-          ctx.fillStyle = this.colour;
-          ctx.fillRect((mhw *.5) * s, (mhh * .5) * s, (w * .5) * s, (h * .5) * s);
-        // Image
+      z=0;
+      if(this.angle > 0){
+        let z=24;
+        ctx.translate(z,z);
+        ctx.rotate(this.angle*Math.PI/180);
+        ctx.translate(-z,-z);
+      }
+
+      // HERO
+      if(this.isHero()&&!shadow){
+        let x=cart.hero;
+
+        // Render HERO
+        ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
+        if(x.defence>=2)ctx.drawImage(img, 96, 16, 11, 10, 12, 12, 11*s, 10*s);
+      } else {
+        // Where all entities get drawn
+        if(shadow){
+          ctx.scale(1,-1);
+          ctx.shadowColor = "#000";  // Shadow color
+          ctx.shadowBlur = 8;        // Shadow blur level
+          ctx.globalAlpha = 0.1;
+          let yoff=this.isHero()?3.2:3.6;
+          if(this.isSkelly())yoff=3;
+          ctx.drawImage(shadowImage, this.sx, this.sy, w, h, hw+z, -yoff*h, w * s, h * s);
         } else {
-          if (this.flip){
-            ctx.scale(-1, 1);
-            ctx.translate(-(w*s)-w,0);
-          } else {
-            ctx.scale(1, 1);
-          }
-
-          z=0;
-          if(this.angle > 0){
-            let z=24;
-            ctx.translate(z,z);
-            ctx.rotate(this.angle*Math.PI/180);
-            ctx.translate(-z,-z);
-          }
-
-          if(this.wet) h-=2;
-          // HERO
-          if(this.isHero()&&!shadow){
-            let x=cart.hero;
-            // Draw the hands, hair etc, weapon
-            x.hands.forEach((i) => {
-              ctx.drawImage(img, i.sx, i.sy, i.width, i.height, i.x, i.y, i.width*i.scale, i.height*i.scale);
-            });
-
-            // Hero
-            if(x.dance){
-              ctx.shadowColor = "gold";  // Shadow color
-              ctx.shadowBlur = 10;        // Shadow blur level
-            }
-
-            // Show some blood
-            if(x.isGad){
-              ctx.shadowColor = "red";
-              ctx.shadowBlur = 20;
-            }
-
-            // Render HERO
-            ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
-            if(x.defence>=2)ctx.drawImage(img, 96, 16, 11, 10, 12, 12, 11*s, 10*s);
-
-            if(x.isShielded()){
-              let sh = x.shield;
-              ctx.drawImage(img, sh.sx, sh.sy, sh.width, sh.height, sh.x, sh.y, sh.width*sh.scale, sh.height*sh.scale);
-            }
-
-            if(x.renderPower){
-              ctx.globalAlpha = x.wepPower>2?x.wepPower/10:0;
-              // Draw power up
-              let f=x.wepPower<10;
-              // Patch the issue rather than fixing :D
-              let arcX=x.facing==RIGHT?w*s-10:w*s-20;
-              let arcY= -h+10;
-
-              // Draw the arc
-              if(x.facing!=RIGHT){
-                ctx.scale(-1, 1);
-                ctx.translate(-(w*s),0);
-              }
-              ctx.beginPath();
-              ctx.arc(arcX, arcY, 20, Math.PI, 2 * Math.PI);
-              ctx.lineWidth = f?10:15; // Width of the line, adjust if needed
-
-              // Fill based on power
-              let gradient = ctx.createLinearGradient(arcX - 20, arcY, arcX + 20, arcY);
-              gradient.addColorStop(0, f?'#0a910f':'#fff'); // Start color (you can change it)
-              gradient.addColorStop(x.wepPower / 10, '#db6532'); // Color at the end of the power level
-              let val = x.wepPower / 10 + 0.01 > 1 ? 1 : x.wepPower / 10 + 0.01;
-              gradient.addColorStop(val, f?'#06062e':'#db6532'); // Rest of the arc
-
-              ctx.strokeStyle = gradient;
-              ctx.stroke();
-            }
-
-          } else {
-            // Where all entities get drawn
-            if(shadow){
-              ctx.scale(1,-1);
-              ctx.shadowColor = "#000";  // Shadow color
-              ctx.shadowBlur = 8;        // Shadow blur level
-              ctx.globalAlpha = 0.1;
-              let yoff=this.isHero()?3.2:3.6;
-              if(this.isSkelly())yoff=3;
-              ctx.drawImage(shadowImage, this.sx, this.sy, w, h, hw+z, -yoff*h, w * s, h * s);
-            } else {
-              if((this.isRock() || this.isTree()) && cart.level.id < 6){
-                ctx.shadowColor = "gold";  // Shadow color
-                ctx.shadowBlur = 10;        // Shadow blur level
-              }
-              ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
-
-              // MOB
-              if(this.isSkelly() || this.isGob()){
-                this.hands.forEach((i) => {
-                    ctx.drawImage(img, i.sx, i.sy, i.width, i.height, i.x, i.y, i.width*i.scale, i.height*i.scale);
-                });
-              }
-
-              if(this.isSkelly() || this.isGob() || this.isRock() || this.isTree()){
-                //Draw HP
-                if(this.hp < this.maxHP && this.alpha==1){
-                  ctx.globalAlpha = .7;
-                  ctx.fillRect(8, -15, 26, 10);
-                  ctx.fillStyle = this.isRock()? "#ededed" : "#E15353";
-                  ctx.fillStyle = this.isTree()? "green" : ctx.fillStyle;
-                  ctx.fillRect(10, -13, (22/this.maxHP)*this.hp, 6);
-                }
-              }
-            }
-          }
+          ctx.drawImage(img, this.sx, this.sy, w, h, hw+z, hh, w * s, h * s);
         }
       }
 
@@ -226,25 +126,6 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
     this.cenY=this.y-this.mhHScld;
   }
 
-  this.isHero = function(){
-    return this.type == types.HERO;
-  }
-
-  this.isSkelly = function(){
-    return this.type == types.SKELLY;
-  }
-
-  this.isGob = function(){
-    return this.type == types.GOB;
-  }
-
-  this.isRock= function(){
-    return this.type == types.ROCK;
-  }
-
-  this.isTree = function(){
-    return this.type == types.TREE;
-  }
 
   this.setType = function(){
     this.alpha = 1;
@@ -260,92 +141,6 @@ function entity(w, h, x, y, angle, type, colour, scale, isButton = false, maxHP 
         break;
       case types.GRASS:
         this.sx=16;
-        break;
-      case types.BRDE:
-        this.sx=32;
-        break;
-      case types.WTR:
-        this.sx=48;
-        break;
-      case types.SEA:
-        this.sx=48;
-        break;
-      case types.AIR:
-        this.sx=144;
-        break;
-      case types.SND:
-        this.sy=16;
-        break;
-      case types.TREE:
-        this.isSolid = true;
-        this.sx=80;
-        break;
-      case types.ROCK:
-        this.isSolid = true;
-        this.sx=64;
-        break;
-      case types.CST:
-        this.isSolid = true;
-        this.sx=64;
-        this.sy=16;
-        break;
-      case types.CNE:
-        this.sx=48;
-        this.sy=16;
-        break;
-      case types.UI:
-        this.ui=true;
-        this.sy=32;
-        break;
-      case types.HAM:
-        this.sx=16;
-        this.sy=33;
-        this.ui=true;
-        break;
-      case types.SWD:
-        this.sx=26;
-        this.sy=33;
-        this.ui=true;
-        break;
-      case types.AX:
-        this.sx=36;
-        this.sy=32;
-        this.ui=true;
-        break;
-      case types.HP:
-        this.sx=48;
-        this.sy=32;
-        this.ui=true;
-        break;
-      case types.HPE:
-        this.sx=64;
-        this.sy=32;
-        this.ui=true;
-        break;
-      case types.HAND:
-        this.sx=71;
-        this.sy=42;
-        this.ui=true;
-        break;
-      case types.SKELLY:
-        this.sx=96;
-        this.sy=16;
-        break;
-      case types.GOB:
-        this.sx=83;
-        this.sy=33;
-        break;
-      case types.GRAVE:
-        this.sx=85;
-        this.sy=23;
-        break;
-      case types.SHIELD:
-        this.sx=77;
-        this.sy=32;
-        break;
-      case types.STUMP:
-        this.sx=81;
-        this.sy=23;
         break;
     }
   }

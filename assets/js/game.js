@@ -1,6 +1,6 @@
-// ╔═══════════════════════════════╗
-// ║ JS13K Entry by @CarelessLabs  ║
-// ╚═══════════════════════════════╝
+// ╔══════════════════════════════════╗
+// ║ JS13K template by @CarelessLabs  ║
+// ╚══════════════════════════════════╝
 
 // Reference for new atlas
 let canvasW = window.innerWidth;
@@ -10,7 +10,6 @@ let delta = 0.0;
 let prevDelta = Date.now();
 let currentDelta = Date.now();
 let TIME = 0;
-let introT = 0;
 let mousePos = new vec2(0,0);
 let clickedAt = new vec2(0,0);
 let clickedRec = new rectanlge(0,0,0,0);
@@ -18,15 +17,12 @@ let processClick = false;
 let GAMEOVER=false;
 let RELOAD=false;
 let WIN = false;
-let STAGE=1;
-colz=40+(STAGE*2);
+let STAGE=0;
 let atlas = new Image();
 atlas.src = "atlas.png";
 atlas.crossOrigin = "anonymous";
-let shadowImage=new Image();
-let shaky = true;
 let cart = new Cart();
-start=false;
+let start=false;
 let music=true;
 let pause=false;
 let leftMB=false;
@@ -34,7 +30,7 @@ let rightMB=false;
 let startDelay=2;
 
 // Load the music player
-genAudio();
+// genAudio();
 
 // Called by body onload on index page
 function startGame() {
@@ -56,16 +52,8 @@ let mg = {
     ctx.imageSmoothingEnabled = false;
     this.canvas.classList.add("screen");
     document.body.insertBefore(this.canvas, document.body.childNodes[6]);
-    this.frameNo = 0;
-    this.interval = setInterval(updateGameArea, 20);
-
-    // Shadows
-    shadowImage.crossOrigin = "anonymous";
-    shadowImage.src = 'atlas.png';
-
-    shadowImage.onload = function() {
-      shadowImage = mkShadows(shadowImage);
-    }
+    // Run the game loop
+    this.frameId = requestAnimationFrame(updateGameLoop);
 
     // Keyboard
     window.addEventListener('keydown', function(e) {
@@ -74,13 +62,11 @@ let mg = {
       mg.keys = (mg.keys || []);
       mg.keys[e.keyCode] = (e.type == "keydown");
     })
-    dd=true;
     window.addEventListener('keyup', function(e) {
       mg.keys[e.keyCode] = (e.type == "keydown");
       if(e.keyCode==R) RELOAD=true;
       if(e.keyCode==M) pause=!pause;
       if(e.keyCode==T) cart.tips=!cart.tips;
-      if(dd){zzfxX=new AudioContext();dd=false;};
     })
     window.addEventListener('mouseup', function(e) {
       e.preventDefault();
@@ -106,47 +92,40 @@ let mg = {
       var r = mg.canvas.getBoundingClientRect();
       mousePos.set((e.clientX - r.left) / (r.right - r.left) * canvasW,
                    (e.clientY - r.top) / (r.bottom - r.top) * canvasH);
-  })
+    })
     // Disable right click context menu
     this.canvas.oncontextmenu = function(e) {
       e.preventDefault();
     };
   },
   stop: function() {
-    clearInterval(this.interval);
+    if (mg.frameId) {
+      cancelAnimationFrame(mg.frameId);
+      // Reset the frameId
+      mg.frameId = null;
+    }
   },
   clear: function() {
     this.context.clearRect(0, 0, 4*this.canvas.width, 4*this.canvas.height);
   }
 }
 
-function mkShadows(image) {
-    const tempCanvas = document.createElement('canvas');
-    tempCanvas.width = image.width;
-    tempCanvas.height = image.height;
-    const tempCtx = tempCanvas.getContext('2d');
-    tempCtx.drawImage(image, 0, 0);
+let lastTimestamp = null;
+function updateGameLoop(timestamp) {
+  if (!lastTimestamp) lastTimestamp = timestamp;
 
-    const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
-    const data = imageData.data;
+  // Calculate the delta time (in seconds)
+  let deltaTime = (timestamp - lastTimestamp) / 1000;
+  lastTimestamp = timestamp;
 
-    // Convert all non-transparent pixels to black
-    for (let i = 0; i < data.length; i += 4) {
-        if (data[i + 3] !== 0) { // Check if pixel is not transparent
-            data[i] = 0;     // Red
-            data[i + 1] = 0; // Green
-            data[i + 2] = 0; // Blue
-        }
-    }
+  // Update the game state and render
+  updateGameArea(deltaTime);
 
-    tempCtx.putImageData(imageData, 0, 0);
-
-    const blackImage = new Image();
-    blackImage.src = tempCanvas.toDataURL("image/png");
-    return blackImage;
+  // Request the next frame
+  mg.frameId = requestAnimationFrame(updateGameLoop);
 }
 
-function updateGameArea() {
+function updateGameArea(delta) {
   if(GAMEOVER){
     TIME=0;
     GAMEOVER=false;
@@ -154,94 +133,17 @@ function updateGameArea() {
     STAGE=0;
     start=false;
     gameStarted=false;
-    cart.hero.e.hp=100;
-    cart.genLevel();
-    cart.setLevel(0);
     startDelay=3;
   }
 
-  if(start){
-    if(cart.hero != null)cart.hero.e.active=true;
-    gameStarted=true;
-  }
-
-  // Delta
-  prevDelta = currentDelta;
-  currentDelta = Date.now();
-  delta = currentDelta - prevDelta;
+  if(start) gameStarted=true;
   TIME += delta;
-  if(startDelay>0)startDelay-=delta/1000;
-  if (!gameStarted) {
-    // intro Screen
-    mg.clear();
-    ctx = mg.context;
-    cart.update(delta, TIME, true);
-    ctx.save();
-    drawBox(ctx,0.8,"black",0,0,canvasW,canvasH)
-    let font="70px Papyrus";
-    writeTxt(ctx, 1, font,"WHITE","Fort Knight", 30, 90);
-    font="50px Papyrus";
-    writeTxt(ctx, 1, font,"WHITE",startDelay>0?"Generating World ..":"Press any key to start", 30, canvasH-120);
-    font="30px Papyrus";
-    writeTxt(ctx, 1, font,"RED","Controls", 30, 160);
-    writeTxt(ctx, 1, font,"WHITE","Move: WASD/Arrows", 30, 200);
-    writeTxt(ctx, 1, font,"WHITE","Attack: Space/LMB (Hold)", 30, 250);
-    writeTxt(ctx, 1, font,"WHITE","Weapon: 1-4/RMB on icons", 30, 300);
-    writeTxt(ctx, 1, font,"WHITE","Block: Shift/RMB", 30, 350);
-    writeTxt(ctx, 1, font,"WHITE","Upgrade chance: Destroy drops", 30, 400);
-    writeTxt(ctx, 1, font,"WHITE","@CarelessLabs & @AdamTheWilliams for JS13k", 30, canvasH-50);
-    ctx.restore();
-  } else {
-    mg.clear();
-    cart.update(delta, TIME, false);
-    let font = "30px Papyrus";
-    if(cart.level.id==11){
-      writeTxt(ctx, 1, font,"WHITE","You have saved the land!", canvasW/2-100, 40);
-    } else {
-      writeTxt(ctx, 1, font,"WHITE","Stage: " + (cart.hero.e.curLevel+1), canvasW/2, 40);
-    }
+  if(startDelay>0)startDelay-=delta;
+  cart.update(delta, TIME, gameStarted);
 
-    writeTxt(ctx, 1, font,"WHITE","HP: " + Math.floor(cart.hero.e.hp), 20, 40);
-    font = "20px Papyrus";
-    writeTxt(ctx, 1, font,"WHITE","Attack+    : " + cart.hero.powPlus, 200, 20);
-    writeTxt(ctx, 1, font,"WHITE","Defence+ : " + (cart.hero.defence-1), 200, 40);
-    writeTxt(ctx, 1, font,"WHITE","Speed+     : " + cart.hero.speed, 200, 60);
-    writeTxt(ctx, 1, font,"WHITE","Castle Resources:", canvasW-260, 18);
-
-    let lvl=cart.hero.e.curLevel;
-
-    // Music
-    if(pause){
-      audio.pause();
-      music=true;
-    }
-
-    if(music && songLoaded && !pause){
-      audio.play();
-      audio.loop=true;
-      music=false;
-    }
-  }
+  // Reset Click to false
+  // If it is still true on the next loop could cause an unexpected action
   processClick=false;
-}
-
-function drawBox(ctx,a,colour,x,y,w,h) {
-  ctx.save();
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
-  ctx.globalAlpha = a;
-  ctx.fillStyle = colour;
-  ctx.fillRect(x, y, w, h);
-  ctx.restore();
-}
-
-function writeTxt(ctx,a,font,colour,txt,x,y) {
-  ctx.save();
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
-  ctx.globalAlpha = a;
-  ctx.font = font;
-  ctx.fillStyle = colour;
-  ctx.fillText(txt, x, y);
-  ctx.restore();
 }
 
 function left() {

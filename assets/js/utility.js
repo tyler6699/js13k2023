@@ -55,6 +55,31 @@ function isoCen(nc, nr) {
     return { x: (cenX - cenY) * size / 2, y: (cenX + cenY) * size / 2 };
 }
 
+function getResponsiveFontSize(percent) {
+  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+  // You might want to adjust the scaling factor (0.1) to get the best size for your design.
+  return Math.round(vw * percent); // This sets the font size to 10% of the viewport width.
+}
+
+function drawBox(ctx,a,colour,x,y,w,h) {
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.globalAlpha = a;
+  ctx.fillStyle = colour;
+  ctx.fillRect(x, y, w, h);
+  ctx.restore();
+}
+
+function writeTxt(ctx,a,font,colour,txt,x,y) {
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.globalAlpha = a;
+  ctx.font = font;
+  ctx.fillStyle = colour;
+  ctx.fillText(txt, x, y);
+  ctx.restore();
+}
+
 function getTile(x,y,h,offY){
   let gridX = x / 32;
   let gridY = (y+h*2+offY) / 32 * 2;
@@ -71,30 +96,6 @@ function getTile(x,y,h,offY){
 
 function getTileRC(r,c){
   return cart.level.tiles[c + (cart.levels[cart.hero.e.curLevel].cols * r)];
-}
-
-function nearCastle(x, y, cen) {
-  const tl = [-80, cen.y-85];
-  const br = [85, cen.y+50];
-
-  return x >= tl[0] && x <= br[0] && y >= tl[1] && y <= br[1];
-}
-
-function kBack(h, e, pow) {
-    // SOUND
-    zzfx(...[,,102,,.03,.15,3,1.95,-1.5,,,,,1,,.1,,.55,.07,.28]);
-    let push = 25 + pow;
-    let dx = e.x - h.e.x;
-    let dy = e.y - h.e.y;
-    let len = Math.sqrt(dx * dx + dy * dy);
-
-    if (length !== 0) { // To prevent division by zero
-        dx /= len;
-        dy /= len;
-    }
-
-    entity.x += dx * push;
-    entity.y += dy * push;
 }
 
 function knockback(hero, src, amt) {
