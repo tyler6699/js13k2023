@@ -20,7 +20,6 @@ let WIN = false;
 let STAGE=0;
 let atlas = new Image();
 atlas.src = "atlas.png";
-atlas.crossOrigin = "anonymous";
 let cart = new Cart();
 let start=false;
 let music=true;
@@ -29,12 +28,17 @@ let leftMB=false;
 let rightMB=false;
 let startDelay=2;
 
+const BASE_CANVAS_WIDTH = 800;
+const BASE_CANVAS_HEIGHT = 600;
+
+
 // Load the music player
 // genAudio();
 
 // Called by body onload on index page
 function startGame() {
   mg.start();
+  resizeCanvas(ctx); // Ensure we're at the right size at the start.
 }
 
 let mg = {
@@ -87,6 +91,8 @@ let mg = {
         rightMB=true;
       }
     })
+    // Add an event listener for window resize.
+    window.addEventListener('resize', resizeCanvas);
     window.addEventListener('mousemove', function(e) {
       e.preventDefault();
       var r = mg.canvas.getBoundingClientRect();
@@ -200,4 +206,32 @@ function setclicks(){
   clickedRec.y=mousePos.y+5;
   clickedRec.h=10;
   clickedRec.w=10;
+}
+
+function resizeCanvas(ctx) {
+  let windowWidth = window.innerWidth;
+  let windowHeight = window.innerHeight;
+  let windowRatio = windowWidth / windowHeight;
+  let gameRatio = BASE_CANVAS_WIDTH / BASE_CANVAS_HEIGHT;
+  let newCanvasWidth;
+  let newCanvasHeight;
+
+  // Check the ratios to maintain the aspect ratio of the canvas.
+  if (windowRatio < gameRatio) {
+    // If the window is relatively tall and narrow,
+    newCanvasWidth = windowWidth;
+    newCanvasHeight = windowWidth / gameRatio;
+  } else {
+    // If the window is relatively wide and short,
+    newCanvasHeight = windowHeight;
+    newCanvasWidth = windowHeight * gameRatio;
+  }
+
+  // Set the canvas dimensions.
+  mg.canvas.style.width = `${newCanvasWidth}px`;
+  mg.canvas.style.height = `${newCanvasHeight}px`;
+
+  // Ensure the game contents are scaled and positioned in the center.
+  ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset the transformation matrix.
+  ctx.scale(newCanvasWidth / BASE_CANVAS_WIDTH, newCanvasHeight / BASE_CANVAS_HEIGHT);
 }
