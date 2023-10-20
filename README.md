@@ -1,6 +1,6 @@
 # JavaScript Game Template
 
-##A simple framework for making a javascript game
+## A simple framework for making a javascript game
 
 ### game.js
 
