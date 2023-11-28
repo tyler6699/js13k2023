@@ -26,11 +26,14 @@ let music=true;
 let pause=false;
 let leftMB=false;
 let rightMB=false;
-let startDelay=2;
+let startDelay=0.1;
+let scaleRatio=0;
+let scaleHRatio=1;
+let scaleWRatio=1;
+let zoom=6;
 
 const BASE_CANVAS_WIDTH = 800;
 const BASE_CANVAS_HEIGHT = 600;
-
 
 // Load the music player
 // genAudio();
@@ -218,18 +221,14 @@ function resizeCanvas(ctx) {
 
   // Check the ratios to maintain the aspect ratio of the canvas.
   if (windowRatio < gameRatio) {
-    // If the window is relatively tall and narrow,
+    // tall and narrow,
     newCanvasWidth = windowWidth;
     newCanvasHeight = windowWidth / gameRatio;
   } else {
-    // If the window is relatively wide and short,
+    // wide and short,
     newCanvasHeight = windowHeight;
     newCanvasWidth = windowHeight * gameRatio;
   }
-
-  // Set the canvas dimensions.
-  mg.canvas.style.width = `${newCanvasWidth}px`;
-  mg.canvas.style.height = `${newCanvasHeight}px`;
 
   // Ensure the game contents are scaled and positioned in the center.
   ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset the transformation matrix.

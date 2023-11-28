@@ -23,7 +23,6 @@ function Entity(w, h, x, y, angle, type) {
 
   // Render
   this.update = function(delta) {
-
     ctx.save();
     ctx.translate(this.x, this.y);
     ctx.globalAlpha = this.alpha;
@@ -38,25 +37,22 @@ function Entity(w, h, x, y, angle, type) {
     h   = this.height;
 
     // Camera Tracking
-    //ctx.translate(cart.cam.x,cart.cam.y);
-    // Where all entities get drawn
-    ctx.drawImage(img, this.sx, this.sy, w, h, hw, hh, w * s, h * s);
+    ctx.translate(cart.cam.x,cart.cam.y);
+    ctx.scale(zoom,zoom);
+    ctx.drawImage(img, this.sx, this.sy, w, h, hw, hh, w, h);
     ctx.restore();
 
     this.cenX=this.x-this.mhWScld;
     this.cenY=this.y-this.mhHScld;
   }
 
-
   this.setType = function(){
     this.alpha = 1;
     this.sy=0;
     this.sx=0;
-    this.isSolid = false;
 
     switch(this.type){
       case types.HERO:
-        this.isSolid = true;
         this.sx=0;
         this.sy=0;
         break;

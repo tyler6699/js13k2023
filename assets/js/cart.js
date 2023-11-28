@@ -8,7 +8,7 @@ function Cart() {
   this.reset=false;
 
   // Set up one entity to render test
-  this.entity = new Entity(30, 30, 100, 100, 0, types.HERO)
+  this.entity = new Entity(16, 16, 0, 0, 0, types.HERO);
 
   // Render & Logic
   this.update = function(delta, time, gameStarted=false) {
@@ -19,7 +19,7 @@ function Cart() {
       let font = "30px Papyrus";
       writeTxt(ctx, 1, font,"WHITE","Main Game:", canvasW-300, 200);
       // Test drawing one entity
-      //this.entity.update(delta);
+      this.entity.update(delta);
     } else { // Intro Screen
       let fontSize=getResponsiveFontSize(.05);
       mg.clear();
